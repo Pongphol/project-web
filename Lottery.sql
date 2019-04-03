@@ -7,6 +7,9 @@
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
+CREATE DATABASE IF NOT EXISTS lottery;
+USE lottery;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
