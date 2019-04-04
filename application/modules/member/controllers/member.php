@@ -5,7 +5,10 @@ class Member extends MX_Controller {
 
 	public function index()
 	{
-		$this->load->view('index');
+		$data['title'] = 'Member title';
+		$data['content'] = 'index';
+		$data['message'] = 'Member Page';
+		$this->load->view('template', $data);
 	}
 
 }
