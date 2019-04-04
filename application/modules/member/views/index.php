@@ -1,4 +1,1 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-Member Page!
+<?php echo $message; ?>
