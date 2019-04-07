@@ -41,6 +41,7 @@ CREATE TABLE `account` (
   `money` float NOT NULL,
   `gender` enum('male','female') COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
+  `role` int(1) UNSIGNED NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_date` timestamp NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
