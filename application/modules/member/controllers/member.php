@@ -10,6 +10,7 @@ class Member extends MX_Controller {
 		$data['message'] = 'Member Page';
 		$this->load->view('template', $data);
 	}
+	/*แสดงหน้าจอฝากถอน */
 	public function inform_deposit_show()
 	{
 		$data['title'] = 'แจ้งฝาก';
@@ -17,10 +18,9 @@ class Member extends MX_Controller {
 
 		$this->load->model('admin_banking_model','abm');
 		$data['bank_admin'] =  $this->abm->get_name_banking();
-		print_r($this->abm->get_name_banking());
 		$this->load->view('template', $data);
 	}
-
+	/*แสดงหน้าจอสมัครสมาชิก*/
 	public function register()
 	{
 		$this->load->model('member_model', 'mb_model');

@@ -79,7 +79,6 @@
                 $('#user_bank').removeClass("is-invalid")
             }
         })
-
     })
 </script>
 <!DOCTYPE html>
