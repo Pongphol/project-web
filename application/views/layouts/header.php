@@ -5,6 +5,13 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+
+    <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script>
+
+ 
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
