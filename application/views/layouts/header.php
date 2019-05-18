@@ -10,6 +10,8 @@
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script>
     <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script>
 
+    
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">

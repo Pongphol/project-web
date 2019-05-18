@@ -9,7 +9,7 @@
 </style>
 <script>
     $(document).ready(function(){
-        $.notify("Hello World");
+        /* ฝากเงิน */
         $('#submit_deposit').click(function(){
             if($('#refill_money').val() == ""){
                 $('#refill_money').addClass("is-invalid")
@@ -26,6 +26,31 @@
             if($('#time_input').val() == ""){
                 $('#time_input').addClass("is-invalid")
                 $('#validate_time_input').addClass("invalid-feedback").text("กรุณาเลือกวันที่โอน")
+            }
+            if( $('#refill_money').val() != "" && $('#admin_bank').val() != null && $('#date_input').val() != "" && $('#time_input').val() != ""){
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('member/insert_inform_deposit_ajax'); ?>",
+                    data:{
+                        id_user : 1,
+                        refill_money : $('#refill_money').val(),
+                        admin_bank : $('#admin_bank').val(),
+                        date : $('#date_input').val(),
+                        time : $('#time_input').val(),
+                        description : $('#description_input').val() 
+                    },
+                    success: function(result){
+                        if(result == "success"){
+                            $.notify('แจ้งฝากเงินสำเร็จ', {
+                                className: 'success'
+                            });
+                            $('#refill_money').val("")
+                            $('#admin_bank').val(null)
+                            $('#date_input').val("")
+                            $('#time_input').val("")
+                        }
+                    }
+                });
             }
         })
         $('#refill_money').keyup(function(){
@@ -53,7 +78,7 @@
                 $('#time_input').removeClass("is-invalid")
             }
         })
-
+        /* ถอนเงิน */
         $('#submit_withdraw').click(function(){
             if($('#withdraw_money').val() == ""){
                 $('#withdraw_money').addClass("is-invalid")
@@ -62,6 +87,29 @@
             if($('#user_bank').val() == null){
                 $('#user_bank').addClass("is-invalid")
                 $('#validate_user_bank').addClass("invalid-feedback").text("กรุณาเลือกธนาคารที่โอน")
+            }
+            if( $('#withdraw_money').val() != "" && $('#user_bank').val() != null){
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('member/insert_inform_withdraw_ajax'); ?>",
+                    data:{
+                        id_user : 1,
+                        withdraw_money : $('#withdraw_money').val(),
+                        user_bank : $('#user_bank').val()
+                    },
+                    success: function(result){
+                        console.log(result)
+                        if(result == "success"){
+                            $.notify('แจ้งถอนเงินสำเร็จ', {
+                                className: 'success'
+                            });
+                        }else{
+                            $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
+                                className: 'error'
+                            });
+                        }
+                    }
+                });
             }
         })
         $('#withdraw_money').keyup(function(){
@@ -108,7 +156,7 @@
                                         <table class="table table-hover">
                                              <tr class="form-group">
                                                 <td>จำนวนเงินที่โอน</td>
-                                                <td><input class="form-control" type="number" step="100" name="refill_money" id="refill_money"><div id="validate_refill_money"></div></td>
+                                                <td><input class="form-control" type="number" step="100" min=0 name="refill_money" id="refill_money"><div id="validate_refill_money"></div></td>
                                             </tr>
                                             <tr class="form-group">
                                                 <td>บัญชีที่โอนเข้า</td>
@@ -118,7 +166,7 @@
                                                         <?php
                                                             foreach($bank_admin as $option)
                                                             {
-                                                                echo "<option style='background-image:url(".base_url().$option['picture'].");'>".$option['name_bank']."</option>";
+                                                                echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
                                                             }
                                                         ?>
                                                     </select>
@@ -152,7 +200,7 @@
                                         <table class="table table-hover">
                                             <tr class="form-group">
                                                 <td>จำนวนเงินที่ต้องการถอน</td>
-                                                <td><input class="form-control" type="number" name="withdraw_money" id="withdraw_money"><div id="validate_withdraw_money"></div></td>
+                                                <td><input class="form-control" type="number" min=0 name="withdraw_money" id="withdraw_money"><div id="validate_withdraw_money"></div></td>
                                             </tr>
                                             <tr class="form-group">
                                                 <td>บัญชีธนาคารที่รับเงิน</td>
@@ -162,7 +210,7 @@
                                                         <?php
                                                             foreach($bank_admin as $option)
                                                             {
-                                                                echo "<option style='background-image:url(".base_url().$option['picture'].");'>".$option['name_bank']."</option>";
+                                                                echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
                                                             }
                                                         ?>
                                                     </select>
