@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2019 at 09:24 AM
+-- Generation Time: May 20, 2019 at 02:08 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -41,17 +41,18 @@ CREATE TABLE `account` (
   `money` float NOT NULL,
   `gender` enum('male','female') COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
-  `role` int(1) UNSIGNED NOT NULL,
-  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_date` timestamp NULL DEFAULT '0000-00-00 00:00:00'
+  `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `role` enum('user','admin') COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `role`, `create_date`, `update_date`) VALUES
-(1, 'yok', '12345', 'yok123@gmail.com', 'Satthabut', 'loungsanam', 0, 'male', '0000-00-00', 2, '2019-05-16 19:15:28', '0000-00-00 00:00:00');
+INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'yok', '12345', 'yok123@gmail.com', 'Satthabut', 'loungsanam', 3950, 'male', '0000-00-00', '', 'admin', '2019-05-16 19:15:28', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,7 @@ CREATE TABLE `admin_banking` (
 --
 
 INSERT INTO `admin_banking` (`id`, `bank_name`, `account_number`, `picture`) VALUES
-(1, 'ไทยพาณิชย์', '1234-1233-22', 'resources/image/scb.png');
+(1, 'ไทยพาณิชย์', '1234-1233-22', 'resources/images/scb.png');
 
 -- --------------------------------------------------------
 
@@ -85,6 +86,16 @@ CREATE TABLE `banking` (
   `picture` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `banking`
+--
+
+INSERT INTO `banking` (`id`, `name`, `picture`) VALUES
+(1, 'ไทยพาณิชย์', 'resources/images/scb.png'),
+(2, 'กสิกรไทย', 'resources/images/kkb.png'),
+(3, 'กรุงไทย', 'resources/images/kthai.png'),
+(4, 'กรุงเทพ', 'resources/images/bankok.png');
+
 -- --------------------------------------------------------
 
 --
@@ -95,8 +106,15 @@ CREATE TABLE `bank_account` (
   `id` int(10) NOT NULL,
   `accId` int(11) NOT NULL COMMENT 'ไอดีผู้ใช้งาน',
   `type` int(11) NOT NULL COMMENT 'ไอดีธนาคาร',
-  `number` int(10) NOT NULL COMMENT 'เลขบัญชี'
+  `number` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'เลขบัญชี'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `bank_account`
+--
+
+INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
+(1, 1, 1, '322-313');
 
 -- --------------------------------------------------------
 
@@ -112,6 +130,7 @@ CREATE TABLE `deposit_detail` (
   `tranfersDate` date NOT NULL COMMENT 'วันที่โอน',
   `tranferTime` time NOT NULL COMMENT 'เวลาโอน',
   `detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'รายละเอียด',
+  `status` int(1) NOT NULL COMMENT 'ุสถานะ',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -119,22 +138,16 @@ CREATE TABLE `deposit_detail` (
 -- Dumping data for table `deposit_detail`
 --
 
-INSERT INTO `deposit_detail` (`id`, `accId`, `bankId`, `amount`, `tranfersDate`, `tranferTime`, `detail`, `create_date`) VALUES
-(1, 1, 1, 200, '0000-00-00', '10:30:00', '', '2019-05-17 04:51:09'),
-(2, 1, 1, 300, '2018-01-01', '11:39:00', 'test', '2019-05-17 05:12:23');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `history_detail`
---
-
-CREATE TABLE `history_detail` (
-  `id` int(11) NOT NULL,
-  `deposit_id` int(11) NOT NULL,
-  `withdraw_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `deposit_detail` (`id`, `accId`, `bankId`, `amount`, `tranfersDate`, `tranferTime`, `detail`, `status`, `create_date`) VALUES
+(1, 1, 1, 200, '0000-00-00', '10:30:00', '', 1, '2019-05-17 04:51:09'),
+(2, 1, 1, 300, '2018-01-01', '11:39:00', 'test', 1, '2019-05-17 05:12:23'),
+(3, 1, 1, 300, '2019-02-01', '01:00:00', '', 1, '2019-05-17 07:31:04'),
+(4, 1, 1, 200, '2019-04-01', '01:00:00', '', 1, '2019-05-17 07:31:39'),
+(5, 1, 1, 100, '2019-03-05', '01:00:00', '', 1, '2019-05-17 07:55:14'),
+(6, 1, 1, 400, '2017-02-04', '14:01:00', '', 1, '2019-05-17 09:14:43'),
+(7, 1, 1, 1122, '2019-01-01', '01:00:00', '', 1, '2019-05-17 09:19:17'),
+(8, 1, 1, 300, '2020-01-02', '02:01:00', '', 1, '2019-05-17 10:52:43'),
+(9, 1, 1, 400, '2018-02-03', '14:01:00', '', 1, '2019-05-18 08:56:26');
 
 -- --------------------------------------------------------
 
@@ -166,8 +179,19 @@ CREATE TABLE `withdraw_detail` (
   `accId` int(10) NOT NULL,
   `amount` float NOT NULL,
   `bankId` int(10) NOT NULL,
+  `status` int(1) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `withdraw_detail`
+--
+
+INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `create_date`) VALUES
+(7, 1, 123, 1, 1, '2019-05-17 10:07:57'),
+(8, 1, 3333, 1, 1, '2019-05-17 10:14:07'),
+(9, 1, 333, 1, 1, '2019-05-17 10:52:19'),
+(10, 1, 50, 1, 1, '2019-05-17 11:09:36');
 
 --
 -- Indexes for dumped tables
@@ -208,15 +232,6 @@ ALTER TABLE `deposit_detail`
   ADD KEY `bankId` (`bankId`);
 
 --
--- Indexes for table `history_detail`
---
-ALTER TABLE `history_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `deposit_id` (`deposit_id`),
-  ADD KEY `status_id` (`status_id`),
-  ADD KEY `withdraw_id` (`withdraw_id`);
-
---
 -- Indexes for table `status_transfer`
 --
 ALTER TABLE `status_transfer`
@@ -250,25 +265,19 @@ ALTER TABLE `admin_banking`
 -- AUTO_INCREMENT for table `banking`
 --
 ALTER TABLE `banking`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `bank_account`
 --
 ALTER TABLE `bank_account`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `deposit_detail`
 --
 ALTER TABLE `deposit_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `history_detail`
---
-ALTER TABLE `history_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `status_transfer`
@@ -280,7 +289,7 @@ ALTER TABLE `status_transfer`
 -- AUTO_INCREMENT for table `withdraw_detail`
 --
 ALTER TABLE `withdraw_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -299,14 +308,6 @@ ALTER TABLE `bank_account`
 ALTER TABLE `deposit_detail`
   ADD CONSTRAINT `deposit_detail_ibfk_1` FOREIGN KEY (`accId`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `deposit_detail_ibfk_2` FOREIGN KEY (`bankId`) REFERENCES `admin_banking` (`id`);
-
---
--- Constraints for table `history_detail`
---
-ALTER TABLE `history_detail`
-  ADD CONSTRAINT `history_detail_ibfk_1` FOREIGN KEY (`deposit_id`) REFERENCES `deposit_detail` (`id`),
-  ADD CONSTRAINT `history_detail_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status_transfer` (`id`),
-  ADD CONSTRAINT `history_detail_ibfk_3` FOREIGN KEY (`withdraw_id`) REFERENCES `withdraw_detail` (`id`);
 
 --
 -- Constraints for table `withdraw_detail`
