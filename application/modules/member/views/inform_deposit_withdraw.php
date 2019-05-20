@@ -9,50 +9,89 @@
 </style>
 <script>
     $(document).ready(function(){
-        /* ฝากเงิน */
-        $('#submit_deposit').click(function(){
-            if($('#refill_money').val() == ""){
-                $('#refill_money').addClass("is-invalid")
-                $('#validate_refill_money').addClass("invalid-feedback").text("กรุณากรอกจำนวนเงินที่โอน")
-            }
-            if($('#admin_bank').val() == null){
-                $('#admin_bank').addClass("is-invalid")
-                $('#validate_admin_bank').addClass("invalid-feedback").text("กรุณาเลือกธนาคารที่โอน")
-            }
-            if($('#date_input').val() == ""){
-                $('#date_input').addClass("is-invalid")
-                $('#validate_date_input').addClass("invalid-feedback").text("กรุณาเลือกวันที่โอน")
-            }
-            if($('#time_input').val() == ""){
-                $('#time_input').addClass("is-invalid")
-                $('#validate_time_input').addClass("invalid-feedback").text("กรุณาเลือกวันที่โอน")
-            }
-            if( $('#refill_money').val() != "" && $('#admin_bank').val() != null && $('#date_input').val() != "" && $('#time_input').val() != ""){
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url('member/insert_inform_deposit_ajax'); ?>",
-                    data:{
-                        id_user : 1,
-                        refill_money : $('#refill_money').val(),
-                        admin_bank : $('#admin_bank').val(),
-                        date : $('#date_input').val(),
-                        time : $('#time_input').val(),
-                        description : $('#description_input').val() 
-                    },
-                    success: function(result){
-                        if(result == "success"){
-                            $.notify('แจ้งฝากเงินสำเร็จ', {
-                                className: 'success'
-                            });
-                            $('#refill_money').val("")
-                            $('#admin_bank').val(null)
-                            $('#date_input').val("")
-                            $('#time_input').val("")
-                        }
+        check_inform()
+        get_history_ajax()
+    })
+    function send_deposit()
+    {
+        if($('#refill_money').val() == ""){
+            $('#refill_money').addClass("is-invalid")
+            $('#validate_refill_money').addClass("invalid-feedback").text("กรุณากรอกจำนวนเงินที่โอน")
+        }
+        if($('#admin_bank').val() == null){
+            $('#admin_bank').addClass("is-invalid")
+            $('#validate_admin_bank').addClass("invalid-feedback").text("กรุณาเลือกธนาคารที่โอน")
+        }
+        if($('#date_input').val() == ""){
+            $('#date_input').addClass("is-invalid")
+            $('#validate_date_input').addClass("invalid-feedback").text("กรุณาเลือกวันที่โอน")
+        }
+        if($('#time_input').val() == ""){
+            $('#time_input').addClass("is-invalid")
+            $('#validate_time_input').addClass("invalid-feedback").text("กรุณาเลือกวันที่โอน")
+        }
+        if( $('#refill_money').val() != "" && $('#admin_bank').val() != null && $('#date_input').val() != "" && $('#time_input').val() != ""){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('member/insert_inform_deposit_ajax'); ?>",
+                data:{
+                    id_user : 1,
+                    refill_money : $('#refill_money').val(),
+                    admin_bank : $('#admin_bank').val(),
+                    date : $('#date_input').val(),
+                    time : $('#time_input').val(),
+                    description : $('#description_input').val() 
+                },
+                success: function(result){
+                    if(result == "success"){
+                        $.notify('แจ้งฝากเงินสำเร็จ', {
+                            className: 'success'
+                        });
+                        $('#refill_money').val("")
+                        $('#admin_bank').val(null)
+                        $('#date_input').val("")
+                        $('#time_input').val("")
                     }
-                });
-            }
-        })
+                }
+            });
+        }
+    }
+    function send_withdraw()
+    {
+        if($('#withdraw_money').val() == ""){
+                $('#withdraw_money').addClass("is-invalid")
+                $('#validate_withdraw_money').addClass("invalid-feedback").text("กรุณากรอกจำนวนเงินที่ถอน")
+        }
+        if($('#user_bank').val() == null){
+            $('#user_bank').addClass("is-invalid")
+            $('#validate_user_bank').addClass("invalid-feedback").text("กรุณาเลือกธนาคารที่โอน")
+        }
+        if( $('#withdraw_money').val() != "" && $('#user_bank').val() != null){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('member/insert_inform_withdraw_ajax'); ?>",
+                data:{
+                    id_user : 1,
+                    withdraw_money : $('#withdraw_money').val(),
+                    user_bank : $('#user_bank').val()
+                },
+                success: function(result){
+                    console.log(result)
+                    if(result == "success"){
+                        $.notify('แจ้งถอนเงินสำเร็จ', {
+                            className: 'success'
+                        });
+                    }else{
+                        $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
+                            className: 'error'
+                        });
+                    }
+                }
+            });
+        }
+    }
+    function check_inform()
+    {
         $('#refill_money').keyup(function(){
             if($('#refill_money').val() != ""){
                 $('#refill_money').removeClass("is-invalid")
@@ -78,40 +117,6 @@
                 $('#time_input').removeClass("is-invalid")
             }
         })
-        /* ถอนเงิน */
-        $('#submit_withdraw').click(function(){
-            if($('#withdraw_money').val() == ""){
-                $('#withdraw_money').addClass("is-invalid")
-                $('#validate_withdraw_money').addClass("invalid-feedback").text("กรุณากรอกจำนวนเงินที่ถอน")
-            }
-            if($('#user_bank').val() == null){
-                $('#user_bank').addClass("is-invalid")
-                $('#validate_user_bank').addClass("invalid-feedback").text("กรุณาเลือกธนาคารที่โอน")
-            }
-            if( $('#withdraw_money').val() != "" && $('#user_bank').val() != null){
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url('member/insert_inform_withdraw_ajax'); ?>",
-                    data:{
-                        id_user : 1,
-                        withdraw_money : $('#withdraw_money').val(),
-                        user_bank : $('#user_bank').val()
-                    },
-                    success: function(result){
-                        console.log(result)
-                        if(result == "success"){
-                            $.notify('แจ้งถอนเงินสำเร็จ', {
-                                className: 'success'
-                            });
-                        }else{
-                            $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
-                                className: 'error'
-                            });
-                        }
-                    }
-                });
-            }
-        })
         $('#withdraw_money').keyup(function(){
             if($('#withdraw_money').val() != ""){
                 $('#withdraw_money').removeClass("is-invalid")
@@ -127,7 +132,31 @@
                 $('#user_bank').removeClass("is-invalid")
             }
         })
-    })
+    }
+    function get_history_ajax()
+    {
+        $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('member/get_history_inform_ajax'); ?>",
+                dataType: 'json',
+                data:{
+                    id_user : 1
+                },
+                success: function(result){
+                    console.log(result)
+                    var table_string = "";
+                    for(i = 0 ; i < result.length ; i++)
+                    {
+                        table_string += "<tr>";
+                        table_string += "<td>"+result[i]['inform']+"</td>";
+                        table_string += "<td>"+result[i]['amount']+"</td>";
+                        table_string += "<td>"+result[i]['status']+"</td>";
+                        table_string += "</tr>";
+                    }
+                    $('#inform_history').html(table_string)
+                }
+        });
+    }
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,6 +176,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link " data-toggle="tab" href="#withdraw">แจ้งถอน</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#history">ประวัติฝากถอน</a>
                             </li>
                         </ul>
                         <div id="myTabContent" class="tab-content form_inform">
@@ -188,7 +220,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" align='center'><button type="button" class="btn btn-primary" id="submit_deposit">แจ้งเติมเงิน</button></td>
+                                                <td colspan="2" align='center'><button type="button" class="btn btn-primary" onclick="send_deposit()">แจ้งเติมเงิน</button></td>
                                             </tr>
                                         </table>
                                    </fieldset>  
@@ -218,8 +250,21 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" align='center'><button type="button" class="btn btn-primary" id="submit_withdraw">แจ้งถอนเงิน</button></td>
+                                                <td colspan="2" align='center'><button type="button" class="btn btn-primary" onclick="send_withdraw()">แจ้งถอนเงิน</button></td>
                                             </tr>
+                                        </table>
+                                   </fieldset>  
+                               </form>
+                            </div>
+                            <div class="tab-pane fade show" id="history">
+                                <form>
+                                    <fieldset class ="mb-12">
+                                        <table class="table table-hover" id="inform_history">
+                                        <tr>
+                                            <th>รูปแบบ</th>
+                                            <th>จำนวนเงิน</th>
+                                            <th>สถานะ</th>
+                                        </tr>  
                                         </table>
                                    </fieldset>  
                                </form>
