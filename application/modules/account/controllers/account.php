@@ -1,0 +1,262 @@
+<?php
+
+class Account extends MX_Controller {
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->load->model('account_model', 'acc_model');
+	}
+
+    public function register()
+	{
+		$data['title'] = 'Register Page';
+		$data['content'] = 'register';
+		$data['banking_list'] = $this->acc_model->get_banking_list();
+
+        $this->load->view('template', $data);
+	}
+	
+	public function login()
+	{
+		$data['title'] = 'Login Page';
+		$data['content'] = 'login';
+		
+		$this->load->view('template', $data);
+	}
+
+	public function signin()
+	{
+		$data = ['success' => false, 'messages' => []];
+
+		$this->load->library('form_validation');
+		$this->form_validation->CI =& $this;
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+		$config = [
+			[
+				'field' => 'username',
+				'label' => 'ชื่อเข้าใช้งาน',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก {field} หรือ อีเมล'
+				]
+			],
+			[
+				'field' => 'password',
+				'label' => 'รหัสผ่าน',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			]
+		];
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run())
+		{
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+
+			$account = $this->acc_model->check_login($username, $password);
+
+			if ($account)
+			{
+				$params = [
+					'user_id' => $account->id,
+					'role' => $account->role
+				];
+
+				$data['role'] = $account->role;
+
+				$this->session->set_userdata($params);
+
+				$data['success'] = true;
+			}
+			else
+			{
+				$data['message'] = 'ไม่พบบัญชีนี้ในระบบ';
+			}
+
+			
+		}
+		else
+		{
+			foreach ($_POST as $key => $value)
+			{
+				$data['messages'][$key] = form_error($key);
+			}
+		}
+		
+		echo json_encode($data);
+	}
+    
+	public function add()
+	{
+		$data = ['success' => false, 'messages' => []];
+
+		$this->load->library('form_validation');
+		$this->form_validation->CI =& $this;
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+		$config = [
+			[
+				'field' => 'username',
+				'label' => 'ชื่อเข้าใช้งาน',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณาตั้ง{field}'
+				]
+			],
+			[
+				'field' => 'password',
+				'label' => 'รหัสผ่าน',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณาตั้ง{field}'
+				]
+			],
+			[
+				'field' => 'con_password',
+				'label' => 'ยืนยันรหัสผ่าน',
+				'rules' => 'required|matches[password]',
+				'errors' => [
+					'required' => 'กรุณา{field}',
+					'matches' => 'รหัสผ่านไม่ตรงกัน'
+				]
+			],
+			[
+				'field' => 'fname',
+				'label' => 'ชื่อ',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'lname',
+				'label' => 'นามสกุล',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'birthday',
+				'label' => 'วันเกิด',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณาเลือก{field}'
+				]
+			],
+			[
+				'field' => 'phone',
+				'label' => 'เบอร์โทรศัพท์',
+				'rules' => 'required|numeric',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'gender',
+				'label' => 'เพศ',
+				'rules' => 'required|callback_empty_check|in_list[male,female]',
+				'errors' => [
+					'required' => 'กรุณาเลือก{field}',
+					'in_list' => ''
+				]
+			],
+			[
+				'field' => 'email',
+				'label' => 'อีเมล',
+				'rules' => 'required|valid_email',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'bank_type',
+				'label' => 'ธนาคาร',
+				'rules' => 'required|callback_empty_check',
+				'errors' => [
+					'required' => 'กรุณาเลือก{field}'
+				]
+			],
+			[
+				'field' => 'bank_number',
+				'label' => 'หมายเลขบัญชี',
+				'rules' => 'required|numeric',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}',
+					'numeric' => '{field}ต้องเป็นตัวเลขเท่านั้น'
+				]
+			],
+		];
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run())
+		{
+			$insert_data = [
+					'username' => $this->input->post('username'),
+					'password' => $this->input->post('password'),
+					'fname' => $this->input->post('fname'),
+					'lname' => $this->input->post('lname'),
+					'birthday' => $this->input->post('birthday'),
+					'gender' => $this->input->post('gender'),
+					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
+					'money' => intval(0)
+			];
+
+			$this->db->trans_start();
+
+			$member_id = $this->acc_model->insert_account($insert_data);
+
+			if ($member_id != false)
+			{
+				$insert_data = [
+					'accId' => $member_id,
+					'type' => $this->input->post('bank_type'),
+					'number' => $this->input->post('bank_number'),
+				];
+
+				$result = $this->acc_model->insert_account_banking($insert_data);
+				$this->db->trans_complete();
+
+				$data['success'] = $result;
+			}
+			else
+			{
+				$data['success'] = false;
+			}
+		}
+		else
+		{
+			foreach ($_POST as $key => $value)
+			{
+				$data['messages'][$key] = form_error($key);
+			}
+		}
+
+		echo json_encode($data);
+	}
+
+	public function empty_check($str)
+	{
+		if ($str == '' || empty($str))
+		{
+			$this->form_validation->set_message('empty_check', 'กรุณาเลือก{field}');
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+}
+
+?>

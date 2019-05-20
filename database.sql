@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2019 at 11:03 AM
+-- Generation Time: May 17, 2019 at 09:24 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -41,9 +41,17 @@ CREATE TABLE `account` (
   `money` float NOT NULL,
   `gender` enum('male','female') COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
+  `role` int(1) UNSIGNED NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_date` timestamp NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `role`, `create_date`, `update_date`) VALUES
+(1, 'yok', '12345', 'yok123@gmail.com', 'Satthabut', 'loungsanam', 0, 'male', '0000-00-00', 2, '2019-05-16 19:15:28', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -53,9 +61,17 @@ CREATE TABLE `account` (
 
 CREATE TABLE `admin_banking` (
   `id` int(10) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `bank_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'ชื่อธนาคาร',
+  `account_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'บัญชีธนาคาร',
   `picture` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `admin_banking`
+--
+
+INSERT INTO `admin_banking` (`id`, `bank_name`, `account_number`, `picture`) VALUES
+(1, 'ไทยพาณิชย์', '1234-1233-22', 'resources/image/scb.png');
 
 -- --------------------------------------------------------
 
@@ -77,9 +93,9 @@ CREATE TABLE `banking` (
 
 CREATE TABLE `bank_account` (
   `id` int(10) NOT NULL,
-  `accId` int(11) NOT NULL,
-  `type` int(11) NOT NULL,
-  `number` int(10) NOT NULL
+  `accId` int(11) NOT NULL COMMENT 'ไอดีผู้ใช้งาน',
+  `type` int(11) NOT NULL COMMENT 'ไอดีธนาคาร',
+  `number` int(10) NOT NULL COMMENT 'เลขบัญชี'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -90,14 +106,22 @@ CREATE TABLE `bank_account` (
 
 CREATE TABLE `deposit_detail` (
   `id` int(10) NOT NULL,
-  `accId` int(10) NOT NULL,
-  `bankId` int(10) NOT NULL,
-  `amount` float NOT NULL,
-  `tranfersDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `tranfersOption` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `accId` int(10) NOT NULL COMMENT 'ไอดีผู้ใช้งาน',
+  `bankId` int(10) NOT NULL COMMENT 'ไอดีธนาคารแอดมิน',
+  `amount` float NOT NULL COMMENT 'จำนวนเงินฝาก',
+  `tranfersDate` date NOT NULL COMMENT 'วันที่โอน',
+  `tranferTime` time NOT NULL COMMENT 'เวลาโอน',
+  `detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'รายละเอียด',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `deposit_detail`
+--
+
+INSERT INTO `deposit_detail` (`id`, `accId`, `bankId`, `amount`, `tranfersDate`, `tranferTime`, `detail`, `create_date`) VALUES
+(1, 1, 1, 200, '0000-00-00', '10:30:00', '', '2019-05-17 04:51:09'),
+(2, 1, 1, 300, '2018-01-01', '11:39:00', 'test', '2019-05-17 05:12:23');
 
 -- --------------------------------------------------------
 
@@ -214,13 +238,13 @@ ALTER TABLE `withdraw_detail`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `admin_banking`
 --
 ALTER TABLE `admin_banking`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `banking`
@@ -238,7 +262,7 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT for table `deposit_detail`
 --
 ALTER TABLE `deposit_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `history_detail`
