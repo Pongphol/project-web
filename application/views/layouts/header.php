@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <title><?php if (isset($title)) { echo $title; } else { echo "Untitled"; } ?></title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
@@ -36,19 +36,28 @@
         <a class="nav-link" href="#">About</a>
       </li>
     </ul>
-
+    <?php if(is_logged_in()) : ?>
     <ul class="nav nav-pills">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true"><i class="fas fa-user"></i>&nbsp;&nbsp;User</a>
+            <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+                <i class="fas fa-user"></i>&nbsp;&nbsp;<?php echo $account->fname; ?>
+            </a>
             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                <a class="dropdown-item" href="#"><i class="fas fa-address-card"></i>&nbsp;&nbsp;My Profile</a>
-                <a class="dropdown-item" href="#"><i class="fas fa-cog"></i>&nbsp;&nbsp;Setting</a>
+                <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
             <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a>
+                <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
+                    </i>&nbsp;&nbsp;ออกจากระบบ
+                </a>
             </div>
         </li>
     </ul>
-
+    <?php else: ?>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link login" href="<?php echo base_url('login'); ?>">เข้าสู่ระบบ</a>
+            </li>
+        </ul>
+    <?php endif; ?>
   </div>
   
 </nav>

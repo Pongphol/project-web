@@ -73,15 +73,20 @@
 <script>
 
 function countdown(){
+
     var n=$('.cd').attr('id');
     var c=n;
+    
     $('.cd').text(c);
-    setInterval(function(){
+
+    setInterval(function() {
         c--;
-        if(c>=0){
+        if (c >= 0)
+        {
             $('.cd').text(c);
         }
     },1000);
+
 }
 
 $('#form-user').submit(function(e) {
@@ -97,16 +102,17 @@ $('#form-user').submit(function(e) {
         success : function(response) {
             if (response.success == true)
             {
+                $('div.form-group').hide();
                 $('#the-message').append(
                     '<div class="alert alert-success">' +  
                     '<h4 class="alert-heading">สมัครสมาชิกสำเร็จ !</h4>' + 
                     '<p>ระบบกำลังพาท่านไปหน้าเข้าสู่ระบบภายใน <span class="cd" id="5"></span> วินาที</p>' + 
                     '</div>'
                 );
-                $('.form-group').removeClass('has-error').removeClass('has-success');
                 $('text-danger').remove();
                 me[0].reset();
                 countdown();
+
                 $('.alert-success').delay(0).show(10, function() {
                     $(this).delay(5000).hide(10, function() {
                         $(this).remove();
@@ -118,11 +124,7 @@ $('#form-user').submit(function(e) {
             {
                 $.each(response.messages, function(key, value) {
                     var element = $('#' + key);
-
-                    element.closest('div.form-group')
-                        .removeClass('has-error')
-                        .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                        .find(key == 'lname' ? false : '.text-danger').remove();
+                    element.closest('div.form-group').find(key == 'lname' ? false : '.text-danger').remove();
                     element.after(value);
                 });
             }

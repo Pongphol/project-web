@@ -11,6 +11,8 @@ class Account extends MX_Controller {
 
     public function register()
 	{
+		require_no_login('member');
+
 		$data['title'] = 'Register Page';
 		$data['content'] = 'register';
 		$data['banking_list'] = $this->acc_model->get_banking_list();
@@ -20,10 +22,18 @@ class Account extends MX_Controller {
 	
 	public function login()
 	{
+		require_no_login('member');
+
 		$data['title'] = 'Login Page';
 		$data['content'] = 'login';
 		
 		$this->load->view('template', $data);
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('login');
 	}
 
 	public function signin()
@@ -65,11 +75,11 @@ class Account extends MX_Controller {
 			if ($account)
 			{
 				$params = [
-					'user_id' => $account->id,
-					'role' => $account->role
+					'account_id' => $account->id,
+					'account_role' => $account->role
 				];
 
-				$data['role'] = $account->role;
+				$data['account_role'] = $account->role;
 
 				$this->session->set_userdata($params);
 

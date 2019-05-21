@@ -2,13 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends MX_Controller {
+
+	public function __construct()
+    {
+		parent::__construct();
+		require_login('login');
+    }
+
 	public function approval_inform()
 	{
 		$data['title'] = 'อนุมัติแจ้งฝากถอน';
 		$data['content'] = 'approval_inform';
 		$this->load->view('template', $data);
 	}
-	function get_inform_deposit_ajax()
+
+	public function get_inform_deposit_ajax()
 	{
 		$this->load->helper('date_helper');
 		$this->load->model('admin_model','mm');
@@ -32,7 +40,8 @@ class Admin extends MX_Controller {
 		echo "</pre>";
 		echo json_encode($data_deposit);
 	}
-	function get_inform_withdraw_ajax()
+
+	public function get_inform_withdraw_ajax()
 	{
 		$this->load->model('admin_model','mm');
 		$data_withdraw = $this->mm->get_inform_withdraw();
