@@ -25,15 +25,20 @@
 <script>
 
 function countdown(){
+
     var n=$('.cd').attr('id');
     var c=n;
+    
     $('.cd').text(c);
-    setInterval(function(){
+
+    setInterval(function() {
         c--;
-        if(c>=0){
+        if (c >= 0)
+        {
             $('.cd').text(c);
         }
     },1000);
+
 }
 
 $('#form-user').submit(function(e) {
@@ -49,7 +54,6 @@ $('#form-user').submit(function(e) {
         success : function(response) {
             if (response.success == true)
             {
-                console.log(response);
                 $('div.form-group').hide();
                 $('#the-message').append(
                     '<div class="alert alert-success">' +  
@@ -64,7 +68,7 @@ $('#form-user').submit(function(e) {
                 $('.alert-success').delay(0).show(10, function() {
                     $(this).delay(5000).hide(10, function() {
                         $(this).remove();
-                        if (response.role == 'admin')
+                        if (response.account_role == 'admin')
                         {
                             window.location.href = "<?php echo base_url('admin'); ?>";
                         }
@@ -77,24 +81,17 @@ $('#form-user').submit(function(e) {
             }
             else
             {
+
                 if(typeof(response.message) != "undefined" && response.message !== null)
                 {
-                    var element = $('#password');
-
-                    element.closest('div.form-group')
-                        .removeClass('has-error')
-                        .addClass(response.length > 0 ? 'has-error' : 'has-success')
-                        .find('.text-danger').remove();
-                    element.after('<p class="text-danger">' + response.message + '</p>');
+                    $('#username').closest('div.form-group').find('.text-danger').remove();
+                    $('#password').closest('div.form-group').find('.text-danger').remove();
+                    $('#password').after('<p class="text-danger">' + response.message + '</p>');
                 }
 
                 $.each(response.messages, function(key, value) {
                     var element = $('#' + key);
-                    
-                    element.closest('div.form-group')
-                        .removeClass('has-error')
-                        .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                        .find('.text-danger').remove();
+                    element.closest('div.form-group').find('.text-danger').remove();
                     element.after(value);
                 });
             }

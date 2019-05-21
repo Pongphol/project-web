@@ -22,6 +22,13 @@ class Account_model extends CI_Model
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
+    public function update_account($data, $id)
+    {
+        $this->db
+            ->where('id', $id)
+            ->update('account', $data);
+    }
+
     public function check_login($username, $password)
     {
         $account = $this->db
@@ -41,7 +48,7 @@ class Account_model extends CI_Model
         }
     }
 
-    public function get_account_data($id)
+    public function get_account_data_by_id($id)
     {
         $account = $this->db->where('id', $id)->get('account');
         return $account->num_rows() == 1 ? $account->row() : false;

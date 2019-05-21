@@ -1,1 +1,1 @@
-<?php echo '<pre>'; print_r($user); echo '</pre>'; ?>
+<?php echo '<pre>'; print_r($account); echo '</pre>'; ?>

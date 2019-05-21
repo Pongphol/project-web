@@ -5,7 +5,8 @@ class Member extends MX_Controller {
 
 	public function __construct()
     {
-        parent::__construct();
+		parent::__construct();
+		require_login('login');
     }
 
 	public function index()
@@ -14,8 +15,113 @@ class Member extends MX_Controller {
 
 		$data['title'] = 'Member title';
 		$data['content'] = 'index';
-		$data['user'] = $this->acc_model->get_account_data($this->session->userdata('user_id'));
+		$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+		
 		$this->load->view('template', $data);
+	}
+
+	/* แสดงข้อมูลของผู้ใช้ */
+	public function profile()
+	{
+		$this->load->model('account/account_model', 'acc_model');
+
+		$data['title'] = 'Profile';
+		$data['content'] = 'profile';
+		$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+		
+		if ($data['account'])
+		{
+			$data['account_profile']['ชื่อเข้าใช้งาน'] = $data['account']->username;
+			$data['account_profile']['รหัสผ่าน'] = "
+				<input type='password' disabled class='form-control' value='{$data['account']->password}'>
+				<a href=" . base_url('change_password') . " class='text-info'>เปลี่ยนรหัสผ่าน</a>
+			";
+			$data['account_profile']['อีเมล'] = $data['account']->email;
+			$data['account_profile']['ชื่อ'] = $data['account']->fname;
+			$data['account_profile']['นามสกุล'] = $data['account']->lname;
+			$data['account_profile']['เพศ'] = $data['account']->gender == 'male' ? 'ชาย' : 'หญิง';
+			$data['account_profile']['วันเกิด'] = $data['account']->birthday;
+			$data['account_profile']['เบอร์โทรศัพท์'] = $data['account']->phone;
+			$data['account_profile']['บัญชีถูกสร้าง'] = $data['account']->created_at;
+			$data['account_profile']['บัญชีถูกอัพเดท'] = $data['account']->updated_at;
+		}
+		
+		$this->load->view('template', $data);
+	}
+
+	/* แสดงหน้าแก้ไขข้อมูล */
+	public function edit_profile()
+	{
+		$this->load->model('account/account_model', 'acc_model');
+
+		$this->load->library('form_validation');
+		$this->form_validation->CI =& $this;
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+		$config = [
+			[
+				'field' => 'email',
+				'label' => 'อีเมล',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'fname',
+				'label' => 'ชื่อ',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'lname',
+				'label' => 'นามสกุล',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+			[
+				'field' => 'phone',
+				'label' => 'อีเมล',
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}'
+				]
+			],
+		];
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run())
+		{
+			$id = $this->session->userdata('account_id');
+
+			$update_data = [
+				'email' => $this->input->post('email'),
+				'fname' => $this->input->post('fname'),
+				'lname' => $this->input->post('lname'),
+				'phone' => $this->input->post('phone'),
+				'phone' => $this->input->post('phone'),
+				'updated_at' => date("Y-m-d H:i:s")
+			];
+
+			$this->acc_model->update_account($update_data, $id);
+
+			redirect('profile');
+		}
+		else
+		{
+			$data['title'] = 'Edit Profile';
+			$data['content'] = 'edit_profile';
+			$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+			
+			$this->load->view('template', $data);
+		}
+
+		
 	}
 
 	/*แสดงหน้าจอฝากถอน */
