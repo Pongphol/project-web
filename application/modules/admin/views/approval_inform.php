@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function(){
+   
         get_inform_deposit()
         get_inform_withdraw()
     })
@@ -10,7 +11,7 @@
                 url: "<?php echo base_url('admin/get_inform_deposit_ajax'); ?>",
                 dataType : 'json',
                 success: function(result){
-                       console.log(result)
+                       
                 }  
         });
     }
@@ -48,10 +49,26 @@
                         </ul>
                         <div id="myTabContent" class="tab-content form_inform">
                             <div class="tab-pane fade active show" id="deposit">
-                            1
+                                <table class="table table-hover" id="inform_deposit">
+                                    <tr>
+                                        <td>ผู้เติมเงิน</td>
+                                        <td>ธนาคาร</td>
+                                        <td>หมายเลขบัญชี</td>
+                                        <td>จำนวนเงินฝาก</td>
+                                        <td>วันที่</td>
+                                        <td>เวลา</td>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="tab-pane fade show" id="withdraw">
-                            2
+                                <table class="table table-hover" id="inform_withdraw">
+                                    <tr>
+                                        <td>ผู้ถอน</td>
+                                        <td>ธนาคาร</td>
+                                        <td>หมายเลขบัญชี</td>
+                                        <td>จำนวนเงินถอน</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
