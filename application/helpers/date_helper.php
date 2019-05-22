@@ -179,7 +179,7 @@ function getMonthTh($mm) {
 }
 
 function fullDateTH($date) {
-	list($dd, $mm, $yy) = preg_split("[/|-]", $date);
+	list($yy, $mm, $dd) = preg_split("[/|-]", $date);
 	
 	if($dd=='01') { $dd='1'; }
 	else if($dd=='02') { $dd='2'; }
@@ -293,7 +293,7 @@ function fullDateTH4($date) {
 }
 
 function fullDate($date) {
-	list($dd, $mm, $yy) = preg_split("[/|-]",$date);
+	list($yy, $mm, $dd) = preg_split("[/|-]",$date);
 	
 	if($dd=='01') { $dd='1'; }
 	else if($dd=='02') { $dd='2'; }
