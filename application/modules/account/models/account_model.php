@@ -48,10 +48,42 @@ class Account_model extends CI_Model
         }
     }
 
+    
+    /* เพิ่มบัญชีธนาคาร */
+    public function insert_bank_account_by_id($data, $id)
+    {
+        $bank_account = $this->db->select('accId')
+            ->where('accId', $id)
+            ->get('bank_account')
+            ->num_rows();
+        if ($bank_account < 3)
+        {
+            $this->db->insert('bank_account', $data);
+        }   
+    }
+
+    public function delete_bank_account_by_id($id)
+    {
+        $this->db->where('id', $id)
+            ->delete('bank_account');
+    }
+
     public function get_account_data_by_id($id)
     {
         $account = $this->db->where('id', $id)->get('account');
         return $account->num_rows() == 1 ? $account->row() : false;
+    }
+
+    public function get_bank_data_by_id($id)
+    {
+        $account = $this->db->select('bank_account.id, banking.name, banking.picture, bank_account.number')
+            ->from('bank_account')
+            ->where('bank_account.accId', $id)
+            ->join('banking', 'bank_account.type = banking.id')
+            ->order_by('bank_account.id', 'ASC')
+            ->get();
+
+        return $account->num_rows() > 0 ? $account->result() : false;
     }
 }
 

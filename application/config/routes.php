@@ -59,3 +59,6 @@ $route['logout'] = 'account/logout';
 
 $route['profile'] = 'member/profile';
 $route['edit'] = 'member/edit_profile';
+$route['change_password'] = 'member/change_password';
+$route['add_bank_account'] = 'member/add_bank_account';
+$route['delete_bank_account'] = 'member/delete_bank_account';

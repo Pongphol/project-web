@@ -166,7 +166,8 @@ class Account extends MX_Controller {
 				'label' => 'เบอร์โทรศัพท์',
 				'rules' => 'required|numeric',
 				'errors' => [
-					'required' => 'กรุณากรอก{field}'
+					'required' => 'กรุณากรอก{field}',
+					'numeric' => '{field}ต้องเป็นตัวเลขเท่านั้น'
 				]
 			],
 			[
