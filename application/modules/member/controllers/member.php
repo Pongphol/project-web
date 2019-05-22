@@ -274,7 +274,7 @@ class Member extends MX_Controller {
 		{
 			$id = $this->session->userdata('account_id');
 
-			$this->acc_model->delete_bank_account_by_id($id);
+			$this->acc_model->delete_bank_account_by_id($this->input->post('bank_type'));
 
 			if ($this->db->affected_rows() > 0)
 			{
