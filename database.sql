@@ -3,12 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2019 at 02:08 PM
+-- Generation Time: May 24, 2019 at 12:48 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
-
-CREATE DATABASE IF NOT EXISTS lottery;
-USE lottery;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,7 +49,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'yok', '12345', 'yok123@gmail.com', 'Satthabut', 'loungsanam', 3950, 'male', '0000-00-00', '', 'admin', '2019-05-16 19:15:28', '0000-00-00 00:00:00');
+(1, 'yok', '12345', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 10572, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-22 03:29:53');
 
 -- --------------------------------------------------------
 
@@ -119,6 +116,34 @@ INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `criteria`
+--
+
+CREATE TABLE `criteria` (
+  `id` int(3) NOT NULL,
+  `number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `pay` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `criteria`
+--
+
+INSERT INTO `criteria` (`id`, `number`, `discount`, `pay`) VALUES
+(1, '3 ตัวบน', '35', 550),
+(2, '3 ตัวบนโต๊ด', '35', 100),
+(3, '3 ตัวหัว', '35', 550),
+(4, '3 ตัวหัวโต๊ด', '35', 100),
+(5, '2 ตัวบน', '28', 70),
+(6, '2 ตัวล่าง', '28', 70),
+(7, '3 ตัวล่าง', '26', 100),
+(8, 'วิ่งบน', '12', 3),
+(9, 'วิ่งล่าง', '12', 4);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `deposit_detail`
 --
 
@@ -130,6 +155,7 @@ CREATE TABLE `deposit_detail` (
   `tranfersDate` date NOT NULL COMMENT 'วันที่โอน',
   `tranferTime` time NOT NULL COMMENT 'เวลาโอน',
   `detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'รายละเอียด',
+  `description_admin` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(1) NOT NULL COMMENT 'ุสถานะ',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -138,16 +164,27 @@ CREATE TABLE `deposit_detail` (
 -- Dumping data for table `deposit_detail`
 --
 
-INSERT INTO `deposit_detail` (`id`, `accId`, `bankId`, `amount`, `tranfersDate`, `tranferTime`, `detail`, `status`, `create_date`) VALUES
-(1, 1, 1, 200, '0000-00-00', '10:30:00', '', 1, '2019-05-17 04:51:09'),
-(2, 1, 1, 300, '2018-01-01', '11:39:00', 'test', 1, '2019-05-17 05:12:23'),
-(3, 1, 1, 300, '2019-02-01', '01:00:00', '', 1, '2019-05-17 07:31:04'),
-(4, 1, 1, 200, '2019-04-01', '01:00:00', '', 1, '2019-05-17 07:31:39'),
-(5, 1, 1, 100, '2019-03-05', '01:00:00', '', 1, '2019-05-17 07:55:14'),
-(6, 1, 1, 400, '2017-02-04', '14:01:00', '', 1, '2019-05-17 09:14:43'),
-(7, 1, 1, 1122, '2019-01-01', '01:00:00', '', 1, '2019-05-17 09:19:17'),
-(8, 1, 1, 300, '2020-01-02', '02:01:00', '', 1, '2019-05-17 10:52:43'),
-(9, 1, 1, 400, '2018-02-03', '14:01:00', '', 1, '2019-05-18 08:56:26');
+INSERT INTO `deposit_detail` (`id`, `accId`, `bankId`, `amount`, `tranfersDate`, `tranferTime`, `detail`, `description_admin`, `status`, `create_date`) VALUES
+(2, 1, 1, 300, '2018-01-01', '11:39:00', 'test', '', 2, '2019-05-17 05:12:23'),
+(3, 1, 1, 300, '2019-02-01', '01:00:00', '', '', 2, '2019-05-17 07:31:04'),
+(4, 1, 1, 200, '2019-04-01', '01:00:00', '', '', 2, '2019-05-17 07:31:39'),
+(5, 1, 1, 100, '2019-03-05', '01:00:00', '', '', 2, '2019-05-17 07:55:14'),
+(6, 1, 1, 400, '2017-02-04', '14:01:00', '', '', 2, '2019-05-17 09:14:43'),
+(7, 1, 1, 1122, '2019-01-01', '01:00:00', '', '', 2, '2019-05-17 09:19:17'),
+(8, 1, 1, 300, '2020-01-02', '02:01:00', '', '', 2, '2019-05-17 10:52:43'),
+(9, 1, 1, 400, '2018-02-03', '14:01:00', '', '', 2, '2019-05-18 08:56:26'),
+(10, 1, 1, 600, '2019-02-02', '03:07:00', '', '', 2, '2019-05-22 23:50:21'),
+(11, 1, 1, 400, '2019-02-04', '14:01:00', '', '', 2, '2019-05-22 23:57:52'),
+(12, 1, 1, 500, '2019-01-01', '01:00:00', '', '', 2, '2019-05-23 00:05:05'),
+(13, 1, 1, 300, '2019-01-02', '02:01:00', '', '', 2, '2019-05-23 00:05:14'),
+(14, 1, 1, 300, '2019-02-03', '02:01:00', '', '', 2, '2019-05-23 00:05:22'),
+(15, 1, 1, 500, '2019-01-03', '01:00:00', '', '', 2, '2019-05-23 00:15:09'),
+(16, 1, 1, 300, '2019-01-01', '01:00:00', '', '', 2, '2019-05-23 00:15:18'),
+(17, 1, 1, 500, '2019-01-01', '01:00:00', '', '', 2, '2019-05-23 00:16:33'),
+(18, 1, 1, 200, '2019-01-01', '01:00:00', '', 'dfdfdfd', 3, '2019-05-23 00:16:39'),
+(19, 1, 1, 400, '2019-01-02', '03:00:00', '', '', 2, '2019-05-23 00:17:31'),
+(20, 1, 1, 400, '2019-01-02', '02:00:00', '', 'เงินไม่เข้า', 3, '2019-05-23 21:17:49'),
+(21, 1, 1, 400, '2019-01-04', '01:00:00', '', 'eeee', 3, '2019-05-23 21:26:02');
 
 -- --------------------------------------------------------
 
@@ -166,7 +203,8 @@ CREATE TABLE `status_transfer` (
 
 INSERT INTO `status_transfer` (`id`, `name`) VALUES
 (1, 'กำลังดำเนินการ'),
-(2, 'ทำรายการสำเร็จ');
+(2, 'ทำรายการสำเร็จ'),
+(3, 'ไม่อนุมัติ');
 
 -- --------------------------------------------------------
 
@@ -180,6 +218,7 @@ CREATE TABLE `withdraw_detail` (
   `amount` float NOT NULL,
   `bankId` int(10) NOT NULL,
   `status` int(1) NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -187,11 +226,11 @@ CREATE TABLE `withdraw_detail` (
 -- Dumping data for table `withdraw_detail`
 --
 
-INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `create_date`) VALUES
-(7, 1, 123, 1, 1, '2019-05-17 10:07:57'),
-(8, 1, 3333, 1, 1, '2019-05-17 10:14:07'),
-(9, 1, 333, 1, 1, '2019-05-17 10:52:19'),
-(10, 1, 50, 1, 1, '2019-05-17 11:09:36');
+INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `description`, `create_date`) VALUES
+(7, 1, 123, 1, 2, '', '2019-05-17 10:07:57'),
+(8, 1, 3333, 1, 1, '', '2019-05-17 10:14:07'),
+(9, 1, 333, 1, 3, 'ไม่มีเงินโอน', '2019-05-17 10:52:19'),
+(10, 1, 50, 1, 1, '', '2019-05-17 11:09:36');
 
 --
 -- Indexes for dumped tables
@@ -201,7 +240,8 @@ INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `cre
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`,`email`);
 
 --
 -- Indexes for table `admin_banking`
@@ -222,6 +262,12 @@ ALTER TABLE `bank_account`
   ADD PRIMARY KEY (`id`),
   ADD KEY `accId` (`accId`),
   ADD KEY `type` (`type`);
+
+--
+-- Indexes for table `criteria`
+--
+ALTER TABLE `criteria`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `deposit_detail`
@@ -274,16 +320,22 @@ ALTER TABLE `bank_account`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `criteria`
+--
+ALTER TABLE `criteria`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `deposit_detail`
 --
 ALTER TABLE `deposit_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `status_transfer`
 --
 ALTER TABLE `status_transfer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `withdraw_detail`
