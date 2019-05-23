@@ -10,15 +10,6 @@ class Admin extends MX_Controller {
 		admin_only();
 		$this->load->model('account/account_model', 'acc_model');
 	}
-	
-	public function manage_members()
-	{
-		$data['title'] = 'จัดการสมาชิก';
-		$data['content'] = 'manage_members';
-		$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
-
-		$this->load->view('template', $data);
-	}
 
 	public function approval_inform()
 	{
