@@ -7,7 +7,8 @@ class Admin extends MX_Controller {
     {
 		parent::__construct();
 		require_login('login');
-		$this->load->model('account/account_model', 'acc_model');
+		admin_only();
+        $this->load->model('account/account_model', 'acc_model');
     }
 	/*แสดงหน้าจออนุมัติแจ้งฝากถอน */
 	public function approval_inform()

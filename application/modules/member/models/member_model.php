@@ -6,6 +6,7 @@ class Member_model extends CI_Model
         $banking = $this->db->get('banking');
         return $banking->result_object();
     }
+
     /*รับข้อมูลธนาคารของ admin*/
     function get_name_banking(){
         $sql = "SELECT id,CONCAT(bank_name,' ',account_number) as name_bank,picture
@@ -13,6 +14,7 @@ class Member_model extends CI_Model
         $query = $this->db->query($sql)->result_array();
         return  $query;
     }
+
     /*เพิ่มข้อมูลการแจ้งฝากเงิน */
     function insert_deposit($data)
     {

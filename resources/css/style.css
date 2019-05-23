@@ -1,3 +1,15 @@
 .nav-user:hover {
     color: #18BC9C!important;
 }
+
+li.nav-item a.login {
+    color: #fff;
+}
+
+li.nav-item a.login:hover {
+    color: #18BC9C;
+}
+
+table.profile tr th {
+    width: 25%;
+}

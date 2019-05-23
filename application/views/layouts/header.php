@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script>
+    <script src=<?php echo base_url()."resources/js/holder.min.js" ?>> </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script>
     <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script>
@@ -43,6 +44,9 @@
             </a>
             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
+                <?php if (is_admin()) : ?>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/manage_members'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
+                <?php endif; ?>
             <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
                     </i>&nbsp;&nbsp;ออกจากระบบ
