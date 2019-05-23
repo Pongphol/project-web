@@ -3,21 +3,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends MX_Controller {
 
+	private $data = false;
+
 	public function __construct()
     {
 		parent::__construct();
 		require_login('login');
 		admin_only();
-        $this->load->model('account/account_model', 'acc_model');
-    }
+
+		// หลังจากมีการล็อคอินแล้วเป็นแอดมิน
+		$this->load->model('account/account_model', 'acc_model');
+		$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+	}
+
+	public function change_price_lotto()
+	{
+		$this->data['title'] = 'กำหนดราคาหวย';
+		$this->data['content'] = 'change_price_lotto';
+
+		$this->load->view('template', $this->data);
+	}
+
 	/*แสดงหน้าจออนุมัติแจ้งฝากถอน */
 	public function approval_inform()
 	{
-		$data['title'] = 'อนุมัติแจ้งฝากถอน';
-		$data['content'] = 'approval_inform';
-		$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
-		$this->load->view('template', $data);
+		$this->data['title'] = 'อนุมัติแจ้งฝากถอน';
+		$this->data['content'] = 'approval_inform';
+		
+		$this->load->view('template', $this->data);
 	}
+
 	/*รับค่าการแจ้งเติมเงินมาแสดงในตารางอนุมัติการแจ้งเติมเงิน */
 	public function get_inform_deposit_ajax()
 	{

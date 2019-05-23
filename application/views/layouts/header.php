@@ -16,53 +16,53 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-    </ul>
-    <?php if(is_logged_in()) : ?>
-    <ul class="nav nav-pills">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                <i class="fas fa-user"></i>&nbsp;&nbsp;<?php echo $account->fname; ?>
-            </a>
-            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
-                <div class="dropdown-divider"></div>
-                <!-- สำหรับแอดมิน -->
-                <?php if (is_admin()) : ?>
-                    <a class="dropdown-item" href="<?php echo base_url('admin/manage_members'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
-                <?php endif; ?>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
-                    </i>&nbsp;&nbsp;ออกจากระบบ
-                </a>
-            </div>
-        </li>
-    </ul>
-    <?php else: ?>
-        <ul class="nav nav-pills">
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
-                <a class="nav-link login" href="<?php echo base_url('login'); ?>">เข้าสู่ระบบ</a>
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
             </li>
         </ul>
-    <?php endif; ?>
-  </div>
+        <?php if(is_logged_in()) : ?>
+        <ul class="nav nav-pills">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+                    <i class="fas fa-user"></i>&nbsp;&nbsp;<?php echo $account->fname; ?>
+                </a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                    <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
+                    <div class="dropdown-divider"></div>
+                    <!-- สำหรับแอดมิน -->
+                    <?php if (is_admin()) : ?>
+                        <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
+                    <?php endif; ?>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
+                        </i>&nbsp;&nbsp;ออกจากระบบ
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <?php else: ?>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link login" href="<?php echo base_url('login'); ?>">เข้าสู่ระบบ</a>
+                </li>
+            </ul>
+        <?php endif; ?>
+    </div>
   
 </nav>

@@ -169,74 +169,65 @@
         })
     }
 </script>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <div class="container mt-5" >
-            <div class="card border-secondary mb-12" >
-                <div class="card-header"><h4>อนุมัติการแจ้งฝากถอน</h4></div>
-                    <div class="card-body">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item tab_deposit">
-                                <a class="nav-link active" data-toggle="tab" href="#deposit">คำร้องฝากเงิน</a>
-                            </li>
-                            <li class="nav-item tab_withdraw">
-                                <a class="nav-link " data-toggle="tab" href="#withdraw">คำร้องถอนเงิน</a>
-                            </li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content form_inform">
-                            <div class="tab-pane fade active show" id="deposit">
-                                <p class="bs-component" style="margin-top: 15px;">
-                                    <button type="button" class="btn btn-success" onclick="approval_deposit()">อนุมัติ</button>
-                                </p>
-                                <table class="table table-hover" id="table_deposit">
-                                    <thead align='center'>
-                                        <tr>
-                                            <th class="cus_checkbox"><input type='checkbox' id="checkAll_deposit" ></th>
-                                            <th>ผู้เติมเงิน</th>
-                                            <th>ธนาคาร</th>
-                                            <th>หมายเลขบัญชี</th>
-                                            <th>จำนวนเงินฝาก</th>
-                                            <th>วันที่</th>
-                                            <th>เวลา</th>
-                                            <th>ดำเนินการ</th>
-                                        </tr>
-                                    </thead >
-                                    <tbody id="inform_deposit" align='center'>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade show" id="withdraw">
-                                <p class="bs-component" style="margin-top: 15px;">
-                                    <button type="button" class="btn btn-success" onclick="approval_withdraw()">อนุมัติ</button>
-                                </p>
-                                <table class="table table-hover" id="table_withdraw">
-                                    <thead align='center'>
-                                        <tr>
-                                            <th class="cus_checkbox"><input type='checkbox' id="checkAll_withdraw"></th>
-                                            <th>ผู้ถอน</th>
-                                            <th>ธนาคาร</th>
-                                            <th>หมายเลขบัญชี</th>
-                                            <th>จำนวนเงินถอน</th>
-                                            <th>ดำเนินการ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="inform_withdraw" align='center'>
-                                    
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+
+<div class="container mt-5" >
+    <div class="card border-secondary mb-12" >
+        <div class="card-header"><h4>อนุมัติการแจ้งฝากถอน</h4></div>
+            <div class="card-body">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item tab_deposit">
+                        <a class="nav-link active" data-toggle="tab" href="#deposit">คำร้องฝากเงิน</a>
+                    </li>
+                    <li class="nav-item tab_withdraw">
+                        <a class="nav-link " data-toggle="tab" href="#withdraw">คำร้องถอนเงิน</a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content form_inform">
+                    <div class="tab-pane fade active show" id="deposit">
+                        <p class="bs-component" style="margin-top: 15px;">
+                            <button type="button" class="btn btn-success" onclick="approval_deposit()">อนุมัติ</button>
+                        </p>
+                        <table class="table table-hover" id="table_deposit">
+                            <thead align='center'>
+                                <tr>
+                                    <th class="cus_checkbox"><input type='checkbox' id="checkAll_deposit" ></th>
+                                    <th>ผู้เติมเงิน</th>
+                                    <th>ธนาคาร</th>
+                                    <th>หมายเลขบัญชี</th>
+                                    <th>จำนวนเงินฝาก</th>
+                                    <th>วันที่</th>
+                                    <th>เวลา</th>
+                                    <th>ดำเนินการ</th>
+                                </tr>
+                            </thead >
+                            <tbody id="inform_deposit" align='center'>
+                            </tbody>
+                        </table>
                     </div>
+                    <div class="tab-pane fade show" id="withdraw">
+                        <p class="bs-component" style="margin-top: 15px;">
+                            <button type="button" class="btn btn-success" onclick="approval_withdraw()">อนุมัติ</button>
+                        </p>
+                        <table class="table table-hover" id="table_withdraw">
+                            <thead align='center'>
+                                <tr>
+                                    <th class="cus_checkbox"><input type='checkbox' id="checkAll_withdraw"></th>
+                                    <th>ผู้ถอน</th>
+                                    <th>ธนาคาร</th>
+                                    <th>หมายเลขบัญชี</th>
+                                    <th>จำนวนเงินถอน</th>
+                                    <th>ดำเนินการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inform_withdraw" align='center'>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </body>
-</html>
+    </div>
+</div>
 
 <div class="modal fade" id="unconfirm_deposit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
