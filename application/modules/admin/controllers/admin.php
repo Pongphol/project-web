@@ -8,84 +8,181 @@ class Admin extends MX_Controller {
 		parent::__construct();
 		require_login('login');
 		admin_only();
-		$this->load->model('account/account_model', 'acc_model');
-	}
-
+        $this->load->model('account/account_model', 'acc_model');
+    }
+	/*แสดงหน้าจออนุมัติแจ้งฝากถอน */
 	public function approval_inform()
 	{
 		$data['title'] = 'อนุมัติแจ้งฝากถอน';
 		$data['content'] = 'approval_inform';
+		$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
 		$this->load->view('template', $data);
 	}
-
+	/*รับค่าการแจ้งเติมเงินมาแสดงในตารางอนุมัติการแจ้งเติมเงิน */
 	public function get_inform_deposit_ajax()
 	{
 		$this->load->helper('date_helper');
 		$this->load->model('admin_model','mm');
 		$data_deposit = $this->mm->get_inform_deposit();
-		$temp_data = [];	
+		$table = "";	
+		$num = 1;
 		foreach($data_deposit as $row)
 		{
-			$temp_data = [
-				'id' => $row['id'],
-				'userName' => $row['username'],
-				'bankName' => $row['bank_name'],
-				'bankNumber' => $row['account_number'],
-				'amount' => number_format($row['amount'],2),
-				'date' => fullDate($row['tranfersDate']),
-				'time' => $row['tranferTime']
-			];
-			$new_data[] = $temp_data;
+			$table .= "<tr id='deposit".$num++."'>";
+			$table .= "<td><input type='checkbox' class='dep' name='inform' value='".$row['id']."'></td>";
+			$table .= "<td>".$row['username']."</td>";
+			$table .= "<td>".$row['bank_name']."</td>";
+			$table .= "<td>".$row['account_number']."</td>";
+			$table .= "<td>".number_format($row['amount'],2)." บาท</td>";
+			$table .= "<td>".fullDate($row['tranfersDate'])."</td>";
+			$table .= "<td>".$row['tranferTime']." น.</td>";
+			$table .= "<td><button type='button' onclick='push_modal_unconfirm_deposit(".$row['id'].")' class='btn btn-danger'>ไม่อนุมัติ</button></td>";
+			$table .= "</tr>";
 		}
-		echo "<pre>";
-		echo print_r($new_data);
-		echo "</pre>";
-		echo json_encode($data_deposit);
+		echo json_encode($table);
 	}
-
+	/*รับค่าการแจ้งถอนเงินมาแสดงในตารางอนุมัติการแจ้งถอนเงิน */
 	public function get_inform_withdraw_ajax()
 	{
 		$this->load->model('admin_model','mm');
 		$data_withdraw = $this->mm->get_inform_withdraw();
-		$temp_data = [];
+		$table = "";	
 		foreach($data_withdraw as $row)
 		{
-			$temp_data = [
-				'id' => $row['id'],
-				'username' => $row['username'],
-				'name' => $row['name'],
-				'number' => $row['number'],
-				'amount' => number_format($row['amount'],2)
-			];
-			$new_data[] = $temp_data;
+			$table .= "<tr>";
+			$table .= "<td><input type='checkbox' class='wit' name='inform' value='".$row['id']."'></td>";
+			$table .= "<td>".$row['username']."</td>";
+			$table .= "<td>".$row['name']."</td>";
+			$table .= "<td>".$row['number']."</td>";
+			$table .= "<td>".number_format($row['amount'],2)." บาท</td>";
+			$table .= "<td><button type='button' onclick='push_modal_unconfirm_withdraw(".$row['id'].")' class='btn btn-danger'>ไม่อนุมัติ</button></td>";
+			$table .= "</tr>";
 		}
-		echo "<pre>";
-		echo print_r($new_data);
-		echo "</pre>";
-		echo json_encode($data_withdraw);
+		echo json_encode($table);
 	}
-	function update_status_deposit()
+	/*อัพเดตสถานะอนุมัติการแจ้งเติมเงิน */
+	function update_status_confirm_deposit()
 	{
 		$this->load->model('admin_model','mm');
-
 		$id = $this->input->post('id');
-		$statusId = $this->input->post('status');
-		$description = $this->input->post('description');
-		$cash = $this->input->post('money');
-		if($statusId == 2)//อนุมัติ
+
+		$deposit_money = $this->mm->get_money_deposit($id);
+
+		foreach($deposit_money as $row)
 		{
-			$current_cash = $this->mm->get_current_user_money($id);
-			$update_cash = $cuerrent_cash + $cash;
-			$this->mm->update_cash($update_cash);
-			$this->mm->update_status_inform_deposit($statusId,$description);
+			$this->mm->update_status_deposit($row['id'],2);
+			$current_cash = $this->mm->get_current_user_money($row['id']);
+			$update_cash = $current_cash['money'] + $row['amount'];
+			$this->mm->update_cash($current_cash['id'],$update_cash);
 		}
-		elseif($statusId == 3)//ไม่อนุมัติ
+	}
+	/*รับข้อมูลที่ไม่อนุมัตการเติมเงิน */
+	function get_data_unconfirm_deposit()
+	{
+		$this->load->model('admin_model','mm');
+		$this->load->helper('date_helper');
+		$id = $this->input->post('id');
+		$unconfirm_data = $this->mm->get_data_unconfirm_deposit($id);
+
+		$table = "";
+		$table .= "<tr>";
+		$table .= "<td>ชื่อผู้ใช้</td>";
+		$table .= "<td>".$unconfirm_data['username']."</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td>ธนาคาร</td>";
+		$table .= "<td>".$unconfirm_data['bank']."</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td>จำนวนเงินโอน</td>";
+		$table .= "<td>".number_format($unconfirm_data['amount'],2)." บาท</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td>วันที่</td>";
+		$table .= "<td>".fullDate($unconfirm_data['tranfersDate'])."</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td>เวลา</td>";
+		$table .= "<td>".$unconfirm_data['tranferTime']." น.</td>";
+		$table .= "</tr>";
+
+		if($unconfirm_data['detail'] == null)
 		{
-			$this->mm->update_status_inform_deposit($statusId,$description);
+			$unconfirm_data['detail'] = "-";
 		}
-		else // อื่นๆ
+		$table .= "<tr>";
+		$table .= "<td>รายละเอียด</td>";
+		$table .= "<td rowspan='5'>".$unconfirm_data['detail']."</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td colspan='2'><div class='form-group'>";
+		$table .= "<input type='text' class='form-control' placeholder='ระบุหมายเหตุการไม่อนุมัติ' id='detail_unconfirm_deposit'>";
+		$table .= "<div id='validate_detail_unconfirm_dep'></div>";
+		$table .= "</div></td>";
+		$table .= "</tr>";
+		echo json_encode($table);
+	}
+	/*รับข้อมูลที่ไม่อนุมัติการถอนเงิน */
+	function get_data_unconfirm_withdraw()
+	{
+		$this->load->model('admin_model','mm');
+		$this->load->helper('date_helper');
+		$id = $this->input->post('id');
+
+		$unconfirm_data = $this->mm->get_data_unconfirm_withdraw($id);
+		$table = "";
+		$table .= "<tr>";
+		$table .= "<td>ชื่อผู้ใช้</td>";
+		$table .= "<td>".$unconfirm_data['username']."</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td>ธนาคาร</td>";
+		$table .= "<td>".$unconfirm_data['bank']."</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td>จำนวนเงินโอน</td>";
+		$table .= "<td>".number_format($unconfirm_data['amount'],2)." บาท</td>";
+		$table .= "</tr>";
+
+		$table .= "<tr>";
+		$table .= "<td colspan='2'><div class='form-group'>";
+		$table .= "<input type='text' class='form-control' placeholder='ระบุหมายเหตุการไม่อนุมัติ' id='detail_unconfirm_withdraw'>";
+		$table .= "<div id='validate_detail_unconfirm_wit'></div>";
+		$table .= "</div></td>";
+		$table .= "</tr>";
+		echo json_encode($table);
+	}
+	/*อัพเดตสถานะไม่อนุมัติการแจ้งเติมเงิน */
+	function update_status_unconfirm_deposit()
+	{
+		$this->load->model('admin_model','mm');
+		$id = $this->input->post('id');
+		$description = $this->input->post('detail');
+		$this->mm->update_status_deposit($id,3,$description);
+	}
+	/*อัพเดตสถานะการแจ้งถอนเงิน */
+	function update_status_confirm_withdraw()
+	{
+		$this->load->model('admin_model','mm');
+		$id = $this->input->post('id');
+		foreach($id as $row)
 		{
-			echo "function update_status_deposit error";
+			$this->mm->update_status_withdraw($row,2);
 		}
+	}
+	/*อัพเดตสถานะไม่อนุมัติการแจ้งถอนเงิน*/
+	function update_status_unconfirm_withdraw()
+	{
+		$this->load->model('admin_model','mm');
+		$id = $this->input->post('id');
+		$description = $this->input->post('detail');
+		$this->mm->update_status_withdraw($id,3,$description);
 	}
 }
