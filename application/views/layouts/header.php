@@ -44,10 +44,12 @@
             </a>
             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
+                <div class="dropdown-divider"></div>
+                <!-- สำหรับแอดมิน -->
                 <?php if (is_admin()) : ?>
                     <a class="dropdown-item" href="<?php echo base_url('admin/manage_members'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
                 <?php endif; ?>
-            <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
                     </i>&nbsp;&nbsp;ออกจากระบบ
                 </a>
