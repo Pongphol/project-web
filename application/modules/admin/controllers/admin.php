@@ -18,8 +18,11 @@ class Admin extends MX_Controller {
 
 	public function change_price_lotto()
 	{
+		$this->load->model('admin_model');
+
 		$this->data['title'] = 'กำหนดราคาหวย';
 		$this->data['content'] = 'change_price_lotto';
+		$this->data['criteria'] = $this->admin_model->get_criteria();
 
 		$this->load->view('template', $this->data);
 	}
@@ -76,7 +79,7 @@ class Admin extends MX_Controller {
 		echo json_encode($table);
 	}
 	/*อัพเดตสถานะอนุมัติการแจ้งเติมเงิน */
-	function update_status_confirm_deposit()
+	public function update_status_confirm_deposit()
 	{
 		$this->load->model('admin_model','mm');
 		$id = $this->input->post('id');
@@ -92,7 +95,7 @@ class Admin extends MX_Controller {
 		}
 	}
 	/*รับข้อมูลที่ไม่อนุมัตการเติมเงิน */
-	function get_data_unconfirm_deposit()
+	public function get_data_unconfirm_deposit()
 	{
 		$this->load->model('admin_model','mm');
 		$this->load->helper('date_helper');
@@ -143,7 +146,7 @@ class Admin extends MX_Controller {
 		echo json_encode($table);
 	}
 	/*รับข้อมูลที่ไม่อนุมัติการถอนเงิน */
-	function get_data_unconfirm_withdraw()
+	public function get_data_unconfirm_withdraw()
 	{
 		$this->load->model('admin_model','mm');
 		$this->load->helper('date_helper');
@@ -175,7 +178,7 @@ class Admin extends MX_Controller {
 		echo json_encode($table);
 	}
 	/*อัพเดตสถานะไม่อนุมัติการแจ้งเติมเงิน */
-	function update_status_unconfirm_deposit()
+	public function update_status_unconfirm_deposit()
 	{
 		$this->load->model('admin_model','mm');
 		$id = $this->input->post('id');
@@ -183,7 +186,7 @@ class Admin extends MX_Controller {
 		$this->mm->update_status_deposit($id,3,$description);
 	}
 	/*อัพเดตสถานะการแจ้งถอนเงิน */
-	function update_status_confirm_withdraw()
+	public function update_status_confirm_withdraw()
 	{
 		$this->load->model('admin_model','mm');
 		$id = $this->input->post('id');
@@ -193,11 +196,32 @@ class Admin extends MX_Controller {
 		}
 	}
 	/*อัพเดตสถานะไม่อนุมัติการแจ้งถอนเงิน*/
-	function update_status_unconfirm_withdraw()
+	public function update_status_unconfirm_withdraw()
 	{
 		$this->load->model('admin_model','mm');
 		$id = $this->input->post('id');
 		$description = $this->input->post('detail');
 		$this->mm->update_status_withdraw($id,3,$description);
+	}
+
+	public function update_criteria()
+	{
+		$data['success'] = false;
+
+		$this->load->model('admin_model');
+		
+		$this->admin_model->update_criteria(
+			[
+				'discount' => $this->input->post('update_data')[1],
+				'pay' => $this->input->post('update_data')[2]
+			], $this->input->post('update_data')[0]
+		);
+
+		if ($this->db->affected_rows() > 0)
+		{
+			$data['success'] = true;
+		}
+
+		echo json_encode($data);
 	}
 }

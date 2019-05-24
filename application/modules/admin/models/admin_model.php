@@ -2,8 +2,19 @@
 
 class Admin_model extends CI_Model
 {
+    public function get_criteria()
+    {
+        return $this->db->get('criteria')->result();
+    }
+
+    public function update_criteria($data, $id)
+    {
+        $this->db->where('id', $id)
+            ->update('criteria', $data);
+    }
+
     /*รับข้อมูลการแจ้งฝากเงิน */
-    function get_inform_deposit()
+    public function get_inform_deposit()
     {
         $sql = "SELECT deposit_detail.id,account.username,admin_banking.bank_name,admin_banking.account_number,amount,tranfersDate,tranferTime
                 FROM deposit_detail 
@@ -15,7 +26,7 @@ class Admin_model extends CI_Model
         return  $query;
     }
     /*รับข้อมูลการแจ้งถอนเงิน */
-    function get_inform_withdraw()
+    public function get_inform_withdraw()
     {
         $sql = "SELECT withdraw_detail.id,account.username,banking.name,bank_account.number,withdraw_detail.amount
                 FROM withdraw_detail
@@ -28,7 +39,7 @@ class Admin_model extends CI_Model
         return $query;
     }
     /*รับข้อมูลเงินที่แจ้งเติมเงิน */
-    function get_money_deposit($id)
+    public function get_money_deposit($id)
     {
         $sql="SELECT id,accId,amount
         	    FROM deposit_detail
@@ -52,7 +63,7 @@ class Admin_model extends CI_Model
         return $query;
     }
     /*เปลี่ยนแปลงสถานะการแจ้งเติมเงิน*/
-    function update_status_deposit($id,$status,$des=null)
+    public function update_status_deposit($id,$status,$des=null)
     {
         $sql = "UPDATE deposit_detail
                 SET status = $status,
@@ -61,7 +72,7 @@ class Admin_model extends CI_Model
         $this->db->query($sql);
     }
     /*เปลี่ยนแปลงสถานะการแจ้งถอนเงิน*/
-    function update_status_withdraw($id,$status,$des=null)
+    public function update_status_withdraw($id,$status,$des=null)
     {
         $sql = "UPDATE withdraw_detail
                  SET status = $status,
@@ -70,7 +81,7 @@ class Admin_model extends CI_Model
         $this->db->query($sql);
     }
     /*เปลี่ยนแปลงเงินในบัญชีผู้ใช้งาน*/
-    function update_cash($id,$cash)
+    public function update_cash($id,$cash)
     {   
         $sql = "UPDATE account 
                 SET account.money = $cash
@@ -78,7 +89,7 @@ class Admin_model extends CI_Model
          $this->db->query($sql);
     }
     /*รับข้อมูลเงินของผู้ใช้*/
-    function get_current_user_money($id)
+    public function get_current_user_money($id)
     {
         $sql = "SELECT account.id,account.money
                 FROM deposit_detail
@@ -88,7 +99,7 @@ class Admin_model extends CI_Model
         return $query;    
     }
     /*รับข้อมูลผู้ใช้ที่ไม่อนุมัติการเติมเงิน*/
-    function get_data_unconfirm_deposit($id)
+    public function get_data_unconfirm_deposit($id)
     {
         $sql = "SELECT deposit_detail.id,account.username,CONCAT(admin_banking.bank_name,' ',admin_banking.account_number) as bank,amount,tranfersDate,tranferTime,detail
                 FROM `deposit_detail`
@@ -99,7 +110,7 @@ class Admin_model extends CI_Model
          return $query;        
     }
     /*รับข้อมูลผู้ใช้ที่ไม่อนุมัติการถอนเงิน*/
-    function get_data_unconfirm_withdraw($id)
+    public function get_data_unconfirm_withdraw($id)
     {
         $sql = "SELECT account.username,CONCAT(banking.name,' ',bank_account.number) as bank,withdraw_detail.amount
                 FROM `withdraw_detail`

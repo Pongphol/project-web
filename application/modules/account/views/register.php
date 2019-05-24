@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label for="gender">เพศ</label>
                         <select class="form-control" id="gender" name="gender">
-                            <option value=""> ------</option>
+                            <option value=""> -- เลือกเพศ --</option>
                             <option value="male">ชาย</option>
                             <option value="female">หญิง</option>
                         </select>

@@ -22,6 +22,15 @@ class Account_model extends CI_Model
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
+    public function get_current_password($id)
+    {
+        $query = $this->db
+            ->select('password')
+            ->where('id', $id)
+            ->get('account');
+        return $query->num_rows() == 1 ? $query->row() : false;
+    }
+
     public function update_account($data, $id)
     {
         $this->db
@@ -56,6 +65,7 @@ class Account_model extends CI_Model
             ->where('accId', $id)
             ->get('bank_account')
             ->num_rows();
+            
         if ($bank_account < 3)
         {
             $this->db->insert('bank_account', $data);

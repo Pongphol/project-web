@@ -3,20 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MX_Controller {
 
+	private $data = false;
+
 	public function __construct()
     {
 		parent::__construct();
 		require_login('login');
+		
+		// หลังจากมีการล็อคอินแล้ว
 		$this->load->model('account/account_model', 'acc_model');
+		$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
     }
 
 	public function index()
 	{
-		$data['title'] = 'Member title';
-		$data['content'] = 'index';
-		$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+		$this->data['title'] = 'Member title';
+		$this->data['content'] = 'index';
+		$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
 		
-		$this->load->view('template', $data);
+		$this->load->view('template', $this->data);
 	}
 
 	/* แสดงข้อมูลของผู้ใช้ */
@@ -24,30 +29,30 @@ class Member extends MX_Controller {
 	{
 		$user_id = $this->session->userdata('account_id');
 
-		$data['title'] = 'Profile';
-		$data['content'] = 'profile';
-		$data['account'] = $this->acc_model->get_account_data_by_id($user_id);
+		$this->data['title'] = 'Profile';
+		$this->data['content'] = 'profile';
+		$this->data['account'] = $this->acc_model->get_account_data_by_id($user_id);
 		$banking = $this->acc_model->get_bank_data_by_id($user_id);
 		
-		if ($data['account'])
+		if ($this->data['account'])
 		{
-			$data['account_profile']['ชื่อเข้าใช้งาน'] = $data['account']->username;
-			$data['account_profile']['รหัสผ่าน'] = "
-				<input type='password' disabled class='form-control' value='{$data['account']->password}'>
+			$this->data['account_profile']['ชื่อเข้าใช้งาน'] = $this->data['account']->username;
+			$this->data['account_profile']['รหัสผ่าน'] = "
+				<input type='password' disabled class='form-control' value='{$this->data['account']->password}'>
 				<a href=" . base_url('change_password') . " class='text-info'>เปลี่ยนรหัสผ่าน</a>
 			";
-			$data['account_profile']['อีเมล'] = $data['account']->email;
-			$data['account_profile']['ชื่อ'] = $data['account']->fname;
-			$data['account_profile']['นามสกุล'] = $data['account']->lname;
-			$data['account_profile']['เพศ'] = $data['account']->gender == 'male' ? 'ชาย' : 'หญิง';
-			$data['account_profile']['วันเกิด'] = fullDateTH2($data['account']->birthday);
-			$data['account_profile']['เบอร์โทรศัพท์'] = $data['account']->phone;
-			$data['account_profile']['บัญชีธนาคาร'] = $banking;
-			$data['account_profile']['บัญชีถูกสร้าง'] = dateThai($data['account']->created_at);
-			$data['account_profile']['บัญชีถูกอัพเดท'] = dateThai($data['account']->updated_at);
+			$this->data['account_profile']['อีเมล'] = $this->data['account']->email;
+			$this->data['account_profile']['ชื่อ'] = $this->data['account']->fname;
+			$this->data['account_profile']['นามสกุล'] = $this->data['account']->lname;
+			$this->data['account_profile']['เพศ'] = $this->data['account']->gender == 'male' ? 'ชาย' : 'หญิง';
+			$this->data['account_profile']['วันเกิด'] = fullDateTH2($this->data['account']->birthday);
+			$this->data['account_profile']['เบอร์โทรศัพท์'] = $this->data['account']->phone;
+			$this->data['account_profile']['บัญชีธนาคาร'] = $banking;
+			$this->data['account_profile']['บัญชีถูกสร้าง'] = dateThai($this->data['account']->created_at);
+			$this->data['account_profile']['บัญชีถูกอัพเดท'] = dateThai($this->data['account']->updated_at);
 		}
 		
-		$this->load->view('template', $data);
+		$this->load->view('template', $this->data);
 	}
 
 	/* แสดงหน้าแก้ไขข้อมูล */
@@ -121,11 +126,11 @@ class Member extends MX_Controller {
 		}
 		else
 		{
-			$data['title'] = 'Edit Profile';
-			$data['content'] = 'edit_profile';
-			$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+			$this->data['title'] = 'Edit Profile';
+			$this->data['content'] = 'edit_profile';
+			$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
 			
-			$this->load->view('template', $data);
+			$this->load->view('template', $this->data);
 		}
 
 	}
@@ -139,8 +144,17 @@ class Member extends MX_Controller {
 
 		$config = [
 			[
+				'field' => 'current_password',
+				'label' => 'รหัสผ่านปัจจุบัน',
+				'rules' => 'required|alpha_numeric|callback_current_password_check',
+				'errors' => [
+					'required' => 'กรุณากรอก{field}',
+					'alpha_numeric' => '{field}ต้องเป็นอังกฤษหรือตัวเลขเท่านั้น'
+				]
+			],
+			[
 				'field' => 'password',
-				'label' => 'รหัสผ่าน',
+				'label' => 'รหัสผ่านใหม่',
 				'rules' => 'required|alpha_numeric',
 				'errors' => [
 					'required' => 'กรุณากรอก{field}',
@@ -181,11 +195,11 @@ class Member extends MX_Controller {
 		}
 		else
 		{
-			$data['title'] = 'Change Password';
-			$data['content'] = 'change_password';
-			$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+			$this->data['title'] = 'Change Password';
+			$this->data['content'] = 'change_password';
+			$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
 			
-			$this->load->view('template', $data);
+			$this->load->view('template', $this->data);
 		}
 	}
 
@@ -242,12 +256,12 @@ class Member extends MX_Controller {
 		}
 		else
 		{
-			$data['title'] = 'เพิ่มบัญชีธนาคาร';
-			$data['content'] = 'add_bank_account';
-			$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
-			$data['banking_list'] = $this->acc_model->get_banking_list();
+			$this->data['title'] = 'เพิ่มบัญชีธนาคาร';
+			$this->data['content'] = 'add_bank_account';
+			$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+			$this->data['banking_list'] = $this->acc_model->get_banking_list();
 			
-			$this->load->view('template', $data);
+			$this->load->view('template', $this->data);
 		}
 	}
 
@@ -289,12 +303,12 @@ class Member extends MX_Controller {
 		}
 		else
 		{
-			$data['title'] = 'ลบบัญชีธนาคาร';
-			$data['content'] = 'delete_bank_account';
-			$data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
-			$data['banking_list'] = $this->acc_model->get_bank_data_by_id($this->session->userdata('account_id'));
+			$this->data['title'] = 'ลบบัญชีธนาคาร';
+			$this->data['content'] = 'delete_bank_account';
+			$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+			$this->data['banking_list'] = $this->acc_model->get_bank_data_by_id($this->session->userdata('account_id'));
 			
-			$this->load->view('template', $data);
+			$this->load->view('template', $this->data);
 		}
 	}
 
@@ -303,13 +317,13 @@ class Member extends MX_Controller {
 	{
 		$this->load->model('member_model','mm');
 
-		$data['title'] = 'แจ้งฝาก';
-		$data['content'] = 'inform_deposit_withdraw';
-		$data['bank_admin'] =  $this->mm->get_name_banking();
+		$this->data['title'] = 'แจ้งฝาก';
+		$this->data['content'] = 'inform_deposit_withdraw';
+		$this->data['bank_admin'] =  $this->mm->get_name_banking();
 		/*To do
 			รับ session เพื่อ get ธนาคารของผู้ใช้ */
 
-		$this->load->view('template', $data);
+		$this->load->view('template', $this->data);
 	}
 	/*บันทึกการแจ้งฝากเงิน */
 	function insert_inform_deposit_ajax()
@@ -415,10 +429,22 @@ class Member extends MX_Controller {
 			$this->form_validation->set_message('empty_check', 'กรุณาเลือก{field}');
 			return false;
 		}
-		else
+		
+		return true;
+	}
+
+	public function current_password_check($current_password)
+	{
+		$id = $this->session->userdata('account_id');
+		$current_password_from_db = $this->acc_model->get_current_password($id);
+
+		if ($current_password_from_db->password != $current_password)
 		{
-			return true;
+			$this->form_validation->set_message('current_password_check', '{field}ไม่ถูก');
+			return false;
 		}
+
+		return true;
 	}
 
 }

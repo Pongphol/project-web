@@ -9,16 +9,23 @@
                             <table class="table table-hover table-bordered profile">
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="text-center">รหัสผ่าน</th>
+                                        <th scope="row" class="text-center">รหัสผ่านปัจจุบัน</th>
                                         <td>
-                                            <input type="password" class="form-control" name="password" required value="<?php echo (!isset($_POST['password'])) ? $account->password : set_value('password'); ?>">
+                                            <input type="password" class="form-control" name="current_password" required value="<?php echo (isset($_POST['current_password'])) ? set_value('current_password') : ''; ?>">
+                                            <?php echo form_error('current_password'); ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">รหัสผ่านใหม่</th>
+                                        <td>
+                                            <input type="password" class="form-control" name="password" required value="<?php echo set_value('password'); ?>">
                                             <?php echo form_error('password'); ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="text-center">ยืนยันรหัสผ่าน</th>
                                         <td>
-                                            <input type="password" class="form-control" name="con_password" required value="<?php echo (!isset($_POST['con_password'])) ? $account->password : set_value('con_password'); ?>">
+                                            <input type="password" class="form-control" name="con_password" required value="<?php echo set_value('con_password'); ?>">
                                             <?php echo form_error('con_password'); ?>
                                         </td>
                                     </tr>
