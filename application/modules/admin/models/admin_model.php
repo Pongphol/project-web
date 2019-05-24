@@ -67,7 +67,8 @@ class Admin_model extends CI_Model
     {
         $sql = "UPDATE deposit_detail
                 SET status = $status,
-                 description_admin = '$des'
+                 description = '$des',
+				 updated_at = NOW()
                 WHERE id = $id";
         $this->db->query($sql);
     }
@@ -76,7 +77,8 @@ class Admin_model extends CI_Model
     {
         $sql = "UPDATE withdraw_detail
                  SET status = $status,
-                    description = '$des'
+                    description = '$des',
+					updated_at = NOW()
                     WHERE id = $id";
         $this->db->query($sql);
     }
@@ -120,6 +122,20 @@ class Admin_model extends CI_Model
                 WHERE withdraw_detail.id = $id";
          $query = $this->db->query($sql)->row_array();
          return $query;  
+    }
+    /*รับข้อมูลประวัติการแจ้ง*/
+    function get_history_inform()
+    {
+        $sql = "SELECT accId, account.username, amount, create_date , deposit_detail.updated_at, tranfersDate, status, description 
+                FROM deposit_detail
+                LEFT JOIN account ON deposit_detail.accId = account.id
+                UNION ALL
+                SELECT accId, account.username, amount, create_date, withdraw_detail.updated_at ,NULL AS tranfersDate, status, description 
+                FROM withdraw_detail
+                LEFT JOIN account ON withdraw_detail.accId = account.id
+                ORDER BY create_date DESC";
+        $query = $this->db->query($sql)->result_array();
+        return $query; 
     }
 }
 ?>

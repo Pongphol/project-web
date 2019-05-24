@@ -385,16 +385,30 @@ class Member extends MX_Controller {
 				{
 					$temp_data = [
 						'inform' => "ถอนเงิน",
-						'amount' => number_format($row['amount'],2),
-						'status' => "ทำรายการสำเร็จ"
+						'amount' => number_format($row['amount'],2)." บาท",
+						'date_time' => dateThai3($row['create_date']),
+						'status' => "ทำรายการสำเร็จ",
+						'detail' => $row['description']
+					];
+				}
+				elseif($row['status'] == 3)
+				{
+					$temp_data = [
+						'inform' => "ถอนเงิน",
+						'amount' => number_format($row['amount'],2)." บาท",
+						'date_time' => dateThai3($row['create_date']),
+						'status' => "การทำรายการถูกปฏิเสธ",
+						'detail' => $row['description']
 					];
 				}
 				else
 				{
 					$temp_data = [
 						'inform' => "ถอนเงิน",
-						'amount' => number_format($row['amount'],2),
-						'status' => "กำลังดำเนินการ"
+						'amount' => number_format($row['amount'],2)." บาท",
+						'date_time' => dateThai3($row['create_date']),
+						'status' => "กำลังดำเนินการ",
+						'detail' => $row['description']
 					];
 				}
 			}
@@ -404,22 +418,65 @@ class Member extends MX_Controller {
 				{
 					$temp_data = [
 						'inform' => "เติมเงิน",
-						'amount' => number_format($row['amount'],2),
-						'status' => "ทำรายการสำเร็จ"
+						'amount' => number_format($row['amount'],2)." บาท",
+						'date_time' => dateThai3($row['create_date']),
+						'status' => "ทำรายการสำเร็จ",
+						'detail' => $row['description']
+					];
+				}
+				elseif($row['status'] == 3)
+				{
+					$temp_data = [
+						'inform' => "เติมเงิน",
+						'amount' => number_format($row['amount'],2)." บาท",
+						'date_time' => dateThai3($row['create_date']),
+						'status' => "การทำรายการถูกปฏิเสธ",
+						'detail' => $row['description']
 					];
 				}
 				else
 				{
 					$temp_data = [
 						'inform' => "เติมเงิน",
-						'amount' => number_format($row['amount'],2),
-						'status' => "กำลังดำเนินการ"
+						'amount' => number_format($row['amount'],2)." บาท",
+						'date_time' => dateThai3($row['create_date']),
+						'status' => "กำลังดำเนินการ",
+						'detail' => $row['description']
 					];
 				}
 			}
 			$newdata[] = $temp_data;
 		}
-		echo json_encode($newdata);
+		$table = "";
+		foreach($newdata as $row)
+		{
+			$table .= "<tr>";
+			if( $row['inform'] == "เติมเงิน")
+			{
+				$table .= "<td class='text-success'>".$row['inform']."</td>";
+			}
+			else
+			{
+				$table .= "<td>".$row['inform']."</td>";
+			}
+			$table .= "<td>".$row['amount']."</td>";
+			$table .= "<td>".$row['date_time']."</td>";
+			if( $row['status'] == "ทำรายการสำเร็จ" )
+			{
+				$table .= "<td class='text-success'>".$row['status']."</td>";
+			}
+			elseif( $row['status'] == "กำลังดำเนินการ" ) 
+			{
+				$table .= "<td class='text-secondary'>".$row['status']."</td>";
+			}
+			elseif(  $row['status'] == "การทำรายการถูกปฏิเสธ" )
+			{
+				$table .= "<td class='text-danger'>".$row['status']."</td>";
+			}
+			$table .= "<td>".$row['detail']."</td>";
+			$table .= "</tr>";
+		}
+		echo json_encode($table);
 	}
 
 	public function empty_check($str)

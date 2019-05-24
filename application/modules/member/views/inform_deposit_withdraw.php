@@ -143,125 +143,132 @@
                     id_user : 1
                 },
                 success: function(result){
-                    console.log(result)
-                    var table_string = "";
-                    for(i = 0 ; i < result.length ; i++)
-                    {
-                        table_string += "<tr>";
-                        table_string += "<td>"+result[i]['inform']+"</td>";
-                        table_string += "<td>"+result[i]['amount']+"</td>";
-                        table_string += "<td>"+result[i]['status']+"</td>";
-                        table_string += "</tr>";
-                    }
-                    $('#inform_history').html(table_string)
+                    $('#inform_history').html(result)
                 }
         });
     }
 </script>
-<div class="container mt-5" >
-    <div class="card border-secondary mb-12" >
-        <div class="card-header"><h4>ฝาก / ถอน</h4></div>
-            <div class="card-body">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#deposit">แจ้งฝาก</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#withdraw">แจ้งถอน</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#history">ประวัติฝากถอน</a>
-                    </li>
-                </ul>
-                <div id="myTabContent" class="tab-content form_inform">
-                    <div class="tab-pane fade active show" id="deposit">
-                        <form>
-                            <fieldset class ="mb-12">
-                                <table class="table table-hover">
-                                        <tr class="form-group">
-                                        <td>จำนวนเงินที่โอน</td>
-                                        <td><input class="form-control" type="number" step="100" min=0 name="refill_money" id="refill_money"><div id="validate_refill_money"></div></td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td>บัญชีที่โอนเข้า</td>
-                                        <td> 
-                                            <select class="form-control " id="admin_bank">
-                                                <option disabled selected >-- เลือกบัญชีที่โอนเข้า --</option>
-                                                <?php
-                                                    foreach($bank_admin as $option)
-                                                    {
-                                                        echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
-                                                    }
-                                                ?>
-                                            </select>
-                                            <div id="validate_admin_bank"></div>
-                                        </td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td>วันที่โอนเงิน</td>
-                                        <td><input class="form-control" type="date" name="date_input" id="date_input"><div id="validate_date_input"></div></td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td>เวลาที่โอนเงิน</td>
-                                        <td><input class="form-control" type="time" id="time_input" name="time_input" min="9:00" max="18:00" required><div id="validate_time_input"> </div></td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td>รายละเอียดการโอน</td>
-                                        <td><input class="form-control" type="text" name="description_input" id="description_input">
-                                        <small  class="form-text text-muted">เช่น สาขาที่โอน หรือ โอนจากธนาคารอะไร เพื่อเพิ่มความรวดเร็วในการตรวจสอบ</small>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align='center'><button type="button" class="btn btn-primary" onclick="send_deposit()">แจ้งเติมเงิน</button></td>
-                                    </tr>
-                                </table>
-                            </fieldset>  
-                        </form>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="container mt-5" >
+            <div class="card border-secondary mb-12" >
+                <div class="card-header"><h4>ฝาก / ถอน</h4></div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#deposit">แจ้งฝาก</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#withdraw">แจ้งถอน</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#history">ประวัติฝากถอน</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content form_inform">
+                            <div class="tab-pane fade active show" id="deposit">
+                               <form>
+                                   <fieldset class ="mb-12">
+                                        <table class="table table-hover">
+                                             <tr class="form-group">
+                                                <td>จำนวนเงินที่โอน</td>
+                                                <td><input class="form-control" type="number" step="100" min=0 name="refill_money" id="refill_money"><div id="validate_refill_money"></div></td>
+                                            </tr>
+                                            <tr class="form-group">
+                                                <td>บัญชีที่โอนเข้า</td>
+                                                <td> 
+                                                    <select class="form-control " id="admin_bank">
+                                                        <option disabled selected >-- เลือกบัญชีที่โอนเข้า --</option>
+                                                        <?php
+                                                            foreach($bank_admin as $option)
+                                                            {
+                                                                echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                    <div id="validate_admin_bank"></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="form-group">
+                                                <td>วันที่โอนเงิน</td>
+                                                <td><input class="form-control" type="date" name="date_input" id="date_input"><div id="validate_date_input"></div></td>
+                                            </tr>
+                                            <tr class="form-group">
+                                                <td>เวลาที่โอนเงิน</td>
+                                                <td><input class="form-control" type="time" id="time_input" name="time_input" min="9:00" max="18:00" required><div id="validate_time_input"> </div></td>
+                                            </tr>
+                                            <tr class="form-group">
+                                                <td>รายละเอียดการโอน</td>
+                                                <td><input class="form-control" type="text" name="description_input" id="description_input">
+                                                <small  class="form-text text-muted">เช่น สาขาที่โอน หรือ โอนจากธนาคารอะไร เพื่อเพิ่มความรวดเร็วในการตรวจสอบ</small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" align='center'><button type="button" class="btn btn-primary" onclick="send_deposit()">แจ้งเติมเงิน</button></td>
+                                            </tr>
+                                        </table>
+                                   </fieldset>  
+                               </form>
+                            </div>
+                            <div class="tab-pane fade show" id="withdraw">
+                                <form>
+                                    <fieldset class ="mb-12">
+                                        <table class="table table-hover">
+                                            <tr class="form-group">
+                                                <td>จำนวนเงินที่ต้องการถอน</td>
+                                                <td><input class="form-control" type="number" min=0 name="withdraw_money" id="withdraw_money"><div id="validate_withdraw_money"></div></td>
+                                            </tr>
+                                            <tr class="form-group">
+                                                <td>บัญชีธนาคารที่รับเงิน</td>
+                                                <td> 
+                                                    <select class="form-control " id="user_bank">
+                                                        <option disabled selected >-- เลือกบัญชีที่รับเงิน --</option>
+                                                        <?php
+                                                            foreach($bank_admin as $option)
+                                                            {
+                                                                echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                    <div id="validate_user_bank"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" align='center'><button type="button" class="btn btn-primary" onclick="send_withdraw()">แจ้งถอนเงิน</button></td>
+                                            </tr>
+                                        </table>
+                                   </fieldset>  
+                               </form>
+                            </div>
+                            <div class="tab-pane fade show" id="history">
+                                <form>
+                                    <fieldset class ="mb-12">
+                                        <table class="table table-hover">
+                                        <thead align="center">
+                                            <tr>
+                                                <th>รูปแบบ</th>
+                                                <th>จำนวนเงิน</th>
+                                                <th>วันที่แจ้ง</th>
+                                                <th>สถานะ</th>
+                                                <th>หมายเหตุ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody  id="inform_history" align="center">
+                                            
+                                        </tbody>
+                                        </table>
+                                   </fieldset>  
+                               </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tab-pane fade show" id="withdraw">
-                        <form>
-                            <fieldset class ="mb-12">
-                                <table class="table table-hover">
-                                    <tr class="form-group">
-                                        <td>จำนวนเงินที่ต้องการถอน</td>
-                                        <td><input class="form-control" type="number" min=0 name="withdraw_money" id="withdraw_money"><div id="validate_withdraw_money"></div></td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td>บัญชีธนาคารที่รับเงิน</td>
-                                        <td> 
-                                            <select class="form-control " id="user_bank">
-                                                <option disabled selected >-- เลือกบัญชีที่รับเงิน --</option>
-                                                <?php
-                                                    foreach($bank_admin as $option)
-                                                    {
-                                                        echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
-                                                    }
-                                                ?>
-                                            </select>
-                                            <div id="validate_user_bank"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align='center'><button type="button" class="btn btn-primary" onclick="send_withdraw()">แจ้งถอนเงิน</button></td>
-                                    </tr>
-                                </table>
-                            </fieldset>  
-                        </form>
-                    </div>
-                    <div class="tab-pane fade show" id="history">
-                        <form>
-                            <fieldset class ="mb-12">
-                                <table class="table table-hover" id="inform_history">
-                                <tr>
-                                    <th>รูปแบบ</th>
-                                    <th>จำนวนเงิน</th>
-                                    <th>สถานะ</th>
-                                </tr>  
-                                </table>
-                            </fieldset>  
-                        </form>
-                    </div>
-                </div>
             </div>
-    </div>
-</div>
+        </div>
+    </body>
+</html>

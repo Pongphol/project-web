@@ -35,6 +35,14 @@ class Admin extends MX_Controller {
 		
 		$this->load->view('template', $this->data);
 	}
+	/*แสดงหน้าจอประวัติการแจ้งฝากถอน */
+	public function history_inform()
+	{
+		$this->data['title'] = 'ประวัติการแจ้งฝากถอน';
+		$this->data['content'] = 'history_inform';
+		
+		$this->load->view('template', $this->data);
+	}
 
 	/*รับค่าการแจ้งเติมเงินมาแสดงในตารางอนุมัติการแจ้งเติมเงิน */
 	public function get_inform_deposit_ajax()
@@ -83,9 +91,7 @@ class Admin extends MX_Controller {
 	{
 		$this->load->model('admin_model','mm');
 		$id = $this->input->post('id');
-
 		$deposit_money = $this->mm->get_money_deposit($id);
-
 		foreach($deposit_money as $row)
 		{
 			$this->mm->update_status_deposit($row['id'],2);
@@ -203,6 +209,129 @@ class Admin extends MX_Controller {
 		$description = $this->input->post('detail');
 		$this->mm->update_status_withdraw($id,3,$description);
 	}
+	
+	/*รับข้อมูลประวัติการแจ้งฝากถอน*/
+	public function get_history_inform()
+	{
+		$this->load->model('admin_model','mm');
+		$data = $this->mm->get_history_inform();
+		$temp_data = [];
+		foreach($data as $row)
+		{
+			if($row['tranfersDate'] == NULL)
+			{
+				if($row['status'] == 2)
+				{
+					$temp_data = [
+						'inform' => "ถอนเงิน",
+						'user' => $row['username'],
+						'amount' => number_format($row['amount'],2)." บาท",
+						'create_date' => dateThai3($row['create_date']),
+						'updated_at' => dateThai3($row['updated_at']),
+						'status' => "ทำรายการสำเร็จ",
+						'detail' => $row['description']
+					];
+				}
+				elseif($row['status'] == 3)
+				{
+					$temp_data = [
+						'inform' => "ถอนเงิน",
+						'user' => $row['username'],
+						'amount' => number_format($row['amount'],2)." บาท",
+						'create_date' => dateThai3($row['create_date']),
+						'updated_at' => dateThai3($row['updated_at']),
+						'status' => "การทำรายการถูกปฏิเสธ",
+						'detail' => $row['description']
+					];
+				}
+				else
+				{
+					$temp_data = [
+						'inform' => "ถอนเงิน",
+						'user' => $row['username'],
+						'amount' => number_format($row['amount'],2)." บาท",
+						'create_date' => dateThai3($row['create_date']),
+						'updated_at' => dateThai3($row['updated_at']),
+						'status' => "กำลังดำเนินการ",
+						'detail' => $row['description']
+					];
+				}
+			}
+			else
+			{
+				if($row['status'] == 2)
+				{
+					$temp_data = [
+						'inform' => "เติมเงิน",
+						'user' => $row['username'],
+						'amount' => number_format($row['amount'],2)." บาท",
+						'create_date' => dateThai3($row['create_date']),
+						'updated_at' => dateThai3($row['updated_at']),
+						'status' => "ทำรายการสำเร็จ",
+						'detail' => $row['description']
+					];
+				}
+				elseif($row['status'] == 3)
+				{
+					$temp_data = [
+						'inform' => "เติมเงิน",
+						'user' => $row['username'],
+						'amount' => number_format($row['amount'],2)." บาท",
+						'create_date' => dateThai3($row['create_date']),
+						'updated_at' => dateThai3($row['updated_at']),
+						'status' => "การทำรายการถูกปฏิเสธ",
+						'detail' => $row['description']
+					];
+				}
+				else
+				{
+					$temp_data = [
+						'inform' => "เติมเงิน",
+						'user' => $row['username'],
+						'amount' => number_format($row['amount'],2)." บาท",
+						'create_date' => dateThai3($row['create_date']),
+						'updated_at' => dateThai3($row['updated_at']),
+						'status' => "กำลังดำเนินการ",
+						'detail' => $row['description']
+					];
+				}
+			}
+			$newdata[] = $temp_data;
+		}
+
+		$table = "";
+		foreach ($newdata as $row) 
+		{
+			$table .= "<tr>";
+			if( $row['inform'] == "เติมเงิน")
+			{
+				$table .= "<td class='text-success'>".$row['inform']."</td>";
+			}
+			else
+			{
+				$table .= "<td>".$row['inform']."</td>";
+			}
+			$table .= "<td>".$row['user']."</td>";
+			$table .= "<td>".$row['amount']."</td>";
+			$table .= "<td>".$row['create_date']."</td>";
+			$table .= "<td>".$row['updated_at']."</td>";
+			if( $row['status'] == "ทำรายการสำเร็จ" )
+			{
+				$table .= "<td class='text-success'>".$row['status']."</td>";
+			}
+			elseif( $row['status'] == "กำลังดำเนินการ" ) 
+			{
+				$table .= "<td class='text-secondary'>".$row['status']."</td>";
+			}
+			elseif(  $row['status'] == "การทำรายการถูกปฏิเสธ" )
+			{
+				$table .= "<td class='text-danger'>".$row['status']."</td>";
+			}
+			$table .= "<td>".$row['detail']."</td>";
+			$table .= "</tr>";
+		}
+		echo json_encode($table);
+	}
 
 	public function update_criteria()
 	{
@@ -224,4 +353,5 @@ class Admin extends MX_Controller {
 
 		echo json_encode($data);
 	}
+
 }
