@@ -40,9 +40,9 @@ class Member_model extends CI_Model
     /*รับประวัติการแจ้งฝากถอน */
     function get_history_inform_user_by_id($userId)
     {
-        $sql ="SELECT accId, amount, create_date ,tranfersDate,status FROM deposit_detail
+        $sql ="SELECT accId, amount, create_date ,tranfersDate,status,description FROM deposit_detail
                 UNION ALL
-                SELECT accId, amount, create_date ,NULL AS tranfersDate,status FROM withdraw_detail
+                SELECT accId, amount, create_date ,NULL AS tranfersDate,status,description FROM withdraw_detail
                 WHERE accId = $userId
                 ORDER BY create_date DESC ";
         $query = $this->db->query($sql)->result_array();

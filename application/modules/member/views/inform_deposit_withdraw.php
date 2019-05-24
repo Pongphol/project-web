@@ -143,17 +143,7 @@
                     id_user : 1
                 },
                 success: function(result){
-                    console.log(result)
-                    var table_string = "";
-                    for(i = 0 ; i < result.length ; i++)
-                    {
-                        table_string += "<tr>";
-                        table_string += "<td>"+result[i]['inform']+"</td>";
-                        table_string += "<td>"+result[i]['amount']+"</td>";
-                        table_string += "<td>"+result[i]['status']+"</td>";
-                        table_string += "</tr>";
-                    }
-                    $('#inform_history').html(table_string)
+                    $('#inform_history').html(result)
                 }
         });
     }
@@ -259,12 +249,19 @@
                             <div class="tab-pane fade show" id="history">
                                 <form>
                                     <fieldset class ="mb-12">
-                                        <table class="table table-hover" id="inform_history">
-                                        <tr>
-                                            <th>รูปแบบ</th>
-                                            <th>จำนวนเงิน</th>
-                                            <th>สถานะ</th>
-                                        </tr>  
+                                        <table class="table table-hover">
+                                        <thead align="center">
+                                            <tr>
+                                                <th>รูปแบบ</th>
+                                                <th>จำนวนเงิน</th>
+                                                <th>วันที่แจ้ง</th>
+                                                <th>สถานะ</th>
+                                                <th>หมายเหตุ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody  id="inform_history" align="center">
+                                            
+                                        </tbody>
                                         </table>
                                    </fieldset>  
                                </form>

@@ -56,7 +56,7 @@ class Admin_model extends CI_Model
     {
         $sql = "UPDATE deposit_detail
                 SET status = $status,
-                 description_admin = '$des'
+                 description = '$des'
                 WHERE id = $id";
         $this->db->query($sql);
     }
