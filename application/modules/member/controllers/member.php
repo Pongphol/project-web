@@ -48,8 +48,8 @@ class Member extends MX_Controller {
 			$this->data['account_profile']['วันเกิด'] = fullDateTH2($this->data['account']->birthday);
 			$this->data['account_profile']['เบอร์โทรศัพท์'] = $this->data['account']->phone;
 			$this->data['account_profile']['บัญชีธนาคาร'] = $banking;
-			$this->data['account_profile']['บัญชีถูกสร้าง'] = dateThai($this->data['account']->created_at);
-			$this->data['account_profile']['บัญชีถูกอัพเดท'] = dateThai($this->data['account']->updated_at);
+			$this->data['account_profile']['บัญชีถูกสร้าง'] = dateTimeThai($this->data['account']->created_at);
+			$this->data['account_profile']['บัญชีถูกอัพเดท'] = dateTimeThai($this->data['account']->updated_at);
 		}
 		
 		$this->load->view('template', $this->data);
@@ -286,8 +286,6 @@ class Member extends MX_Controller {
 
 		if ($this->form_validation->run())
 		{
-			$id = $this->session->userdata('account_id');
-
 			$this->acc_model->delete_bank_account_by_id($this->input->post('bank_type'));
 
 			if ($this->db->affected_rows() > 0)
@@ -386,7 +384,7 @@ class Member extends MX_Controller {
 					$temp_data = [
 						'inform' => "ถอนเงิน",
 						'amount' => number_format($row['amount'],2)." บาท",
-						'date_time' => dateThai3($row['create_date']),
+						'date_time' => dateTimeThai3($row['create_date']),
 						'status' => "ทำรายการสำเร็จ",
 						'detail' => $row['description']
 					];
@@ -396,7 +394,7 @@ class Member extends MX_Controller {
 					$temp_data = [
 						'inform' => "ถอนเงิน",
 						'amount' => number_format($row['amount'],2)." บาท",
-						'date_time' => dateThai3($row['create_date']),
+						'date_time' => dateTimeThai3($row['create_date']),
 						'status' => "การทำรายการถูกปฏิเสธ",
 						'detail' => $row['description']
 					];
@@ -406,7 +404,7 @@ class Member extends MX_Controller {
 					$temp_data = [
 						'inform' => "ถอนเงิน",
 						'amount' => number_format($row['amount'],2)." บาท",
-						'date_time' => dateThai3($row['create_date']),
+						'date_time' => dateTimeThai3($row['create_date']),
 						'status' => "กำลังดำเนินการ",
 						'detail' => $row['description']
 					];
@@ -419,7 +417,7 @@ class Member extends MX_Controller {
 					$temp_data = [
 						'inform' => "เติมเงิน",
 						'amount' => number_format($row['amount'],2)." บาท",
-						'date_time' => dateThai3($row['create_date']),
+						'date_time' => dateTimeThai3($row['create_date']),
 						'status' => "ทำรายการสำเร็จ",
 						'detail' => $row['description']
 					];
@@ -429,7 +427,7 @@ class Member extends MX_Controller {
 					$temp_data = [
 						'inform' => "เติมเงิน",
 						'amount' => number_format($row['amount'],2)." บาท",
-						'date_time' => dateThai3($row['create_date']),
+						'date_time' => dateTimeThai3($row['create_date']),
 						'status' => "การทำรายการถูกปฏิเสธ",
 						'detail' => $row['description']
 					];
@@ -439,7 +437,7 @@ class Member extends MX_Controller {
 					$temp_data = [
 						'inform' => "เติมเงิน",
 						'amount' => number_format($row['amount'],2)." บาท",
-						'date_time' => dateThai3($row['create_date']),
+						'date_time' => dateTimeThai3($row['create_date']),
 						'status' => "กำลังดำเนินการ",
 						'detail' => $row['description']
 					];

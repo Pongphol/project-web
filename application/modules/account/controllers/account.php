@@ -89,8 +89,6 @@ class Account extends MX_Controller {
 			{
 				$data['message'] = 'ไม่พบบัญชีนี้ในระบบ';
 			}
-
-			
 		}
 		else
 		{
@@ -211,15 +209,15 @@ class Account extends MX_Controller {
 		if ($this->form_validation->run())
 		{
 			$insert_data = [
-					'username' => $this->input->post('username'),
-					'password' => $this->input->post('password'),
-					'fname' => $this->input->post('fname'),
-					'lname' => $this->input->post('lname'),
-					'birthday' => $this->input->post('birthday'),
-					'gender' => $this->input->post('gender'),
-					'phone' => $this->input->post('phone'),
-					'email' => $this->input->post('email'),
-					'money' => intval(0)
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password'),
+				'fname' => $this->input->post('fname'),
+				'lname' => $this->input->post('lname'),
+				'birthday' => $this->input->post('birthday'),
+				'gender' => $this->input->post('gender'),
+				'phone' => $this->input->post('phone'),
+				'email' => $this->input->post('email'),
+				'money' => intval(0)
 			];
 
 			$this->db->trans_start();
