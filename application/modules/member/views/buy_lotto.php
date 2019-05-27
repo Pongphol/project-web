@@ -3,12 +3,364 @@
     position:relative;
     height:100%;
 }
+.number_format{
+    text-align: right;
+}
+.discount{
+    color : red;
+}
+.total_net{
+    color : green;
+}
 </style>
 <script>
+    
     $(document).ready(function(){
+        inputFilter()
+        validate_number_input()
+        sum_twoTop_digit()
+        sum_twoTod_digit()
+        sum_twoBut_digit()
+        sum_threeTop_digit()
+        sum_threeTod_digit()
+        sum_threeBut_digit()
+        sum_total_2_digit()
+        sum_total_3_digit()
+        get_criteria_ajax()
+    })
+    function get_criteria_ajax()
+    {
+        $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('member/get_criteria_ajax'); ?>",
+                dataType: 'json',
+                success: function(result){
+                    $('.input_number2 ').on('keyup change focus',function(){
+                        topTwo = result[4]['discount'] / 100
+                        todTwo = result[3]['discount'] / 100
+                        butTwo = result[5]['discount'] / 100
+                        discount_2_digit(topTwo,todTwo,butTwo)
+                    })
+                    $('.input_number2 ').on('keyup change focus',function(){
+                        topThree = result[0]['discount'] / 100
+                        todThree = result[1]['discount'] / 100
+                        butThree = result[2]['discount'] / 100
+                        discount_3_digit(topThree,todThree,butThree)
+                    })
+                    $('.large_button').on('click',function(){
+                        topTwo = result[4]['discount'] / 100
+                        todTwo = result[3]['discount'] / 100
+                        butTwo = result[5]['discount'] / 100
+                        discount_2_digit(topTwo,todTwo,butTwo)
+                        topThree = result[0]['discount'] / 100
+                        todThree = result[1]['discount'] / 100
+                        butThree = result[2]['discount'] / 100
+                        discount_3_digit(topThree,todThree,butThree)
+                    })
+
+                }
+        });
+    }
+    function inputFilter()
+    {
+        $.fn.inputFilter = function(inputFilter) {
+            return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                }
+            });
+        };
         $(".input_number").inputFilter(function(value) {
-            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 500); });
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) < 1000); });
+
+    }
+    function validate_number_input()
+    {
+        $('#number').keyup(function(){
+            var number = ($('#number').val())
+            if(number.toString().length == 3 || number.toString().length == 2 ){
+                $('#number_top').attr('disabled',false)
+                $('#number_tod').attr('disabled',false)
+                $('#number_button').attr('disabled',false)
+            }else{
+                $('#number_top').attr('disabled',true)
+                $('#number_tod').attr('disabled',true)
+                $('#number_button').attr('disabled',true)
+            }
         })
+        $('#number').keyup(function(){
+            if($('#number').val() != ""){
+                $('#number').removeClass("is-invalid")
+            }
+        })
+    }
+    function input_number()
+    {
+        var number = ($('#number').val())
+        if(number == ""){
+            $('#number').addClass("is-invalid")
+            $('#validate_number_input').addClass("invalid-feedback").text("กรุณากรอกเลขที่ต้องการลง")
+        }else if(number.toString().length == 1){
+            $('#number').addClass("is-invalid")
+            $('#validate_number_input').addClass("invalid-feedback").text("กรุณากรอกเลขที่ถูกต้อง")
+        }else{
+            if(number.toString().length == 2){
+                var number_top = $('#number_top').val()
+                var number_tod = $('#number_tod').val()
+                var number_button = $('#number_button').val()
+                for(var i = 0 ; i < 10 ; i++ ){
+                    if($('#number2_inp'+i).val() == ""){
+                        if($('#number_tod').val() == ""){
+                            $('#number2_inp'+i).val(number)
+                            $('#number2_top_inp'+i).val(number_top)
+                            $('#number2_tod_inp'+i).val("")
+                            $('#number2_button_inp'+i).val(number_button)
+                            break;
+                        }else{
+                            result_tod =  permutate.getPermutations(number, 2);
+                            var temp = 0;
+                            for(var j = i ; j < i+result_tod.length ; j++){
+                                $('#number2_inp'+j).val(result_tod[temp++])
+                                $('#number2_top_inp'+j).val(number_top)
+                                $('#number2_tod_inp'+j).val(number_tod)
+                                $('#number2_button_inp'+j).val(number_button)
+                            }
+                            break;
+                        }
+                    }
+                }
+            }else if(number.toString().length == 3){
+                var number_top = $('#number_top').val()
+                var number_tod = $('#number_tod').val()
+                var number_button = $('#number_button').val()
+                for(var i = 0 ; i < 10 ; i++ ){
+                    if($('#number3_inp'+i).val() == ""){
+                        if($('#number_tod').val() == ""){
+                            $('#number3_inp'+i).val(number)
+                            $('#number3_top_inp'+i).val(number_top)
+                            $('#number3_tod_inp'+i).val("")
+                            $('#number3_button_inp'+i).val(number_button)
+                            break;
+                        }else{
+                            result_tod =  permutate.getPermutations(number, 3);
+                            var temp = 0;
+                            for(var j = i ; j < i+result_tod.length ; j++){
+                                $('#number3_inp'+j).val(result_tod[temp++])
+                                $('#number3_top_inp'+j).val(number_top)
+                                $('#number3_tod_inp'+j).val(number_tod)
+                                $('#number3_button_inp'+j).val(number_button)
+                            }
+                            break;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    var permutate = (function() {
+    var results = [];
+    function doPermute(input, output, used, size, level) {
+   
+        if (size == level) {
+            var word = output.join('');
+            results.push(word);
+            return;
+        } 
+        level++;
+        for (var i = 0; i < input.length; i++) {
+            if (used[i] === true) {
+                continue;
+            }
+            used[i] = true;
+            output.push(input[i]);
+            doPermute(input, output, used, size, level);
+            used[i] = false;
+            output.pop();
+            }
+        }
+        return {
+            getPermutations: function(input, size) {
+                var chars = input.split('');
+                var output = [];
+                var used = new Array(chars.length);
+                results = [];
+                doPermute(chars, output, used, size, 0);
+                results = [...new Set(results)];
+                console.log(results)
+                return results;
+            }
+        }
+    })();
+    function sum_twoTop_digit(){
+        $('.input_number2 ').on('keyup change focus',function(){
+            var sum_twoTop = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_twoTop += parseInt($('#number2_top_inp'+i).val()) || 0
+            }
+            $('#cash2_top_total').val(sum_twoTop)
+            return sum_twoTop;
+            return parseInt(sum_twoTop) || 0;
+        })
+        $('.large_button').on('click',function(){
+            var sum_twoTop = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_twoTop += parseInt($('#number2_top_inp'+i).val()) || 0
+            }
+            $('#cash2_top_total').val(sum_twoTop)
+            return parseInt(sum_twoTop) || 0;
+        })
+    }
+    function sum_twoTod_digit(){
+        $('.input_number2 ').on('keyup change focus',function(){
+            var sum_twoTod = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_twoTod += parseInt($('#number2_tod_inp'+i).val()) || 0
+            }
+            $('#cash2_tod_total').val(sum_twoTod)
+            return parseInt(sum_twoTod) || 0;
+        })
+        $('.large_button').on('click',function(){
+            var sum_twoTod = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_twoTod += parseInt($('#number2_tod_inp'+i).val()) || 0
+            }
+            $('#cash2_tod_total').val(sum_twoTod)
+            return parseInt(sum_twoTod) || 0;
+        })
+    }
+    function sum_twoBut_digit(){
+        $('.input_number2 ').on('keyup change focus',function(){
+            var sum_twoBut = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_twoBut += parseInt($('#number2_button_inp'+i).val()) || 0
+            }
+            $('#cash2_but_total').val(sum_twoBut)
+            return parseInt(sum_twoBut) || 0;
+        })
+        $('.large_button').on('click',function(){
+            var sum_twoBut = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_twoBut += parseInt($('#number2_button_inp'+i).val()) || 0
+            }
+            $('#cash2_but_total').val(sum_twoBut)
+            return parseInt(sum_twoBut) || 0;
+        })
+    }
+    function sum_threeTop_digit(){
+        $('.input_number3 ').on('keyup change focus',function(){
+            var sum_threeTop = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_threeTop += parseInt($('#number3_top_inp'+i).val()) || 0
+            }
+            $('#cash3_top_total').val(sum_threeTop)
+        })
+        $('.large_button').on('click',function(){
+            var sum_threeTop = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_threeTop += parseInt($('#number3_top_inp'+i).val()) || 0
+            }
+            $('#cash3_top_total').val(sum_threeTop)
+        })
+    }
+    function sum_threeTod_digit(){
+        $('.input_number3 ').on('keyup change focus',function(){
+            var sum_threeTod = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_threeTod += parseInt($('#number3_tod_inp'+i).val()) || 0
+            }
+            $('#cash3_tod_total').val(sum_threeTod)
+        })
+        $('.large_button').on('click',function(){
+            var sum_threeTod = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_threeTod += parseInt($('#number3_tod_inp'+i).val()) || 0
+            }
+            $('#cash3_tod_total').val(sum_threeTod)
+        })
+    }
+    function sum_threeBut_digit(){
+        $('.input_number3 ').on('keyup change focus',function(){
+            var sum_threeeBut = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_threeeBut += parseInt($('#number3_button_inp'+i).val()) || 0
+            }
+            $('#cash3_but_total').val(sum_threeeBut)
+        })
+        $('.large_button').on('click',function(){
+            var sum_threeeBut = 0
+            for(var i = 0 ; i < 10 ; i++){
+            sum_threeeBut += parseInt($('#number3_button_inp'+i).val()) || 0
+            }
+            $('#cash3_but_total').val(sum_threeeBut)
+        })
+    }
+    function sum_total_2_digit(){
+        $('.input_number2 ').on('keyup change focus',function(){
+            var sum_two = 0
+            sum_two = parseInt($('#cash2_top_total').val())+parseInt($('#cash2_tod_total').val())+parseInt($('#cash2_but_total').val()) || 0
+            $('#cash2_total').val(sum_two)
+        })
+        $('.large_button').on('click',function(){
+            var sum_two = 0
+            sum_two = parseInt($('#cash2_top_total').val())+parseInt($('#cash2_tod_total').val())+parseInt($('#cash2_but_total').val()) || 0
+            $('#cash2_total').val(sum_two)
+        })
+    }
+    function sum_total_3_digit(){
+        $('.input_number3 ').on('keyup change focus',function(){
+            var sum_three = 0
+            sum_three = parseInt($('#cash3_top_total').val())+parseInt($('#cash3_tod_total').val())+parseInt($('#cash3_but_total').val()) || 0
+            $('#cash3_total').val(sum_three)
+        })
+        $('.large_button').on('click',function(){
+            var sum_three = 0
+            sum_three = parseInt($('#cash3_top_total').val())+parseInt($('#cash3_tod_total').val())+parseInt($('#cash3_but_total').val()) || 0
+            $('#cash3_total').val(sum_three)
+        })
+    }
+    function discount_2_digit(top,tod,but)
+    {
+        resutlTop = $('#cash2_top_total').val()*top
+        resultTod = $('#cash2_tod_total').val()*tod
+        resultBut = $('#cash2_but_total').val()*but
+        sum_discount_2 = resutlTop + resultTod + resultBut
+        $('#cash2_discount').val(sum_discount_2.toFixed(2))
+        sum_total_2_net();
+    }
+    function discount_3_digit(top,tod,but)
+    {
+        resutlTop = $('#cash3_top_total').val()*top
+        resultTod = $('#cash3_tod_total').val()*tod
+        resultBut = $('#cash3_but_total').val()*but
+        sum_discount_3 = resutlTop + resultTod + resultBut
+        $('#cash3_discount').val(sum_discount_3.toFixed(2))
+        sum_total_3_net()
+    }
+    function sum_total_2_net()
+    {
+        sum2net = $('#cash2_total').val() - $('#cash2_discount').val()
+        $('#cash2_net').val(sum2net.toFixed(2))
+        sum_total()
+    }
+    function sum_total_3_net()
+    {
+        sum3net = $('#cash3_total').val() - $('#cash3_discount').val()
+        $('#cash3_net').val(sum3net.toFixed(2))
+        sum_total()
+    }
+    function sum_total()
+    {
+        sum  = parseInt($('#cash2_net').val()) + parseInt($('#cash3_net').val())
+        console.log(sum)
+        $('#cash_total').val(sum.toFixed(2))
+    }
+
 </script>   
 <div class="container mt-5" >
     <div class="card border-secondary mb-12" >
@@ -18,22 +370,23 @@
                         <div class="row">
                             <div class="col">
                                 <label><h3>เลข</h3></label>
-                                <input type="number" class="form-control input_number" id="number" name="number">
+                                <input type="text" class="form-control input_number" id="number" name="number">
+                                <div id="validate_number_input"></div>
                             </div>
                             <div class="col">
                                 <label><h3>บน</h3></label>
-                                <input type="number" class="form-control input_number" id="number_top" name="number_top">
+                                <input type="text" class="form-control input_number" disabled id="number_top" name="number_top">
                             </div>
                             <div class="col">
-                                <label><h3>โต้ด</h3></label>
-                                <input type="number" class="form-control input_number" id="number_tod" name="number_tod">
+                                <label><h3>โต๊ด</h3></label>
+                                <input type="text" class="form-control input_number" disabled id="number_tod" name="number_tod">
                             </div>
                             <div class="col">
                                 <label><h3>ล่าง</h3></label>
-                                <input type="number" class="form-control input_number" id="number_button" name="number_button">
+                                <input type="text" class="form-control input_number" disabled id="number_button" name="number_button">
                             </div>
                             <div class="col">
-                                    <button type="submit" class="btn btn-info btn-block large_button" >นำเข้าตาราง</button>
+                                    <button type="submit" class="btn btn-info btn-block large_button" id="input_table" onclick="input_number()">นำเข้าตาราง</button>
                             </div>
                         </div>
                 </div>
@@ -49,7 +402,7 @@
                                         <tr class="table-secondary" align="center">
                                             <th>เลข</th>
                                             <th>บน</th>
-                                            <th>โต้ด</th>
+                                            <th>โต๊ด</th>
                                             <th>ล่าง</th>
                                         </tr>
                                     </thead>
@@ -58,10 +411,10 @@
                                             for($i = 0 ; $i < 10 ; $i++)
                                             {
                                                 echo "<tr>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number2_inp' ></td>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number2_top_inp' ></td>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number2_tod_inp' ></td>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number2_button_inp' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_inp{$i}' name='number2_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_top_inp{$i}' name='number2_top_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number2 number_format'  id='number2_tod_inp{$i}' name='number2_tod_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_button_inp{$i}' name='number2_button_inp[{$i}]' ></td>";
                                                 echo "</tr>";
                                             }
                                         ?>
@@ -77,7 +430,7 @@
                                         <tr class="table-secondary" align="center">
                                             <th>เลข</th>
                                             <th>บน</th>
-                                            <th>โต้ด</th>
+                                            <th>โต๊ด</th>
                                             <th>ล่าง</th>
                                         </tr>
                                     </thead>
@@ -86,10 +439,10 @@
                                             for($i = 0 ; $i < 10 ; $i++)
                                             {
                                                 echo "<tr>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number3_inp' ></td>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number3_top_inp' ></td>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number3_tod_inp' ></td>";
-                                                echo "<td><input type='number' class='form-control input_number'  name='number3_button_inp' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_inp{$i}' name='number3_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_top_inp{$i}' name='number3_top_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_tod_inp{$i}' name='number3_tod_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_button_inp{$i}' name='number3_button_inp[{$i}]' ></td>";
                                                 echo "</tr>";
                                             }
                                         ?>
@@ -104,7 +457,7 @@
                                         <label for="cash2_top_total">บนรวมเลข 2 ตัวจำนวน</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash2_top_total"  class="form-control" name="cash2_top_total" >
+                                        <input type="text" id="cash2_top_total" disabled class="form-control number_format" name="cash2_top_total" >
                                     </div>
                                 </div>
                             </td>                       
@@ -114,7 +467,7 @@
                                         <label for="cash3_top_total">บนรวมเลข 3 ตัว</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash3_top_total"  class="form-control" name="cash3_top_total" >
+                                        <input type="text" id="cash3_top_total" disabled class="form-control number_format" name="cash3_top_total" >
                                     </div>
                                 </div>            
                             </td>                    
@@ -126,7 +479,7 @@
                                         <label for="cash2_but_total">ล่างรวมเลข 2 ตัว</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash2_but_total"  class="form-control" name="cash2_but_total" >
+                                        <input type="text" id="cash2_but_total" disabled class="form-control number_format" name="cash2_but_total" >
                                     </div>
                                 </div>
                             </td>                       
@@ -136,20 +489,29 @@
                                         <label for="cash3_but_total">ล่างรวมเลข 3 ตัว</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash3_but_total"  class="form-control" name="cash3_but_total" >
+                                        <input type="text" id="cash3_but_total" disabled class="form-control number_format" name="cash3_but_total" >
                                     </div>
                                 </div>            
                             </td>                    
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>
+                                <div class="row" class="form-group">
+                                    <div class="col">
+                                        <label for="cash2_tod_total">โต้ดรวมเลข 2 ตัว</label>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="cash2_tod_total" disabled class="form-control number_format" name="cash2_tod_total" >
+                                    </div>
+                                </div>                     
+                            </td>
                             <td>
                                 <div class="row" class="form-group">
                                     <div class="col">
                                         <label for="cash3_tod_total">โต้ดรวมเลข 3 ตัว</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash3_tod_total"  class="form-control" name="cash3_tod_total" >
+                                        <input type="text" id="cash3_tod_total" disabled class="form-control number_format" name="cash3_tod_total" >
                                     </div>
                                 </div>            
                             </td>      
@@ -161,13 +523,13 @@
                                         <label for="cash2_total">รวมเลข 2 ตัวทั้งหมด</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash2_total"  class="form-control" name="cash2_total" >
+                                        <input type="text" id="cash2_total" disabled class="form-control number_format" name="cash2_total" >
                                     </div>
                                     <div class="col">
                                         <label for="cash2_discount">ส่วนลดจำนวน</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash2_discount"  class="form-control" name="cash2_discount" >
+                                        <input type="text" id="cash2_discount" disabled class="form-control number_format discount" name="cash2_discount" >
                                     </div>
                                 </div>                            
                             </td>
@@ -177,13 +539,13 @@
                                         <label for="cash3_total">รวมเลข 3 ตัวทั้งหมด</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash3_total"  class="form-control" name="cash3_total" >
+                                        <input type="text" id="cash3_total" disabled class="form-control number_format " name="cash3_total" >
                                     </div>
                                     <div class="col">
                                         <label for="cash3_discount">ส่วนลดจำนวน</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash3_discount"  class="form-control" name="cash3_discount" >
+                                        <input type="text" id="cash3_discount" disabled class="form-control number_format discount" name="cash3_discount" >
                                     </div>
                                 </div>            
                             </td>      
@@ -195,7 +557,7 @@
                                         <label for="cash2_net">รวม</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash2_net"  class="form-control" name="cash2_net" >
+                                        <input type="text" id="cash2_net" disabled class="form-control number_format total_net" name="cash2_net" >
                                     </div>
                                 </div>
                             </td>                       
@@ -205,7 +567,7 @@
                                         <label for="cash3_net">รวม</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="cash3_net"  class="form-control" name="cash3_net" >
+                                        <input type="text" id="cash3_net" disabled class="form-control number_format total_net" name="cash3_net" >
                                     </div>
                                 </div>            
                             </td>                    
@@ -218,10 +580,13 @@
                                         <label for="cash_total">รวมทั้งหมด</label>
                                     </div>
                                     <div class="col">
-                                        <input type="text" id="fname"  class="form-control" name="firstname" >
+                                        <input type="text" id="cash_total" disabled class="form-control number_format total_net" name="cash_total" >
                                     </div>
                                 </div>            
                             </td>
+                        </tr>
+                        <tr>
+                        <td colspan='2' align="right"><button type="button" class="btn btn-success" >ยืนยัน </button></td>
                         </tr>      
                     </table>
                 </div>

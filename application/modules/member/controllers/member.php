@@ -508,4 +508,11 @@ class Member extends MX_Controller {
 		return true;
 	}
 
+	public function get_criteria_ajax()
+	{
+		$this->load->model('lotto/lotto_model','lm');
+		$data = $this->lm->get_criteria();
+		echo json_encode($data);
+	}
+
 }
