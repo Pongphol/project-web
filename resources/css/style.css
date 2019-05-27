@@ -2,6 +2,20 @@
     color: #18BC9C!important;
 }
 
+nav.custom {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+ul.navbar-nav {
+    text-align: right;
+}
+
+ul.nav.nav-pills {
+    float: right;
+}
+
+
 li.nav-item a.login {
     color: #fff;
 }
@@ -12,4 +26,8 @@ li.nav-item a.login:hover {
 
 table.profile tr th {
     width: 25%;
+}
+
+table.lotto_price_list tbody tr td.number {
+    color: #ff0000;
 }

@@ -19,10 +19,11 @@ class Admin extends MX_Controller {
 	public function change_price_lotto()
 	{
 		$this->load->model('admin_model');
+		$this->load->model('lotto/lotto_model');
 
 		$this->data['title'] = 'กำหนดราคาหวย';
 		$this->data['content'] = 'change_price_lotto';
-		$this->data['criteria'] = $this->admin_model->get_criteria();
+		$this->data['criteria'] = $this->lotto_model->get_criteria();
 
 		$this->load->view('template', $this->data);
 	}
@@ -335,11 +336,12 @@ class Admin extends MX_Controller {
 
 	public function update_criteria()
 	{
-		$data['success'] = false;
-
 		$this->load->model('admin_model');
+		$this->load->model('lotto/lotto_model');
+
+		$data['success'] = false;
 		
-		$this->admin_model->update_criteria(
+		$this->lotto_model->update_criteria(
 			[
 				'discount' => $this->input->post('update_data')[1],
 				'pay' => $this->input->post('update_data')[2]
