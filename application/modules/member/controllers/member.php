@@ -19,7 +19,14 @@ class Member extends MX_Controller {
 	{
 		$this->data['title'] = 'Member title';
 		$this->data['content'] = 'index';
-		$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
+		
+		$this->load->view('template', $this->data);
+	}
+	/* หน้าจอลงหวย */
+	public function buy_lotto()
+	{
+		$this->data['title'] = 'ลงหวย';
+		$this->data['content'] = 'buy_lotto';
 		
 		$this->load->view('template', $this->data);
 	}
@@ -31,7 +38,6 @@ class Member extends MX_Controller {
 
 		$this->data['title'] = 'Profile';
 		$this->data['content'] = 'profile';
-		$this->data['account'] = $this->acc_model->get_account_data_by_id($user_id);
 		$banking = $this->acc_model->get_bank_data_by_id($user_id);
 		
 		if ($this->data['account'])
