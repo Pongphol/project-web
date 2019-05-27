@@ -25,7 +25,7 @@
                     ?>
                     <tr>
                         <td colspan="3" class="text-center">
-                            <a href="<?php echo base_url('lotto/buy_lotto'); ?>" class="btn btn-success">เลือกราคานี้ <i class="far fa-arrow-alt-circle-up"></i></a>
+                            <a href="<?php echo base_url('member/buy_lotto'); ?>" class="btn btn-success">เลือกราคานี้ <i class="far fa-arrow-alt-circle-up"></i></a>
                         </td>
                     </tr>
                 </tbody>

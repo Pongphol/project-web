@@ -359,7 +359,7 @@ class Member extends MX_Controller {
 		if($withdraw_money <= $user_money)
 		{
 			$data = [
-				'accId' => $this->input->post('id_user'),
+				'accId' => $this->session->userdata('account_id'),
 				'amount' => $this->input->post('withdraw_money'),
 				'bankId' => $this->input->post('user_bank'),
 				'status' => 1, //สถานะรอดำเนินการ
@@ -367,7 +367,8 @@ class Member extends MX_Controller {
 			$this->mm->insert_withdraw($data);
 
 			$update['money'] = $user_money - $withdraw_money;
-			$this->mm->update_monney($update);
+			$id = $this->session->userdata('account_id');
+			$this->mm->update_monney_by_id($update,$id);
 			echo "success";
 		}
 		else
@@ -378,7 +379,7 @@ class Member extends MX_Controller {
 	function get_history_inform_ajax()
 	{
 		$this->load->model('member_model','mm');
-		$user_id = $this->input->post('id_user');
+		$user_id = $this->session->userdata('account_id');
 		$data = $this->mm->get_history_inform_user_by_id($user_id); //fix รหัสผู้ใช้
 		$temp_data = [];
 		foreach($data as $row)
@@ -513,6 +514,63 @@ class Member extends MX_Controller {
 		$this->load->model('lotto/lotto_model','lm');
 		$data = $this->lm->get_criteria();
 		echo json_encode($data);
+	}
+	public function buy_lotto_ajax()
+	{
+		$this->load->model('member_model','mm');
+		$id = $this->session->userdata('account_id');
+		$number2 = $this->input->post('number2');
+		$number3 = $this->input->post('number3');
+		$total_cash = $this->input->post('total_cash');
+		$user_money = $this->mm->get_money_user_by_id($id)->money;
+
+		$data = [];
+
+		if($user_money >= $total_cash)
+		{
+			$update['money'] = $user_money - $total_cash;
+			$this->mm->update_monney_by_id($update,$id);
+			foreach($number2 as $row)
+			{
+				if($row['number'] != "")
+				{
+					$data = [
+						'accId' => $this->session->userdata('account_id'),
+						'number' => $row['number'],
+						'lotto' => serialize([
+							'number2_top' => $row['numberTop'],
+							'number2_tod' => $row['numberTod'],
+							'number2_button' => $row['numberBut']
+						])
+					];
+					$this->mm->insert_buy_lotto($data);
+				}
+			}
+			foreach($number3 as $row)
+			{
+				if($row['number'] != "")
+				{
+					$data = [
+						'accId' => $this->session->userdata('account_id'),
+						'number' => $row['number'],
+						'lotto' => serialize([
+							'number3_top' => $row['numberTop'],
+							'number3_tod' => $row['numberTod'],
+							'number3_button' => $row['numberBut']
+						])
+					];
+					$this->mm->insert_buy_lotto($data);
+				}
+			}
+			
+			/** */
+			echo json_encode(['status' => 'success']);
+		}
+		else
+		{
+			echo json_encode(['status' => 'error']);
+		}
+
 	}
 
 }

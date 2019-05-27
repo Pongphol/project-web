@@ -71,7 +71,6 @@
                 type: "POST",
                 url: "<?php echo base_url('member/insert_inform_withdraw_ajax'); ?>",
                 data:{
-                    id_user : 1,
                     withdraw_money : $('#withdraw_money').val(),
                     user_bank : $('#user_bank').val()
                 },
@@ -139,9 +138,6 @@
                 type: "POST",
                 url: "<?php echo base_url('member/get_history_inform_ajax'); ?>",
                 dataType: 'json',
-                data:{
-                    id_user : 1
-                },
                 success: function(result){
                     $('#inform_history').html(result)
                 }

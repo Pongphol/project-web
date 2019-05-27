@@ -24,7 +24,7 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item <?php if ($this->uri->segment(1) == "choose_criteria" || $this->uri->segment(2) == "choose_criteria"){ echo 'active'; }?>">
-                <a class="nav-link" href="<?php echo base_url('lotto/choose_criteria'); ?>">แทงหวย <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<?php echo base_url('lotto/choose_criteria'); ?>">เล่นหวย <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item <?php if ($this->uri->segment(1) == "inform_deposit_withdraw_show" || $this->uri->segment(2) == "inform_deposit_withdraw_show"){ echo 'active'; }?>">
                 <a class="nav-link" href="<?php echo base_url('member/inform_deposit_withdraw_show'); ?>">แจ้งฝาก/ถอน</a>

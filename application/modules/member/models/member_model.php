@@ -26,9 +26,9 @@ class Member_model extends CI_Model
         $this->db->insert('withdraw_detail', $data);
     }
     /*อัปเดตเงินของผู้ใช้ */
-    function update_monney($data)
+    function update_monney_by_id($data,$id)
     {
-        $this->db->update('account', $data);
+        $this->db->where("id",$id)->update('account', $data);
     }
     /*รับข้อมูลเงินของผู้ใช้ */
     function get_money_user_by_id($userId)
@@ -47,6 +47,10 @@ class Member_model extends CI_Model
                 ORDER BY create_date DESC ";
         $query = $this->db->query($sql)->result_array();
         return  $query;
+    }
+    function insert_buy_lotto($data)
+    {
+        $this->db->insert('buy_lotto', $data);
     }
 }
 

@@ -14,7 +14,6 @@
 }
 </style>
 <script>
-    
     $(document).ready(function(){
         inputFilter()
         validate_number_input()
@@ -357,8 +356,62 @@
     function sum_total()
     {
         sum  = parseInt($('#cash2_net').val()) + parseInt($('#cash3_net').val())
-        console.log(sum)
         $('#cash_total').val(sum.toFixed(2))
+    }
+    function comfirm_buy()
+    {
+        number2 = [];
+        number3 = [];
+        var temp = 0
+        for(var i = 0 ; i < 10 ; i++){
+            if($('#number2_inp'+i).val().toString().length == 3){
+                $('#number2_inp'+i).addClass("is-invalid")
+                temp++
+            }
+            if($('#number3_inp'+i).val().toString().length == 2){
+                $('#number3_inp'+i).addClass("is-invalid")
+                temp++
+            }
+        }
+        if(temp == 0){
+            for(var i = 0 ; i < 10 ; i++){
+                number2.push({
+                    number:$('#number2_inp'+i).val(),
+                    numberTop:$('#number2_top_inp'+i).val(),
+                    numberTod:$('#number2_tod_inp'+i).val(),
+                    numberBut:$('#number2_button_inp'+i).val()
+                })
+                number3.push({
+                    number:$('#number3_inp'+i).val(),
+                    numberTop:$('#number3_top_inp'+i).val(),
+                    numberTod:$('#number3_tod_inp'+i).val(),
+                    numberBut:$('#number3_button_inp'+i).val()
+                })
+            }
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('member/buy_lotto_ajax'); ?>",
+                dataType : "json",
+                data:{
+                    number2 : number2,
+                    number3 : number3,
+                    total_cash : $('#cash_total').val()
+                },
+                success: function(result){
+                    console.log(result.status)
+                    if(result.status == "success"){
+                        $.notify('แจ้งถอนเงินสำเร็จ', {
+                            className: 'success'
+                        });
+                    }else{
+                        $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
+                            className: 'error'
+                        });
+                    }
+                }
+            });
+        }
+        
     }
 
 </script>   
@@ -586,7 +639,7 @@
                             </td>
                         </tr>
                         <tr>
-                        <td colspan='2' align="right"><button type="button" class="btn btn-success" >ยืนยัน </button></td>
+                        <td colspan='2' align="right"><button type="button" class="btn btn-success" onclick="comfirm_buy()">ยืนยัน</button></td>
                         </tr>      
                     </table>
                 </div>
