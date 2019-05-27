@@ -69,9 +69,9 @@ class Welcome extends MX_Controller {
 		$table .= "</tr>";
 
 		$table .= "<tr>";
-		$table .= "<td>" . implode('', $data['prize_first']) . "</td>";
-		$table .= "<td>" . implode('</td><td>', $data['number_back_three']) . "</td>";
-		$table .= "<td>" . implode('</td><td>', $data['number_back_two']) . "</td>";
+		$table .= "<td class='number'>" . implode('', $data['prize_first']) . "</td>";
+		$table .= "<td class='number'>" . implode('</td><td class="number">', $data['number_back_three']) . "</td>";
+		$table .= "<td class='number'>" . implode('</td><td class="number">', $data['number_back_two']) . "</td>";
 		$table .= "</tr>";
 
 		echo json_encode($table);
