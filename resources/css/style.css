@@ -28,6 +28,6 @@ table.profile tr th {
     width: 25%;
 }
 
-table.lotto_price_list tbody tr td.number {
+table.lotto_price_list tr td.number {
     color: #ff0000;
 }

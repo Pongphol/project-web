@@ -17,15 +17,15 @@ class Lotto extends MX_Controller {
 
     public function index()
     {
-        echo modules::run('modules/lotto/by_lottery');
+        echo modules::run('modules/lotto/choose_criteria');
     }
 
-    public function by_lottery()
+    public function choose_criteria()
     {
         $this->load->model('lotto_model');
 
         $this->data['title'] = 'แทงหวย';
-		$this->data['content'] = 'by_lottery';
+		$this->data['content'] = 'choose_criteria';
         $this->data['criteria'] = $this->lotto_model->get_criteria();
         
         $this->load->view('template', $this->data);

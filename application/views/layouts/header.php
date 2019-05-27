@@ -23,8 +23,8 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item <?php if ($this->uri->segment(1) == "by_lottery" || $this->uri->segment(2) == "by_lottery"){ echo 'active'; }?>">
-                <a class="nav-link" href="<?php echo base_url('lotto/by_lottery'); ?>">แทงหวย <span class="sr-only">(current)</span></a>
+            <li class="nav-item <?php if ($this->uri->segment(1) == "choose_criteria" || $this->uri->segment(2) == "choose_criteria"){ echo 'active'; }?>">
+                <a class="nav-link" href="<?php echo base_url('lotto/choose_criteria'); ?>">แทงหวย <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item <?php if ($this->uri->segment(1) == "inform_deposit_withdraw_show" || $this->uri->segment(2) == "inform_deposit_withdraw_show"){ echo 'active'; }?>">
                 <a class="nav-link" href="<?php echo base_url('member/inform_deposit_withdraw_show'); ?>">แจ้งฝาก/ถอน</a>
@@ -34,7 +34,7 @@
         <ul class="nav nav-pills">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                    <i class="fas fa-user"></i>&nbsp;:&nbsp;<?php echo $account->fname; ?>
+                    <i class="fas fa-user"></i>&nbsp;<?php echo $account->fname; ?>
                 </a>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                     <p class="dropdown-item"><i class="fab fa-btc"></i>&nbsp;:&nbsp;<?php echo $account->money ?></p>

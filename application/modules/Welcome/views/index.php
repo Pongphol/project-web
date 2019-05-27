@@ -12,7 +12,7 @@ $.ajax({
     <div class="card border-secondary mb-12" >
         <div class="card-header"><h4>ตรวจหวยล่าสุด</h4></div>
         <div class="card-body">
-			<table id="show_lotto" class="table table-bordered">
+			<table id="show_lotto" class="table table-bordered lotto_price_list">
 			</table>
 		</div>
 	</div>
