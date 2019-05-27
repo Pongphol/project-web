@@ -36,7 +36,7 @@
                 <a class="nav-link" href="#">About</a>
             </li>
         </ul>
-        <?php if(is_logged_in()) : ?>
+        <?php if(is_logged_in() && isset($account)) : ?>
         <ul class="nav nav-pills">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">

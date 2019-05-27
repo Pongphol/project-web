@@ -226,8 +226,8 @@ class Admin extends MX_Controller {
 						'inform' => "ถอนเงิน",
 						'user' => $row['username'],
 						'amount' => number_format($row['amount'],2)." บาท",
-						'create_date' => dateThai3($row['create_date']),
-						'updated_at' => dateThai3($row['updated_at']),
+						'create_date' => dateTimeThai3($row['create_date']),
+						'updated_at' => dateTimeThai3($row['updated_at']),
 						'status' => "ทำรายการสำเร็จ",
 						'detail' => $row['description']
 					];
@@ -238,8 +238,8 @@ class Admin extends MX_Controller {
 						'inform' => "ถอนเงิน",
 						'user' => $row['username'],
 						'amount' => number_format($row['amount'],2)." บาท",
-						'create_date' => dateThai3($row['create_date']),
-						'updated_at' => dateThai3($row['updated_at']),
+						'create_date' => dateTimeThai3($row['create_date']),
+						'updated_at' => dateTimeThai3($row['updated_at']),
 						'status' => "การทำรายการถูกปฏิเสธ",
 						'detail' => $row['description']
 					];
@@ -250,8 +250,8 @@ class Admin extends MX_Controller {
 						'inform' => "ถอนเงิน",
 						'user' => $row['username'],
 						'amount' => number_format($row['amount'],2)." บาท",
-						'create_date' => dateThai3($row['create_date']),
-						'updated_at' => dateThai3($row['updated_at']),
+						'create_date' => dateTimeThai3($row['create_date']),
+						'updated_at' => dateTimeThai3($row['updated_at']),
 						'status' => "กำลังดำเนินการ",
 						'detail' => $row['description']
 					];
@@ -265,8 +265,8 @@ class Admin extends MX_Controller {
 						'inform' => "เติมเงิน",
 						'user' => $row['username'],
 						'amount' => number_format($row['amount'],2)." บาท",
-						'create_date' => dateThai3($row['create_date']),
-						'updated_at' => dateThai3($row['updated_at']),
+						'create_date' => dateTimeThai3($row['create_date']),
+						'updated_at' => dateTimeThai3($row['updated_at']),
 						'status' => "ทำรายการสำเร็จ",
 						'detail' => $row['description']
 					];
@@ -277,8 +277,8 @@ class Admin extends MX_Controller {
 						'inform' => "เติมเงิน",
 						'user' => $row['username'],
 						'amount' => number_format($row['amount'],2)." บาท",
-						'create_date' => dateThai3($row['create_date']),
-						'updated_at' => dateThai3($row['updated_at']),
+						'create_date' => dateTimeThai3($row['create_date']),
+						'updated_at' => dateTimeThai3($row['updated_at']),
 						'status' => "การทำรายการถูกปฏิเสธ",
 						'detail' => $row['description']
 					];
@@ -289,8 +289,8 @@ class Admin extends MX_Controller {
 						'inform' => "เติมเงิน",
 						'user' => $row['username'],
 						'amount' => number_format($row['amount'],2)." บาท",
-						'create_date' => dateThai3($row['create_date']),
-						'updated_at' => dateThai3($row['updated_at']),
+						'create_date' => dateTimeThai3($row['create_date']),
+						'updated_at' => dateTimeThai3($row['updated_at']),
 						'status' => "กำลังดำเนินการ",
 						'detail' => $row['description']
 					];

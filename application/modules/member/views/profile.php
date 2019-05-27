@@ -22,19 +22,22 @@
                                         {
                                             echo '<tr scope="row" class="text-center"><th>บัญชีธนาคาร</th><td class="text-left">';
 
-                                            foreach($account_profile[$subject] as $bank)
+                                            if (!empty($account_profile[$subject]))
                                             {
-                                                echo "
-                                                    <div class='media'>
-                                                        <div class='media-left'>
-                                                            <a href='#'>
-                                                                <img class='media-object' data-src='holder.js/64x64' style='width: 64px; height: 64px;' src='{$bank->picture}' alt='{$bank->name}'>
-                                                            </a>
+                                                foreach($account_profile[$subject] as $bank)
+                                                {
+                                                    echo "
+                                                        <div class='media'>
+                                                            <div class='media-left'>
+                                                                <a href='#'>
+                                                                    <img class='media-object' data-src='holder.js/64x64' style='width: 64px; height: 64px;' src='{$bank->picture}' alt='{$bank->name}'>
+                                                                </a>
+                                                            </div>
+                                                            <div class='media-body ml-2'><p>{$bank->name} ({$bank->number})</p></div>
                                                         </div>
-                                                        <div class='media-body ml-2'><p>{$bank->name} ({$bank->number})</p></div>
-                                                    </div>
-                                                    <hr>
-                                                ";
+                                                        <hr>
+                                                    ";
+                                                }
                                             }
 
                                             echo '<a href="' . base_url('add_bank_account') . '" class="text-info">เพิ่มบัญชี</a> | 
