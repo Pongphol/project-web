@@ -536,16 +536,36 @@ class Member extends MX_Controller {
 			{
 				if($row['number'] != "")
 				{
-					$data = [
-						'accId' => $this->session->userdata('account_id'),
-						'number' => $row['number'],
-						'lotto' => serialize([
-							'number2_top' => $row['numberTop'],
-							'number2_tod' => $row['numberTod'],
-							'number2_button' => $row['numberBut']
-						])
-					];
-					$this->mm->insert_buy_lotto($data);
+					if($row['numberTop']  != "")
+					{
+						$data = [
+							'accId' => $this->session->userdata('account_id'),
+							'number' => $row['number'],
+							'criteria_id' => 5,
+							'pay' => $row['numberTop']
+						];
+						$this->mm->insert_buy_lotto($data);
+					}
+					if($row['numberTod']  != "")
+					{
+						$data = [
+							'accId' => $this->session->userdata('account_id'),
+							'number' => $row['number'],
+							'criteria_id' => 4,
+							'pay' => $row['numberTod']
+						];
+						$this->mm->insert_buy_lotto($data);
+					}
+					if($row['numberBut']  != "")
+					{
+						$data = [
+							'accId' => $this->session->userdata('account_id'),
+							'number' => $row['number'],
+							'criteria_id' => 6,
+							'pay' => $row['numberBut']
+						];
+						$this->mm->insert_buy_lotto($data);
+					}
 				}
 			}
 			// เลข 3 ตัว
@@ -553,16 +573,36 @@ class Member extends MX_Controller {
 			{
 				if($row['number'] != "")
 				{
-					$data = [
-						'accId' => $this->session->userdata('account_id'),
-						'number' => $row['number'],
-						'lotto' => serialize([
-							'number3_top' => $row['numberTop'],
-							'number3_tod' => $row['numberTod'],
-							'number3_button' => $row['numberBut']
-						])
-					];
-					$this->mm->insert_buy_lotto($data);
+					if($row['numberTop']  != "")
+					{
+						$data = [
+							'accId' => $this->session->userdata('account_id'),
+							'number' => $row['number'],
+							'criteria_id' => 1,
+							'pay' => $row['numberTop']
+						];
+						$this->mm->insert_buy_lotto($data);
+					}
+					if($row['numberTod']  != "")
+					{
+						$data = [
+							'accId' => $this->session->userdata('account_id'),
+							'number' => $row['number'],
+							'criteria_id' => 2,
+							'pay' => $row['numberTod']
+						];
+						$this->mm->insert_buy_lotto($data);
+					}
+					if($row['numberBut']  != "")
+					{
+						$data = [
+							'accId' => $this->session->userdata('account_id'),
+							'number' => $row['number'],
+							'criteria_id' => 3,
+							'pay' => $row['numberBut']
+						];
+						$this->mm->insert_buy_lotto($data);
+					}
 				}
 			}
 			

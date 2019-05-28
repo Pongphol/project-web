@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2019 at 08:13 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.1
+-- Generation Time: May 28, 2019 at 06:31 PM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 CREATE DATABASE IF NOT EXISTS lottery;
 USE lottery;
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -51,7 +52,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 13172, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
+(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 3898, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
 
 -- --------------------------------------------------------
 
@@ -114,6 +115,37 @@ CREATE TABLE `bank_account` (
 
 INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
 (1, 1, 2, '1234567890');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buy_lotto`
+--
+
+CREATE TABLE `buy_lotto` (
+  `id` int(10) NOT NULL,
+  `accId` int(10) NOT NULL,
+  `number` varchar(10) NOT NULL,
+  `lotto` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `buy_lotto`
+--
+
+INSERT INTO `buy_lotto` (`id`, `accId`, `number`, `lotto`, `created_at`, `updated_at`) VALUES
+(1, 1, '10', 'a:3:{s:11:\"number2_top\";s:2:\"10\";s:11:\"number2_tod\";s:2:\"10\";s:14:\"number2_button\";s:2:\"10\";}', '2019-05-28 06:17:15', '0000-00-00 00:00:00'),
+(2, 1, '01', 'a:3:{s:11:\"number2_top\";s:2:\"10\";s:11:\"number2_tod\";s:2:\"10\";s:14:\"number2_button\";s:2:\"10\";}', '2019-05-28 06:17:15', '0000-00-00 00:00:00'),
+(3, 1, '100', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:17:15', '0000-00-00 00:00:00'),
+(4, 1, '010', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:17:15', '0000-00-00 00:00:00'),
+(5, 1, '001', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:17:15', '0000-00-00 00:00:00'),
+(6, 1, '10', 'a:3:{s:11:\"number2_top\";s:2:\"10\";s:11:\"number2_tod\";s:2:\"10\";s:14:\"number2_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00'),
+(7, 1, '01', 'a:3:{s:11:\"number2_top\";s:2:\"10\";s:11:\"number2_tod\";s:2:\"10\";s:14:\"number2_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00'),
+(8, 1, '100', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00'),
+(9, 1, '010', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00'),
+(10, 1, '001', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -189,7 +221,7 @@ CREATE TABLE `lotto` (
 --
 
 INSERT INTO `lotto` (`id`, `date`, `prize_first`, `number_back_three`, `number_back_two`) VALUES
-(11, '2019-05-16', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}');
+(12, '2019-05-16', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}');
 
 -- --------------------------------------------------------
 
@@ -233,7 +265,8 @@ CREATE TABLE `withdraw_detail` (
 --
 
 INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `description`, `create_date`, `updated_at`) VALUES
-(11, 1, 100, 1, 3, 'ฟหกฟ', '2019-05-24 16:31:56', '2019-05-25 07:39:07');
+(11, 1, 100, 1, 3, 'ฟหกฟ', '2019-05-24 16:31:56', '2019-05-25 07:39:07'),
+(12, 1, 12000, 1, 1, '', '2019-05-27 18:50:19', '0000-00-00 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -265,6 +298,12 @@ ALTER TABLE `bank_account`
   ADD PRIMARY KEY (`id`),
   ADD KEY `accId` (`accId`),
   ADD KEY `type` (`type`);
+
+--
+-- Indexes for table `buy_lotto`
+--
+ALTER TABLE `buy_lotto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `criteria`
@@ -329,6 +368,12 @@ ALTER TABLE `bank_account`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `buy_lotto`
+--
+ALTER TABLE `buy_lotto`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `criteria`
 --
 ALTER TABLE `criteria`
@@ -344,7 +389,7 @@ ALTER TABLE `deposit_detail`
 -- AUTO_INCREMENT for table `lotto`
 --
 ALTER TABLE `lotto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `status_transfer`
@@ -356,7 +401,7 @@ ALTER TABLE `status_transfer`
 -- AUTO_INCREMENT for table `withdraw_detail`
 --
 ALTER TABLE `withdraw_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
