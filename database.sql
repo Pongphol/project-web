@@ -3,9 +3,16 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: May 28, 2019 at 06:31 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
+=======
+-- Generation Time: May 28, 2019 at 07:00 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
+
+>>>>>>> eb0ca6bafb9a94963dc91f5f7a1d371a8f02f211
 CREATE DATABASE IF NOT EXISTS lottery;
 USE lottery;
 
@@ -52,7 +59,11 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `created_at`, `updated_at`) VALUES
+<<<<<<< HEAD
 (1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 3898, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
+=======
+(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 3826, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
+>>>>>>> eb0ca6bafb9a94963dc91f5f7a1d371a8f02f211
 
 -- --------------------------------------------------------
 
@@ -126,11 +137,18 @@ CREATE TABLE `buy_lotto` (
   `id` int(10) NOT NULL,
   `accId` int(10) NOT NULL,
   `number` varchar(10) NOT NULL,
+<<<<<<< HEAD
   `lotto` varchar(255) NOT NULL,
+=======
+  `criteria_id` varchar(3) NOT NULL,
+  `pay` varchar(255) NOT NULL,
+  `status` varchar(5) NOT NULL DEFAULT 'wait',
+>>>>>>> eb0ca6bafb9a94963dc91f5f7a1d371a8f02f211
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+<<<<<<< HEAD
 --
 -- Dumping data for table `buy_lotto`
 --
@@ -147,6 +165,8 @@ INSERT INTO `buy_lotto` (`id`, `accId`, `number`, `lotto`, `created_at`, `update
 (9, 1, '010', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00'),
 (10, 1, '001', 'a:3:{s:11:\"number3_top\";s:2:\"10\";s:11:\"number3_tod\";s:2:\"10\";s:14:\"number3_button\";s:2:\"10\";}', '2019-05-28 06:18:32', '0000-00-00 00:00:00');
 
+=======
+>>>>>>> eb0ca6bafb9a94963dc91f5f7a1d371a8f02f211
 -- --------------------------------------------------------
 
 --
@@ -226,19 +246,19 @@ INSERT INTO `lotto` (`id`, `date`, `prize_first`, `number_back_three`, `number_b
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status_transfer`
+-- Table structure for table `status`
 --
 
-CREATE TABLE `status_transfer` (
+CREATE TABLE `status` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `status_transfer`
+-- Dumping data for table `status`
 --
 
-INSERT INTO `status_transfer` (`id`, `name`) VALUES
+INSERT INTO `status` (`id`, `name`) VALUES
 (1, 'กำลังดำเนินการ'),
 (2, 'ทำรายการสำเร็จ'),
 (3, 'ไม่อนุมัติ');
@@ -326,9 +346,9 @@ ALTER TABLE `lotto`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `status_transfer`
+-- Indexes for table `status`
 --
-ALTER TABLE `status_transfer`
+ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -371,7 +391,11 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT for table `buy_lotto`
 --
 ALTER TABLE `buy_lotto`
+<<<<<<< HEAD
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+=======
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+>>>>>>> eb0ca6bafb9a94963dc91f5f7a1d371a8f02f211
 
 --
 -- AUTO_INCREMENT for table `criteria`
@@ -392,9 +416,9 @@ ALTER TABLE `lotto`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `status_transfer`
+-- AUTO_INCREMENT for table `status`
 --
-ALTER TABLE `status_transfer`
+ALTER TABLE `status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --

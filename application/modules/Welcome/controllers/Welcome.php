@@ -22,25 +22,12 @@ class Welcome extends MX_Controller {
 		$this->load->view('template', $data);
 	}
 
-	protected function get_lotto($type = 'latest')
-	{
-		$ch =  curl_init('https://thai-lotto-api.herokuapp.com/' . $type);
-
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
-
-		$result = curl_exec($ch);
-
-		return json_decode($result, true);
-	}
-
 	private function add_lotto_latest()
 	{
+		$this->load->helper('lotto_helper');
 		$this->load->model('lotto_model');
 
-		$response = $this->get_lotto('latest')['response'];
+		$response = get_lotto('latest')['response'];
 
 		$data = [
 			'date' => stringDateThaiToDate($response['date']),

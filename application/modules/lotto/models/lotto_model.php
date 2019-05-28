@@ -12,6 +12,14 @@ class Lotto_model extends CI_Model
         $this->db->where('id', $id)
             ->update('criteria', $data);
     }
+
+    public function get_buy_lotto_by_id($id)
+    {
+        $result = $this->db->where('accId', $id)
+            ->get('buy_lotto');
+        
+        return $result->num_rows() > 0 ? $result->result() : false;
+    }
 }
 
 ?>

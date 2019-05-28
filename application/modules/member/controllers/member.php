@@ -515,6 +515,7 @@ class Member extends MX_Controller {
 		$data = $this->lm->get_criteria();
 		echo json_encode($data);
 	}
+
 	public function buy_lotto_ajax()
 	{
 		$this->load->model('member_model','mm'); 
@@ -614,6 +615,31 @@ class Member extends MX_Controller {
 			echo json_encode(['status' => 'error']);
 		}
 
+	}
+
+	public function check_award()
+	{
+		$this->load->helper('lotto_helper');
+		$this->load->model('lotto/lotto_model');
+
+		$list_buy_lotto = unserial_list($this->lotto_model->get_buy_lotto_by_id(get_account_id()));
+
+		$response = get_lotto('16052562')['response'];
+
+		foreach($list_buy_lotto as $data)
+		{
+			
+			if ($type == 'number2_top' && $value != '')
+			{
+				$result['answer'] = ($data['number'] == substr($response['prizes'][0]['number'][0], -2)) ? 'match' : 'not_match';
+			}
+		}
+		
+		pre_r($response);
+
+		pre_r($list_buy_lotto);
+
+		pre_r($result);
 	}
 
 }

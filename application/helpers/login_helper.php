@@ -7,6 +7,13 @@ function pre_r($data = '')
     echo '</pre>';
 }
 
+function get_account_id() {
+    $CI =& get_instance();
+    $user = $CI->session->userdata('account_id');
+
+    return isset($user) ? $user : false;
+}
+
 function is_logged_in() {
     $CI =& get_instance();
     $user = $CI->session->userdata('account_id');
