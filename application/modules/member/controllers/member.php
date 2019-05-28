@@ -336,7 +336,7 @@ class Member extends MX_Controller {
 		$this->load->model('member_model','mm');
 
 		$data = [
-			'accId' => $this->input->post('id_user'),
+			'accId' => $this->session->userdata('account_id'),
 			'amount' => $this->input->post('refill_money'),
 			'bankId' => $this->input->post('admin_bank'),
 			'tranfersDate' => splitDateFormTH($this->input->post('date')),
@@ -351,7 +351,7 @@ class Member extends MX_Controller {
 	function insert_inform_withdraw_ajax()
 	{
 		$this->load->model('member_model','mm');
-		$id_user = $this->input->post('id_user');
+		$id_user = $this->session->userdata('account_id');
 		$withdraw_money = $this->input->post('withdraw_money');
 		$user_money = $this->mm->get_money_user_by_id($id_user)->money;
 
@@ -518,7 +518,7 @@ class Member extends MX_Controller {
 
 	public function buy_lotto_ajax()
 	{
-		$this->load->model('member_model','mm');
+		$this->load->model('member_model','mm'); 
 		$id = $this->session->userdata('account_id');
 		$number2 = $this->input->post('number2');
 		$number3 = $this->input->post('number3');
@@ -527,10 +527,12 @@ class Member extends MX_Controller {
 
 		$data = [];
 
-		if($user_money >= $total_cash)
+		if($user_money >= $total_cash) // ตรวจสอบว่าเงินของผู้ใช้เพียงพอต่อการซื้อหวยหรือไม่
 		{
 			$update['money'] = $user_money - $total_cash;
 			$this->mm->update_monney_by_id($update,$id);
+
+			//เลข 2 ตัว
 			foreach($number2 as $row)
 			{
 				if($row['number'] != "")
@@ -547,6 +549,7 @@ class Member extends MX_Controller {
 					$this->mm->insert_buy_lotto($data);
 				}
 			}
+			// เลข 3 ตัว
 			foreach($number3 as $row)
 			{
 				if($row['number'] != "")
