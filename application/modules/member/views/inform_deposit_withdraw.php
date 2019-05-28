@@ -35,7 +35,6 @@
                 type: "POST",
                 url: "<?php echo base_url('member/insert_inform_deposit_ajax'); ?>",
                 data:{
-                    id_user : 1,
                     refill_money : $('#refill_money').val(),
                     admin_bank : $('#admin_bank').val(),
                     date : $('#date_input').val(),
