@@ -10,14 +10,22 @@ function unserial($data)
 
     foreach($data as $key => $value)
     {
-        if (is_serial($value))
+        $result[$key] = is_serial($value) ? unserialize($value) : $value;
+    }
+
+    return $result;
+}
+
+function unserial_list($data)
+{
+    $result = [];
+
+    foreach($data as $key => $value)
+    {
+        foreach($data[$key] as $k => $v)
         {
-            $result[$key] = unserialize($value);
-        }
-        else
-        {
-            $result[$key] = $value;
-        }   
+            $result[$key][$k] = is_serial($v) ? unserialize($v) : $v;
+        }  
     }
 
     return $result;

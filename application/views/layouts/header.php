@@ -37,12 +37,15 @@
                     <i class="fas fa-user"></i>&nbsp;<?php echo $account->fname; ?>
                 </a>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                    <p class="dropdown-item"><i class="fab fa-btc"></i>&nbsp;:&nbsp;<?php echo $account->money ?></p>
+                    <p class="dropdown-item"><i class="fab fa-btc"></i>&nbsp;:&nbsp;<?php echo number_format($account->money); ?></p>
                     <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
                     <div class="dropdown-divider"></div>
                     <!-- สำหรับแอดมิน -->
                     <?php if (is_admin()) : ?>
                         <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
+                        <a class="dropdown-item" href="<?php echo base_url('member/check_award'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
+                    <?php else : ?>
+                    <!-- สำหรับสมาชิกทั่วไป -->
                     <?php endif; ?>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">

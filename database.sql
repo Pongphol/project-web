@@ -3,9 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2019 at 08:13 PM
+-- Generation Time: May 28, 2019 at 07:00 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
+
 CREATE DATABASE IF NOT EXISTS lottery;
 USE lottery;
 
@@ -51,7 +52,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 13172, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
+(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 3826, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
 
 -- --------------------------------------------------------
 
@@ -114,6 +115,23 @@ CREATE TABLE `bank_account` (
 
 INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
 (1, 1, 2, '1234567890');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buy_lotto`
+--
+
+CREATE TABLE `buy_lotto` (
+  `id` int(10) NOT NULL,
+  `accId` int(10) NOT NULL,
+  `number` varchar(10) NOT NULL,
+  `criteria_id` varchar(3) NOT NULL,
+  `pay` varchar(255) NOT NULL,
+  `status` varchar(5) NOT NULL DEFAULT 'wait',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -189,24 +207,24 @@ CREATE TABLE `lotto` (
 --
 
 INSERT INTO `lotto` (`id`, `date`, `prize_first`, `number_back_three`, `number_back_two`) VALUES
-(11, '2019-05-16', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}');
+(12, '2019-05-16', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status_transfer`
+-- Table structure for table `status`
 --
 
-CREATE TABLE `status_transfer` (
+CREATE TABLE `status` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `status_transfer`
+-- Dumping data for table `status`
 --
 
-INSERT INTO `status_transfer` (`id`, `name`) VALUES
+INSERT INTO `status` (`id`, `name`) VALUES
 (1, 'กำลังดำเนินการ'),
 (2, 'ทำรายการสำเร็จ'),
 (3, 'ไม่อนุมัติ');
@@ -233,7 +251,8 @@ CREATE TABLE `withdraw_detail` (
 --
 
 INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `description`, `create_date`, `updated_at`) VALUES
-(11, 1, 100, 1, 3, 'ฟหกฟ', '2019-05-24 16:31:56', '2019-05-25 07:39:07');
+(11, 1, 100, 1, 3, 'ฟหกฟ', '2019-05-24 16:31:56', '2019-05-25 07:39:07'),
+(12, 1, 12000, 1, 1, '', '2019-05-27 18:50:19', '0000-00-00 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -267,6 +286,12 @@ ALTER TABLE `bank_account`
   ADD KEY `type` (`type`);
 
 --
+-- Indexes for table `buy_lotto`
+--
+ALTER TABLE `buy_lotto`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `criteria`
 --
 ALTER TABLE `criteria`
@@ -287,9 +312,9 @@ ALTER TABLE `lotto`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `status_transfer`
+-- Indexes for table `status`
 --
-ALTER TABLE `status_transfer`
+ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -329,6 +354,12 @@ ALTER TABLE `bank_account`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `buy_lotto`
+--
+ALTER TABLE `buy_lotto`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `criteria`
 --
 ALTER TABLE `criteria`
@@ -344,19 +375,19 @@ ALTER TABLE `deposit_detail`
 -- AUTO_INCREMENT for table `lotto`
 --
 ALTER TABLE `lotto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `status_transfer`
+-- AUTO_INCREMENT for table `status`
 --
-ALTER TABLE `status_transfer`
+ALTER TABLE `status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `withdraw_detail`
 --
 ALTER TABLE `withdraw_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
