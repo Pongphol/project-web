@@ -15,8 +15,19 @@ class Lotto_model extends CI_Model
 
     public function get_buy_lotto_by_id($id)
     {
-        $result = $this->db->where('accId', $id)
-            ->get('buy_lotto');
+        $result = $this->db->select(
+                'created_at, 
+                buy_lotto.number, 
+                criteria.name, 
+                buy_lotto.pay, 
+                discount, 
+                criteria.pay as pay_rate, 
+                status'
+            )
+            ->from('buy_lotto')
+            ->join('criteria', 'buy_lotto.criteria_id = criteria.id', 'LEFT')
+            ->where('accId', $id)
+            ->get();
         
         return $result->num_rows() > 0 ? $result->result() : false;
     }

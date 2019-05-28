@@ -617,29 +617,50 @@ class Member extends MX_Controller {
 
 	}
 
-	public function check_award()
+	public function show_lottery_result()
 	{
-		$this->load->helper('lotto_helper');
+		$this->data['title'] = 'ประวัติแทงหวย';
+		$this->data['content'] = 'show_lottery_result';
+
+		$this->load->view('template', $this->data);
+	}
+
+	public function get_lottery_result()
+	{
 		$this->load->model('lotto/lotto_model');
 
-		$list_buy_lotto = unserial_list($this->lotto_model->get_buy_lotto_by_id(get_account_id()));
+		$list_buy_lotto = $this->lotto_model->get_buy_lotto_by_id(get_account_id());
 
-		$response = get_lotto('16052562')['response'];
-
+		$table = "";
+		//$response = get_lotto('16052562')['response'];
+		// $result['answer'] = ($data['number'] == substr($response['prizes'][0]['number'][0], -2)) ? 'match' : 'not_match';
 		foreach($list_buy_lotto as $data)
 		{
-			
-			if ($type == 'number2_top' && $value != '')
-			{
-				$result['answer'] = ($data['number'] == substr($response['prizes'][0]['number'][0], -2)) ? 'match' : 'not_match';
-			}
+
+			$status = [
+				'wait' => '<label class="text-secondary">รอ</label>',
+				'win' => '<label class="text-success">ทายถูก</label>',
+				'lose' => '<label class="text-danger">ทายผิด</label>'
+			];
+
+			$discount = (($data->discount / 100) * $data->pay);
+
+			$table .= "
+				<tr>
+					<td>" . dateThai($data->created_at) . "</td>
+					<td>{$data->number}</td>
+					<td>{$data->name}</td>
+					<td>{$data->pay}</td>
+					<td class='text-danger'>-" . $discount . "</td>
+					<td class='text-primary'>" . ($data->pay - $discount) . "</td>
+					<td class='text-success'>" . ($data->pay * $data->pay_rate) . "</td>
+					<td>" . $status[$data->status] . "</td>
+					<td>" . ($data->status == 'win' ? "<label class='text-success'>" . ($data->pay * $data->pay_rate) . "</label>" : '0') . "</td>
+				</tr>
+			";
 		}
 		
-		pre_r($response);
-
-		pre_r($list_buy_lotto);
-
-		pre_r($result);
+		echo json_encode($table);
 	}
 
 }
