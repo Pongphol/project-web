@@ -26,6 +26,7 @@
         sum_total_2_digit()
         sum_total_3_digit()
         get_criteria_ajax()
+    
     })
     function get_criteria_ajax()
     {
@@ -75,7 +76,11 @@
             });
         };
         $(".input_number").inputFilter(function(value) {
-            return /^\d*$/.test(value) && (value === "" || parseInt(value) < 1000); });
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) < 1000); 
+        });
+        $(".input_pay").inputFilter(function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) < 10000); 
+        });
 
     }
     function validate_number_input()
@@ -403,6 +408,7 @@
                         $.notify('แจ้งถอนเงินสำเร็จ', {
                             className: 'success'
                         });
+                        $("input.form-control:text").val("")
                     }else{
                         $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
                             className: 'error'
@@ -410,8 +416,7 @@
                     }
                 }
             });
-        }
-        
+        }  
     }
 
 </script>   
@@ -428,15 +433,15 @@
                             </div>
                             <div class="col">
                                 <label><h3>บน</h3></label>
-                                <input type="text" class="form-control input_number" disabled id="number_top" name="number_top">
+                                <input type="text" class="form-control input_pay" disabled id="number_top" name="number_top">
                             </div>
                             <div class="col">
                                 <label><h3>โต๊ด</h3></label>
-                                <input type="text" class="form-control input_number" disabled id="number_tod" name="number_tod">
+                                <input type="text" class="form-control input_pay" disabled id="number_tod" name="number_tod">
                             </div>
                             <div class="col">
                                 <label><h3>ล่าง</h3></label>
-                                <input type="text" class="form-control input_number" disabled id="number_button" name="number_button">
+                                <input type="text" class="form-control input_pay" disabled id="number_button" name="number_button">
                             </div>
                             <div class="col">
                                     <button type="submit" class="btn btn-info btn-block large_button" id="input_table" onclick="input_number()">นำเข้าตาราง</button>
