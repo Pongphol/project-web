@@ -6,7 +6,7 @@ class Welcome extends MX_Controller {
 	public function index()
 	{
 		$this->load->model('account/account_model', 'acc_model');
-		$this->load->model('lotto_model');
+		$this->load->model('lotto/lotto_model');
 
 		$data['title'] = 'หน้าหลัก';
 		$data['content'] = 'index';
@@ -25,23 +25,16 @@ class Welcome extends MX_Controller {
 	private function add_lotto_latest()
 	{
 		$this->load->helper('lotto_helper');
-		$this->load->model('lotto_model');
+		$this->load->model('lotto/lotto_model');
 
-		$response = get_lotto('latest')['response'];
-
-		$data = [
-			'date' => stringDateThaiToDate($response['date']),
-			'prize_first' => serialize($response['prizes'][0]['number']),
-			'number_back_three' => serialize($response['runningNumbers'][1]['number']),
-			'number_back_two' => serialize($response['runningNumbers'][2]['number'])
-		];
+		$data = get_lotto_array();
 		
 		$this->lotto_model->insert_lotto($data);
 	}
 
 	public function get_lotto_latest()
 	{
-		$this->load->model('lotto_model');
+		$this->load->model('lotto/lotto_model');
 
 		$data = $this->lotto_model->select_lotto_latest();
 

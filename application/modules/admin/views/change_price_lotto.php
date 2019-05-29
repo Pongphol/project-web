@@ -18,7 +18,7 @@
                         {
                             echo "
                                 <tr id='" . $tr_id++ . "'>
-                                    <td>{$crit->number}</td>
+                                    <td>{$crit->name}</td>
                                     <td><input type='number' class='form-control' name='discount' disabled='disabled' value='{$crit->discount}'></td>
                                     <td><input type='number' class='form-control' name='pay' disabled='disabled' value='{$crit->pay}'></td>
                                     <td><button type='button' class='btn btn-warning change_lotto' value='" . $crit->id . "'>แก้ไข</button></td>

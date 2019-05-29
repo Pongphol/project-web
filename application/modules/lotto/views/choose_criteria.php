@@ -16,7 +16,7 @@
                         {
                             echo "
                                 <tr>
-                                    <td>{$crit->number}</td>
+                                    <td>{$crit->name}</td>
                                     <td class='number'>{$crit->discount}%</td>
                                     <td class='number'>{$crit->pay}</td>
                                 </tr>

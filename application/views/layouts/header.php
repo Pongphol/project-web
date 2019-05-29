@@ -43,7 +43,7 @@
                     <!-- สำหรับแอดมิน -->
                     <?php if (is_admin()) : ?>
                         <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
-                        <a class="dropdown-item" href="<?php echo base_url('member/check_award'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
+                        <a class="dropdown-item" href="<?php echo base_url('member/show_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
                     <?php else : ?>
                     <!-- สำหรับสมาชิกทั่วไป -->
                     <?php endif; ?>
