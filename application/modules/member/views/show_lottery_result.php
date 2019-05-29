@@ -16,7 +16,7 @@ $(document).ready(function() {
 <div class="container-fluid mt-5" >
     <div class="mx-auto">
         <div class="card border-info mb-3">
-            <div class="card-header">ข้อมูลผู้ใช้</div>
+            <div class="card-header">ผลแทงหวย</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">

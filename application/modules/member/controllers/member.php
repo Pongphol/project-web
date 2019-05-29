@@ -625,37 +625,81 @@ class Member extends MX_Controller {
 		$this->load->view('template', $this->data);
 	}
 
+	public function get_lottery_by_date($date)
+	{
+		//$result['answer'] = ($data['number'] == substr($response['prizes'][0]['number'][0], -2)) ? 'match' : 'not_match';
+		//$date = date('Y-m-d',strtotime($data->created_at));
+		//$lotto_data = get_lotto_array();
+		//$this->lotto_model->insert_lotto($lotto_data);
+		$date = date('Y-m-d',strtotime($date));
+		$lotto = $this->lotto_model->select_lotto_by_date($date);
+		$lotto = ($lotto) ? unserial($lotto) : [];
+		return $lotto;
+	}
+
 	public function get_lottery_result()
 	{
+		$this->load->helper('lotto_helper');
 		$this->load->model('lotto/lotto_model');
 
 		$list_buy_lotto = $this->lotto_model->get_buy_lotto_by_id(get_account_id());
 
-		$table = "";
-		//$response = get_lotto('16052562')['response'];
-		// $result['answer'] = ($data['number'] == substr($response['prizes'][0]['number'][0], -2)) ? 'match' : 'not_match';
-		foreach($list_buy_lotto as $data)
+		foreach($list_buy_lotto as $row)
 		{
+			$result = $this->get_lottery_by_date($row->created_at);
 
+			if ($row->criteria_id == '1') // 3 ตัวบน
+			{
+				$status = lotto_answer($row->number, $result['prize_first'][0], -3);
+			}
+			elseif ($row->criteria_id == '2') // 3 ตัวโต๊ด
+			{
+				$status = lotto_answer($row->number, $result['prize_first'][0], -3);
+			}
+			elseif ($row->criteria_id == '3') // 3 ตัวล่าง
+			{
+				$status = lotto_answer($row->number, $result['number_back_three']);
+			}
+			elseif ($row->criteria_id == '4') // 2 ตัวโต๊ด
+			{
+				$status = lotto_answer($row->number, $result['prize_first'][0], -2);
+			}
+			elseif ($row->criteria_id == '5') // 2 ตัวบน
+			{
+				$status = lotto_answer($row->number, $result['prize_first'][0], -2);
+			}
+			elseif ($row->criteria_id == '6') // 2 ตัวล่าง
+			{
+				$status = lotto_answer($row->number, $result['number_back_two'][0]);
+			}
+			$this->lotto_model->update_status_lotto_by_id($status, $row->buy_lotto_id);
+		}
+
+		$list_buy_lotto = $this->lotto_model->get_buy_lotto_by_id(get_account_id());
+		
+		$table = "";
+
+		foreach($list_buy_lotto as $row)
+		{
 			$status = [
 				'wait' => '<label class="text-secondary">รอ</label>',
 				'win' => '<label class="text-success">ทายถูก</label>',
 				'lose' => '<label class="text-danger">ทายผิด</label>'
 			];
 
-			$discount = (($data->discount / 100) * $data->pay);
+			$discount = (($row->discount / 100) * $row->pay);
 
 			$table .= "
 				<tr>
-					<td>" . dateThai($data->created_at) . "</td>
-					<td>{$data->number}</td>
-					<td>{$data->name}</td>
-					<td>{$data->pay}</td>
+					<td>" . dateThai($row->created_at) . "</td>
+					<td class='text-info'>{$row->number}</td>
+					<td>{$row->criteria_name}</td>
+					<td class='text-info'>{$row->pay}</td>
 					<td class='text-danger'>-" . $discount . "</td>
-					<td class='text-primary'>" . ($data->pay - $discount) . "</td>
-					<td class='text-success'>" . ($data->pay * $data->pay_rate) . "</td>
-					<td>" . $status[$data->status] . "</td>
-					<td>" . ($data->status == 'win' ? "<label class='text-success'>" . ($data->pay * $data->pay_rate) . "</label>" : '0') . "</td>
+					<td class='text-info'>" . ($row->pay - $discount) . "</td>
+					<td class='text-success'>" . ($row->pay * $row->pay_rate) . "</td>
+					<td>" . $status[$row->status] . "</td>
+					<td>" . ($row->status == 'win' ? "<label class='text-success'>" . ($row->pay * $row->pay_rate) . "</label>" : '0') . "</td>
 				</tr>
 			";
 		}
