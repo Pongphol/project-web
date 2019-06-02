@@ -326,6 +326,8 @@ class Member extends MX_Controller {
 		$this->data['bank_admin'] =  $this->mm->get_name_banking();
 		/*To do
 			รับ session เพื่อ get ธนาคารของผู้ใช้ */
+		$userId = $this->session->userdata('account_id');
+		$this->data['bank_user'] = $this->mm->get_name_banking_by_userId($userId);
 
 		$this->load->view('template', $this->data);
 	}
@@ -380,7 +382,8 @@ class Member extends MX_Controller {
 	{
 		$this->load->model('member_model','mm');
 		$user_id = $this->session->userdata('account_id');
-		$data = $this->mm->get_history_inform_user_by_id($user_id); //fix รหัสผู้ใช้
+		
+		$data = $this->mm->get_history_inform_user_by_id(1); 
 		$temp_data = [];
 		foreach($data as $row)
 		{

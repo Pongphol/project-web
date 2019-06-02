@@ -14,7 +14,16 @@
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="ยืนยัน">
+                        <div class="row">
+                            <div class="col">
+                                <a href="<?php echo base_url('account/register'); ?>">
+                                <input type="button" class="btn btn-primary" value="สมัครสมาชิก">
+                                </a>
+                            </div>
+                            <div class="col" align='right'>
+                                <input type="submit" class="btn btn-success" value="ลงชื่อเข้าใช้งาน">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

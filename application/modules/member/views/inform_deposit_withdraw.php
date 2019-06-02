@@ -50,6 +50,7 @@
                         $('#admin_bank').val(null)
                         $('#date_input').val("")
                         $('#time_input').val("")
+                        get_history_ajax();
                     }
                 }
             });
@@ -79,6 +80,7 @@
                         $.notify('แจ้งถอนเงินสำเร็จ', {
                             className: 'success'
                         });
+                        get_history_ajax();
                     }else{
                         $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
                             className: 'error'
@@ -217,7 +219,7 @@
                                             <select class="form-control " id="user_bank">
                                                 <option disabled selected >-- เลือกบัญชีที่รับเงิน --</option>
                                                 <?php
-                                                    foreach($bank_admin as $option)
+                                                    foreach($bank_user as $option)
                                                     {
                                                         echo "<option style='background-image:url(".base_url().$option['picture'].");' value='".$option['id']."'>".$option['name_bank']."</option>";
                                                     }

@@ -14,7 +14,16 @@ class Member_model extends CI_Model
         $query = $this->db->query($sql)->result_array();
         return  $query;
     }
-
+    /*รับข้อมูลธนาคารของ ผู้ใช้โดยใช้ไอดีของผู้ใช้ */
+    function get_name_banking_by_userId($id)
+    {
+        $sql = "SELECT bank_account.id,banking.picture,CONCAT(banking.name,' ',bank_account.number) as name_bank
+                FROM `bank_account`
+                LEFT JOIN banking ON bank_account.type = banking.id
+                WHERE accId = $id";
+        $query = $this->db->query($sql)->result_array();
+        return  $query;
+    }
     /*เพิ่มข้อมูลการแจ้งฝากเงิน */
     function insert_deposit($data)
     {
@@ -41,6 +50,7 @@ class Member_model extends CI_Model
     function get_history_inform_user_by_id($userId)
     {
         $sql ="SELECT accId, amount, create_date ,tranfersDate,status,description FROM deposit_detail
+                WHERE accId = $userId
                 UNION ALL
                 SELECT accId, amount, create_date ,NULL AS tranfersDate,status,description FROM withdraw_detail
                 WHERE accId = $userId
