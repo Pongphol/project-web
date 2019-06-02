@@ -382,8 +382,7 @@ class Member extends MX_Controller {
 	{
 		$this->load->model('member_model','mm');
 		$user_id = $this->session->userdata('account_id');
-		
-		$data = $this->mm->get_history_inform_user_by_id(1); 
+		$data = $this->mm->get_history_inform_user_by_id($user_id); 
 		$temp_data = [];
 		foreach($data as $row)
 		{
