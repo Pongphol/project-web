@@ -526,12 +526,11 @@ class Member extends MX_Controller {
 		$number3 = $this->input->post('number3');
 		$total_cash = $this->input->post('total_cash');
 		$user_money = $this->mm->get_money_user_by_id($id)->money;
-
 		$data = [];
 
 		if($user_money >= $total_cash) // ตรวจสอบว่าเงินของผู้ใช้เพียงพอต่อการซื้อหวยหรือไม่
 		{
-			$update['money'] = $user_money - $total_cash;
+			$update['money'] = ($user_money - $total_cash);
 			$this->mm->update_monney_by_id($update,$id);
 
 			//เลข 2 ตัว
@@ -673,6 +672,12 @@ class Member extends MX_Controller {
 				elseif ($row->criteria_id == '6') // 2 ตัวล่าง
 				{
 					$status = lotto_answer($row->number, $result['number_back_two'][0]);
+				}
+				if($status  == 'win' && $row->status != 'wait'){
+					$this->load->model('member_model','mm'); 
+					$user_money = $this->mm->get_money_user_by_id(get_account_id())->money;
+					$update['money'] = ($user_money + ($row->pay * $row->pay_rate));
+					$this->mm->update_monney_by_id($update,get_account_id());
 				}
 				$this->lotto_model->update_status_lotto_by_id($status, $row->buy_lotto_id);
 			}

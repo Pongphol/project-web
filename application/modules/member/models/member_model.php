@@ -42,7 +42,7 @@ class Member_model extends CI_Model
     /*รับข้อมูลเงินของผู้ใช้ */
     function get_money_user_by_id($userId)
     {
-        $sql = "SELECT money FROM account WHERE id = 1";
+        $sql = "SELECT money FROM account WHERE id = $userId";
         $query = $this->db->query($sql)->row();
         return $query;
     }

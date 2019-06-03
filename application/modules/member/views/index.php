@@ -1,1 +1,0 @@
-<?php echo '<pre>'; print_r($account); echo '</pre>'; ?>

@@ -83,7 +83,7 @@ $('#form-user').submit(function(e) {
                         }
                         else
                         {
-                            window.location.href = "<?php echo base_url('member'); ?>";
+                            window.location.href = "<?php echo base_url('welcome'); ?>";
                         }
                     });
                 });

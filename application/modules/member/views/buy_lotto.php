@@ -405,12 +405,12 @@
                 success: function(result){
                     console.log(result.status)
                     if(result.status == "success"){
-                        $.notify('แจ้งถอนเงินสำเร็จ', {
+                        $.notify('ลงหวยสำเร็จ', {
                             className: 'success'
                         });
                         $("input.form-control:text").val("")
                     }else{
-                        $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
+                        $.notify('ยอดเงินไม่เพียงพอ', {
                             className: 'error'
                         });
                     }
