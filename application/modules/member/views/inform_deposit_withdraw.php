@@ -80,6 +80,8 @@
                         $.notify('แจ้งถอนเงินสำเร็จ', {
                             className: 'success'
                         });
+                        $('#withdraw_money').val("")
+                        $('#user_bank').val(null)
                         get_history_ajax();
                     }else{
                         $.notify('ยอดเงินที่ถอนไม่เพียงพอ', {
