@@ -23,12 +23,23 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
+            <?php if (is_admin()) : ?>
+            <!-- สำหรับแอดมิน -->
+            <li class="nav-item <?php if ($this->uri->segment(1) == "approval_inform" || $this->uri->segment(2) == "approval_inform"){ echo 'active'; }?>">
+                <a class="nav-link" href="<?php echo base_url('admin/approval_inform'); ?>">อนุมัติการฝากถอน <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item <?php if ($this->uri->segment(1) == "history_inform" || $this->uri->segment(2) == "history_inform"){ echo 'active'; }?>">
+                <a class="nav-link" href="<?php echo base_url('admin/history_inform'); ?>">ประวัติิการแจ้งฝากถอน <span class="sr-only">(current)</span></a>
+            </li>
+            <?php else: ?>
+            <!-- สำหรับสมาชิกทั่วไป -->
             <li class="nav-item <?php if ($this->uri->segment(1) == "choose_criteria" || $this->uri->segment(2) == "choose_criteria"){ echo 'active'; }?>">
                 <a class="nav-link" href="<?php echo base_url('lotto/choose_criteria'); ?>">เล่นหวย <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item <?php if ($this->uri->segment(1) == "inform_deposit_withdraw_show" || $this->uri->segment(2) == "inform_deposit_withdraw_show"){ echo 'active'; }?>">
                 <a class="nav-link" href="<?php echo base_url('member/inform_deposit_withdraw_show'); ?>">แจ้งฝาก/ถอน</a>
             </li>
+            <?php endif; ?>
         </ul>
         <?php if(is_logged_in() && isset($account)) : ?>
         <ul class="nav nav-pills">
@@ -39,12 +50,13 @@
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                     <p class="dropdown-item"><i class="fab fa-btc"></i>&nbsp;:&nbsp;<?php echo number_format($account->money); ?></p>
                     <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
-                    <div class="dropdown-divider"></div>
-                    <!-- สำหรับแอดมิน -->
                     <?php if (is_admin()) : ?>
-                        <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
-                        <a class="dropdown-item" href="<?php echo base_url('member/show_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
+                    <!-- สำหรับแอดมิน -->
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/get_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;อัพเดทผลหวย</a>
                     <?php else : ?>
+                    <a class="dropdown-item" href="<?php echo base_url('member/show_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
                     <!-- สำหรับสมาชิกทั่วไป -->
                     <?php endif; ?>
                     <div class="dropdown-divider"></div>

@@ -356,4 +356,20 @@ class Admin extends MX_Controller {
 		echo json_encode($data);
 	}
 
+	public function get_lottery_result()
+	{
+		$this->load->helper('lotto_helper');
+		$this->load->model('lotto/lotto_model');
+
+		$date_lotto = $this->lotto_model->check_lotto_by_date(date('Y-m-d'));
+
+		if ($date_lotto === false)
+		{
+			// ดึง api ผลหวยแล้วเก็บลงใน database
+			$lotto_data = get_lotto_array();
+			$this->lotto_model->insert_lotto($lotto_data);
+			redirect('');
+		}
+	}
+
 }

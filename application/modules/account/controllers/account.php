@@ -196,10 +196,10 @@ class Account extends MX_Controller {
 			[
 				'field' => 'bank_number',
 				'label' => 'หมายเลขบัญชี',
-				'rules' => 'required|numeric',
+				'rules' => 'required|alpha_dash',
 				'errors' => [
 					'required' => 'กรุณากรอก{field}',
-					'numeric' => '{field}ต้องเป็นตัวเลขเท่านั้น'
+					'alpha_dash' => '{field}ไม่ถูกต้อง'
 				]
 			],
 		];
@@ -222,12 +222,12 @@ class Account extends MX_Controller {
 
 			$this->db->trans_start();
 
-			$member_id = $this->acc_model->insert_account($insert_data);
+			$account_id = $this->acc_model->insert_account($insert_data);
 
-			if ($member_id != false)
+			if ($account_id != false)
 			{
 				$insert_data = [
-					'accId' => $member_id,
+					'accId' => $account_id,
 					'type' => $this->input->post('bank_type'),
 					'number' => $this->input->post('bank_number'),
 				];

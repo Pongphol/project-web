@@ -49,7 +49,9 @@ class Lotto_model extends CI_Model
 
     public function insert_lotto($data)
     {
-        $result = $this->select_lotto_by_date($date['date']);
+        $result = $this->db->where('date', $data['date'])
+            ->limit(1)
+            ->get('lotto');
         return $result->num_rows() == 0 ? $this->db->insert('lotto', $data) : false;
     }
 
@@ -61,13 +63,19 @@ class Lotto_model extends CI_Model
         return $result->num_rows() > 0 ? $result->row() : false;
     }
 
-    public function select_lotto_latest()
+    public function check_lotto_by_date($date)
     {
-        $result = $this->db->order_by('id', 'ASC')
+        $result = $this->db->where('date', $date)
             ->limit(1)
             ->get('lotto');
+        return $result->num_rows() > 0 ? true : false;
+    }
 
-        return ($result->num_rows() > 0) ? $result->row() : false;
+    public function select_lotto_latest()
+    {
+        $result = $this->db->get('lotto');
+
+        return ($result->num_rows() > 0) ? $result->last_row() : false;
     }
 }
 

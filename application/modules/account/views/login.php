@@ -79,7 +79,7 @@ $('#form-user').submit(function(e) {
                         $(this).remove();
                         if (response.account_role == 'admin')
                         {
-                            window.location.href = "<?php echo base_url('admin'); ?>";
+                            window.location.href = "<?php echo base_url('admin/approval_inform'); ?>";
                         }
                         else
                         {
