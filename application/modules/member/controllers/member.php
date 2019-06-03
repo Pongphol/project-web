@@ -673,7 +673,7 @@ class Member extends MX_Controller {
 				{
 					$status = lotto_answer($row->number, $result['number_back_two'][0]);
 				}
-				if($status  == 'win' && $row->status != 'wait'){
+				if($status  == 'win' && $row->status == 'wait'){
 					$this->load->model('member_model','mm'); 
 					$user_money = $this->mm->get_money_user_by_id(get_account_id())->money;
 					$update['money'] = ($user_money + ($row->pay * $row->pay_rate));
