@@ -130,6 +130,10 @@
                             $('#number2_top_inp'+i).val(number_top)
                             $('#number2_tod_inp'+i).val("")
                             $('#number2_button_inp'+i).val(number_button)
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }else{
                             result_tod =  permutate.getPermutations(number, 2);
@@ -140,6 +144,10 @@
                                 $('#number2_tod_inp'+j).val(number_tod)
                                 $('#number2_button_inp'+j).val(number_button)
                             }
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }
                     }
@@ -155,6 +163,10 @@
                             $('#number3_top_inp'+i).val(number_top)
                             $('#number3_tod_inp'+i).val("")
                             $('#number3_button_inp'+i).val(number_button)
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }else{
                             result_tod =  permutate.getPermutations(number, 3);
@@ -165,6 +177,10 @@
                                 $('#number3_tod_inp'+j).val(number_tod)
                                 $('#number3_button_inp'+j).val(number_button)
                             }
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }
                         break;
