@@ -366,7 +366,9 @@
     }
     function sum_total()
     {
-        sum  = parseInt($('#cash2_net').val()) || 0 + parseInt($('#cash3_net').val()) || 0
+        //console.log("number2 :"+$('#cash2_net').val())
+        //console.log("number3 :"+$('#cash3_net').val())
+        sum  = (parseInt($('#cash2_net').val()) || 0) + (parseInt($('#cash3_net').val()) || 0)
         $('#cash_total').val(sum.toFixed(2))
     }
     function comfirm_buy()
