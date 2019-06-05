@@ -8,6 +8,48 @@ class Account_model extends CI_Model
         return $banking->result_object();
     }
 
+    private function make_query()
+    {
+        $this->db->from('account');
+        $this->db->where('role', 'user');
+
+        if ($this->input->post('search')['value'])
+        {
+            $this->db->group_start();
+            $this->db->like('fname', $this->input->post('search')['value']);
+            $this->db->or_like('lname', $this->input->post('search')['value']);
+            $this->db->group_end();
+        }
+
+        if ($this->input->post('length') != -1)
+        {
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
+    }
+
+    public function get_all_member()
+    {
+        $this->make_query();
+        $query = $this->db->get();
+        
+        return $query->num_rows() > 0 ? $query->result() : [];
+    }
+
+    public function get_filtered_data()
+    {
+        $this->make_query();
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+
+    public function get_all_data()
+    {
+        $this->make_query();
+
+        return $this->db->count_all_results();
+    }
+
     public function insert_account($data)
     {
         $this->db->insert('account', $data);

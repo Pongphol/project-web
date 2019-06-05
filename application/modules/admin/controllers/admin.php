@@ -16,6 +16,49 @@ class Admin extends MX_Controller {
 		$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
 	}
 
+	public function index()
+	{
+		redirect('admin/approval_inform');
+	}
+
+	public function manage_member()
+	{
+		$this->load->model('account/account_model');
+
+		$this->data['title'] = 'จัดการสมาชิก';
+		$this->data['content'] = 'manage_member';
+		//$this->data['members'] = $this->account_model->get_all_member();
+
+		$this->load->view('template', $this->data);
+	}
+
+	public function get_all_member()
+	{
+		$this->load->model('account/account_model');
+		$members = $this->account_model->get_all_member();
+		$data = [];
+
+		foreach ($members as $member)
+		{
+			$sub_array = [];
+			$sub_array[] = "{$member->fname} {$member->lname}";
+			$sub_array[] = '
+				<a href="' . base_url('admin/set_lotto_table_member') . '" class="btn btn-primary">เปลี่ยนเกณฑ์ตารางหวย</a>
+				<a href="' . base_url('admin/set_status_member') . '" class="btn btn-primary">เปลี่ยนสถานะผู้ใช้</a>
+			';
+			$data[] = $sub_array;
+		}
+
+		$output = [
+			'draw' => intval($this->input->post('draw')),
+			'recordsTotal' => $this->account_model->get_all_data(),
+			'recordsFiltered' => $this->account_model->get_filtered_data(),
+			'data' => $data
+		];
+
+		echo json_encode($output);
+	}
+
 	public function change_price_lotto()
 	{
 		$this->load->model('admin_model');

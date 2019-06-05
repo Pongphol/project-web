@@ -5,14 +5,15 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> <!-- CSS DataTable -->
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>resources/js/all.min.js" type="text/javascript"></script>
     <script src=<?php echo base_url()."resources/js/holder.min.js" ?>> </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script>
     <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> <!-- JS DataTable -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> <!-- JS Bootstrap DataTable -->
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary custom">
@@ -53,6 +54,7 @@
                     <?php if (is_admin()) : ?>
                     <!-- สำหรับแอดมิน -->
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/manage_member'); ?>"><i class="fas fa-cog"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
                     <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
                     <a class="dropdown-item" href="<?php echo base_url('admin/get_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;อัพเดทผลหวย</a>
                     <?php else : ?>

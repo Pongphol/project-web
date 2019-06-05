@@ -6,14 +6,14 @@ class Member extends MX_Controller {
 	private $data = false;
 
 	public function __construct()
-    {
+	{
 		parent::__construct();
 		require_login('login');
 		
 		// หลังจากมีการล็อคอินแล้ว
 		$this->load->model('account/account_model', 'acc_model');
 		$this->data['account'] = $this->acc_model->get_account_data_by_id($this->session->userdata('account_id'));
-    }
+	}
 
 	public function index()
 	{
@@ -673,7 +673,8 @@ class Member extends MX_Controller {
 				{
 					$status = lotto_answer($row->number, $result['number_back_two'][0]);
 				}
-				if($status  == 'win' && $row->status != 'wait'){
+				
+				if($status  == 'win' && $row->status == 'wait'){
 					$this->load->model('member_model','mm'); 
 					$user_money = $this->mm->get_money_user_by_id(get_account_id())->money;
 					$update['money'] = ($user_money + ($row->pay * $row->pay_rate));
