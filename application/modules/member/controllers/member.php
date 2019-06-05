@@ -680,6 +680,7 @@ class Member extends MX_Controller {
 					$update['money'] = ($user_money + ($row->pay * $row->pay_rate));
 					$this->mm->update_monney_by_id($update,get_account_id());
 				}
+				
 				$this->lotto_model->update_status_lotto_by_id($status, $row->buy_lotto_id);
 			}
 

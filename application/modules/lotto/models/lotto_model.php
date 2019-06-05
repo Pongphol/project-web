@@ -42,6 +42,7 @@ class Lotto_model extends CI_Model
             ->from('buy_lotto')
             ->join('criteria', 'buy_lotto.criteria_id = criteria.id', 'LEFT')
             ->where('accId', $id)
+            ->order_by('created_at','DESC')
             ->get();
         
         return $result->num_rows() > 0 ? $result->result() : false;

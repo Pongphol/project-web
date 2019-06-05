@@ -41,7 +41,7 @@
                         butTwo = result[5]['discount'] / 100
                         discount_2_digit(topTwo,todTwo,butTwo)
                     })
-                    $('.input_number2 ').on('keyup change focus',function(){
+                    $('.input_number3 ').on('keyup change focus',function(){
                         topThree = result[0]['discount'] / 100
                         todThree = result[1]['discount'] / 100
                         butThree = result[2]['discount'] / 100
@@ -80,6 +80,12 @@
         });
         $(".input_pay").inputFilter(function(value) {
             return /^\d*$/.test(value) && (value === "" || parseInt(value) < 10000); 
+        });
+        $(".number2").inputFilter(function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) < 100); 
+        });
+        $(".number3").inputFilter(function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) < 1000); 
         });
 
     }
@@ -124,6 +130,10 @@
                             $('#number2_top_inp'+i).val(number_top)
                             $('#number2_tod_inp'+i).val("")
                             $('#number2_button_inp'+i).val(number_button)
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }else{
                             result_tod =  permutate.getPermutations(number, 2);
@@ -134,6 +144,10 @@
                                 $('#number2_tod_inp'+j).val(number_tod)
                                 $('#number2_button_inp'+j).val(number_button)
                             }
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }
                     }
@@ -149,6 +163,10 @@
                             $('#number3_top_inp'+i).val(number_top)
                             $('#number3_tod_inp'+i).val("")
                             $('#number3_button_inp'+i).val(number_button)
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }else{
                             result_tod =  permutate.getPermutations(number, 3);
@@ -159,6 +177,10 @@
                                 $('#number3_tod_inp'+j).val(number_tod)
                                 $('#number3_button_inp'+j).val(number_button)
                             }
+                            $('#number').val("")
+                            $('#number_top').val("")
+                            $('#number_tod').val("")
+                            $('#number_button').val("")
                             break;
                         }
                         break;
@@ -360,7 +382,9 @@
     }
     function sum_total()
     {
-        sum  = parseInt($('#cash2_net').val()) + parseInt($('#cash3_net').val())
+        //console.log("number2 :"+$('#cash2_net').val())
+        //console.log("number3 :"+$('#cash3_net').val())
+        sum  = (parseInt($('#cash2_net').val()) || 0) + (parseInt($('#cash3_net').val()) || 0)
         $('#cash_total').val(sum.toFixed(2))
     }
     function comfirm_buy()
@@ -469,7 +493,7 @@
                                             for($i = 0 ; $i < 10 ; $i++)
                                             {
                                                 echo "<tr>";
-                                                echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_inp{$i}' name='number2_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number2 number2 number_format' id='number2_inp{$i}' name='number2_inp[{$i}]' ></td>";
                                                 echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_top_inp{$i}' name='number2_top_inp[{$i}]' ></td>";
                                                 echo "<td><input type='text' class='form-control input_number2 number_format'  id='number2_tod_inp{$i}' name='number2_tod_inp[{$i}]' ></td>";
                                                 echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_button_inp{$i}' name='number2_button_inp[{$i}]' ></td>";
@@ -497,7 +521,7 @@
                                             for($i = 0 ; $i < 10 ; $i++)
                                             {
                                                 echo "<tr>";
-                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_inp{$i}' name='number3_inp[{$i}]' ></td>";
+                                                echo "<td><input type='text' class='form-control input_number3  number3 number_format' id='number3_inp{$i}' name='number3_inp[{$i}]' ></td>";
                                                 echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_top_inp{$i}' name='number3_top_inp[{$i}]' ></td>";
                                                 echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_tod_inp{$i}' name='number3_tod_inp[{$i}]' ></td>";
                                                 echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_button_inp{$i}' name='number3_button_inp[{$i}]' ></td>";
