@@ -26,7 +26,7 @@
         sum_total_2_digit()
         sum_total_3_digit()
         get_criteria_ajax()
-    
+        show_option_number()
     })
     function get_criteria_ajax()
     {
@@ -136,7 +136,10 @@
                             $('#number_button').val("")
                             break;
                         }else{
-                            result_tod =  permutate.getPermutations(number, 2);
+                            var result_tod =  []
+                            $.each($("input[name='list_num']:checked"), function(){            
+                                result_tod.push($(this).val());
+                            });
                             var temp = 0;
                             for(var j = i ; j < i+result_tod.length ; j++){
                                 $('#number2_inp'+j).val(result_tod[temp++])
@@ -169,7 +172,10 @@
                             $('#number_button').val("")
                             break;
                         }else{
-                            result_tod =  permutate.getPermutations(number, 3);
+                            var result_tod =  []
+                            $.each($("input[name='list_num']:checked"), function(){            
+                                result_tod.push($(this).val());
+                            });
                             var temp = 0;
                             for(var j = i ; j < i+result_tod.length ; j++){
                                 $('#number3_inp'+j).val(result_tod[temp++])
@@ -218,7 +224,6 @@
                 results = [];
                 doPermute(chars, output, used, size, 0);
                 results = [...new Set(results)];
-                console.log(results)
                 return results;
             }
         }
@@ -382,8 +387,6 @@
     }
     function sum_total()
     {
-        //console.log("number2 :"+$('#cash2_net').val())
-        //console.log("number3 :"+$('#cash3_net').val())
         sum  = (parseInt($('#cash2_net').val()) || 0) + (parseInt($('#cash3_net').val()) || 0)
         $('#cash_total').val(sum.toFixed(2))
     }
@@ -427,7 +430,6 @@
                     total_cash : $('#cash_total').val()
                 },
                 success: function(result){
-                    console.log(result.status)
                     if(result.status == "success"){
                         $.notify('ลงหวยสำเร็จ', {
                             className: 'success'
@@ -442,6 +444,42 @@
             });
         }  
     }
+    function show_option_number()
+    {
+        var table = "<div class='col'>"
+            table += "<input type='checkbox' id='check_all_number'>"
+            table += "<label>เลือกทั้งหมด</label>"               
+            table += "</div>"
+            $('#number_tod_list').html(table)
+        $('#number').keyup(function(){
+            var table = "<div class='col'>"
+            table += "<input type='checkbox' id='check_all_number'>"
+            table += "<label>เลือกทั้งหมด</label>"               
+            table += "</div>"
+            $('#number_tod_list').html(table)
+            if($('#number').val().toString().length == 2){
+                result_tod =  permutate.getPermutations($('#number').val(), 2);
+                for(var i = 0 ; i < result_tod.length ; i++){
+                    console.log(result_tod[i])
+                    table += "<div class='col'>"
+                    table += "<input type='checkbox'  value='"+result_tod[i]+"' name='list_num'>"
+                    table += "<label>"+result_tod[i]+"</label>"
+                    table += "</div>"
+                }
+                $('#number_tod_list').html(table)
+            }else if($('#number').val().toString().length == 3){
+                result_tod =  permutate.getPermutations($('#number').val(), 3);
+                for(var i = 0 ; i < result_tod.length ; i++){
+                    console.log(result_tod[i])
+                    table += "<div class='col'>"
+                    table += "<input type='checkbox'  value='"+result_tod[i]+"' name='list_num'>"
+                    table += "<label>"+result_tod[i]+"</label>"
+                    table += "</div>"
+                }
+                $('#number_tod_list').html(table)
+            }
+        })
+    }
 
 </script>   
 <div class="container mt-5" >
@@ -449,27 +487,31 @@
         <div class="card-header"><h4>ลงหวย</h4></div>
             <div class="card-body">
                 <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label><h3>เลข</h3></label>
+                    <table class="table">
+                        <tr>
+                            <th><h3>เลข</h3></th>
+                            <th><h3>บน</h3></th>
+                            <th><h3>โต๊ด</h3></th>
+                            <th><h3>ล่าง</h3></th>
+                            <th rowspan="2"><button type="submit" class="btn btn-info btn-block large_button" id="input_table" onclick="input_number()">นำเข้าตาราง</button></th>
+                        </tr>
+                        <tr>
+                            <td>
                                 <input type="text" class="form-control input_number" id="number" name="number">
                                 <div id="validate_number_input"></div>
-                            </div>
-                            <div class="col">
-                                <label><h3>บน</h3></label>
+                            </td>
+                            <td>
                                 <input type="text" class="form-control input_pay" disabled id="number_top" name="number_top">
-                            </div>
-                            <div class="col">
-                                <label><h3>โต๊ด</h3></label>
+                            </td>
+                            <td>
                                 <input type="text" class="form-control input_pay" disabled id="number_tod" name="number_tod">
-                            </div>
-                            <div class="col">
-                                <label><h3>ล่าง</h3></label>
+                            </td>
+                            <td>
                                 <input type="text" class="form-control input_pay" disabled id="number_button" name="number_button">
-                            </div>
-                            <div class="col">
-                                    <button type="submit" class="btn btn-info btn-block large_button" id="input_table" onclick="input_number()">นำเข้าตาราง</button>
-                            </div>
+                            </td>
+                        </tr>
+                    </table>
+                        <div class="row" id="number_tod_list">
                         </div>
                 </div>
                 <div class="form-group">
