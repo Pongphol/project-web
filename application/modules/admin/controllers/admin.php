@@ -27,7 +27,7 @@ class Admin extends MX_Controller {
 
 		$this->data['title'] = 'จัดการสมาชิก';
 		$this->data['content'] = 'manage_member';
-		//$this->data['members'] = $this->account_model->get_all_member();
+		$this->data['members'] = $this->account_model->get_all_member();
 
 		$this->load->view('template', $this->data);
 	}
@@ -41,10 +41,11 @@ class Admin extends MX_Controller {
 		foreach ($members as $member)
 		{
 			$sub_array = [];
+			$sub_array[] = "{$member->id}";
 			$sub_array[] = "{$member->fname} {$member->lname}";
 			$sub_array[] = '
 				<a href="' . base_url('admin/set_lotto_table_member') . '" class="btn btn-primary">เปลี่ยนเกณฑ์ตารางหวย</a>
-				<a href="' . base_url('admin/set_status_member') . '" class="btn btn-primary">เปลี่ยนสถานะผู้ใช้</a>
+				<button type="button" id="btn_show_status_member" onclick="getStatusMember(' . $member->id . ')" data-toggle="modal" class="btn btn-primary">เปลี่ยนสถานะผู้ใช้</button>
 			';
 			$data[] = $sub_array;
 		}

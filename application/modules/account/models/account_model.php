@@ -1,5 +1,4 @@
 <?php
-
 class Account_model extends CI_Model
 {
     public function get_banking_list()
@@ -8,8 +7,24 @@ class Account_model extends CI_Model
         return $banking->result_object();
     }
 
+    public function get_status_member_by_id($id)
+    {
+        $result = $this->db->select('id, status')
+            ->where(['id' => $id, 'role' => 'user'])
+            ->get('account');
+        return $result->num_rows() > 0 ? $result->row() : false;
+    }
+
+    public function update_status_member_by_id($status, $id)
+    {
+        $this->db->where('id', $id)
+            ->update('account', ['status' => strtolower($status)]);
+    }
+
     private function make_query()
     {
+        $order_column = ['id', 'fname', null];
+
         $this->db->from('account');
         $this->db->where('role', 'user');
 
@@ -19,6 +34,18 @@ class Account_model extends CI_Model
             $this->db->like('fname', $this->input->post('search')['value']);
             $this->db->or_like('lname', $this->input->post('search')['value']);
             $this->db->group_end();
+        }
+
+        if ($this->input->post('order'))
+        {
+            $this->db->order_by(
+                $order_column[$this->input->post('order')[0]['column']], 
+                $this->input->post('order')[0]['dir']
+            );
+        }
+        else
+        {
+            $this->db->order_by('id', 'DESC');
         }
 
         if ($this->input->post('length') != -1)
@@ -82,15 +109,10 @@ class Account_model extends CI_Model
 
     public function check_login($username, $password)
     {
-        $account = $this->db
-            ->where('username', $username)
-            ->or_where('email', $username)
-            ->where('password', $password)
-            ->get('account');
 
         $account = $this->db->query(
-            'SELECT * FROM account WHERE (username = ? OR email = ?) AND password = ?',
-            [$username, $username, $password]
+            'SELECT * FROM account WHERE (username = ? OR email = ?) AND password = ? AND status = ?',
+            [$username, $username, $password, 'enable']
         );
         
         if ($account->num_rows() > 0)
@@ -99,7 +121,6 @@ class Account_model extends CI_Model
         }
     }
 
-    
     /* เพิ่มบัญชีธนาคาร */
     public function insert_bank_account_by_id($data, $id)
     {

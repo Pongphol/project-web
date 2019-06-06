@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2019 at 07:11 PM
+-- Generation Time: Jun 06, 2019 at 07:33 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -43,6 +43,7 @@ CREATE TABLE `account` (
   `birthday` date NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `role` enum('user','admin') COLLATE utf8_unicode_ci NOT NULL,
+  `status` enum('disable','enable') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'disable',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -51,8 +52,10 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 1604, 'male', '0000-00-00', '0830131416', 'admin', '2019-05-16 19:15:28', '2019-05-25 19:17:00');
+INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 1604, 'male', '0000-00-00', '0830131416', 'admin', 'enable', '2019-05-16 19:15:28', '2019-06-06 05:17:58'),
+(2, 'fluk', '1121', 'fluk@gmail.com', 'พงศ์พล', 'มาธิดา', 84234, 'male', '2018-07-13', '0864091932', 'user', 'enable', '2019-06-03 03:13:22', '2019-06-03 03:20:55'),
+(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 0, 'male', '2019-03-08', '0123456789', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -114,7 +117,9 @@ CREATE TABLE `bank_account` (
 --
 
 INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
-(2, 1, 2, '1234567890');
+(2, 1, 2, '1234567890'),
+(4, 2, 2, '1234567890-d'),
+(5, 3, 3, '1234567890-d');
 
 -- --------------------------------------------------------
 
@@ -138,17 +143,12 @@ CREATE TABLE `buy_lotto` (
 --
 
 INSERT INTO `buy_lotto` (`id`, `accId`, `number`, `criteria_id`, `pay`, `status`, `created_at`, `updated_at`) VALUES
-(12, 1, '26', '4', '500', 'win', '2019-05-29 00:42:26', '2019-05-30 00:05:12'),
-(13, 1, '62', '4', '500', 'lose', '2019-05-29 00:42:26', '2019-05-30 00:05:12'),
-(14, 1, '12', '5', '200', 'lose', '2019-05-29 00:42:26', '2019-05-30 00:05:12'),
-(15, 1, '13', '5', '200', 'lose', '2019-05-29 00:42:26', '2019-05-30 00:05:12'),
-(16, 1, '13', '6', '400', 'lose', '2019-05-29 00:42:26', '2019-05-30 00:05:12'),
-(17, 1, '123', '2', '200', 'lose', '2019-05-29 00:42:49', '2019-05-30 00:05:12'),
-(18, 1, '132', '2', '200', 'lose', '2019-05-29 00:42:49', '2019-05-30 00:05:12'),
-(19, 1, '213', '2', '200', 'lose', '2019-05-29 00:42:49', '2019-05-30 00:05:12'),
-(20, 1, '231', '2', '200', 'lose', '2019-05-29 00:42:49', '2019-05-30 00:05:12'),
-(21, 1, '312', '2', '200', 'lose', '2019-05-29 00:42:49', '2019-05-30 00:05:12'),
-(22, 1, '321', '2', '200', 'lose', '2019-05-29 00:42:49', '2019-05-30 00:05:12');
+(41, 2, '61', '5', '200', 'win', '2019-06-03 14:38:47', '2019-06-06 06:39:30'),
+(42, 2, '12', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-06 06:39:30'),
+(43, 2, '12', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-06 06:39:30'),
+(44, 2, '21', '5', '200', 'lose', '2019-06-03 14:38:47', '2019-06-06 06:39:30'),
+(45, 2, '21', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-06 06:39:30'),
+(46, 2, '21', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-06 06:39:30');
 
 -- --------------------------------------------------------
 
@@ -241,7 +241,10 @@ CREATE TABLE `lotto` (
 --
 
 INSERT INTO `lotto` (`id`, `date`, `prize_first`, `number_back_three`, `number_back_two`) VALUES
-(16, '2019-05-29', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}');
+(16, '2019-05-16', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}'),
+(21, '2019-06-03', 'a:1:{i:0;s:6:\"516461\";}', 'a:2:{i:0;s:3:\"215\";i:1;s:3:\"560\";}', 'a:1:{i:0;s:2:\"46\";}'),
+(22, '0000-00-00', 'N;', 'N;', 'N;'),
+(23, '2019-06-01', 'a:1:{i:0;s:6:\"516461\";}', 'a:2:{i:0;s:3:\"215\";i:1;s:3:\"560\";}', 'a:1:{i:0;s:2:\"46\";}');
 
 -- --------------------------------------------------------
 
@@ -373,7 +376,7 @@ ALTER TABLE `withdraw_detail`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `admin_banking`
@@ -391,13 +394,13 @@ ALTER TABLE `banking`
 -- AUTO_INCREMENT for table `bank_account`
 --
 ALTER TABLE `bank_account`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `buy_lotto`
 --
 ALTER TABLE `buy_lotto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `criteria`
@@ -421,7 +424,7 @@ ALTER TABLE `lottery_result`
 -- AUTO_INCREMENT for table `lotto`
 --
 ALTER TABLE `lotto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `status`

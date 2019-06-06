@@ -266,6 +266,34 @@ class Account extends MX_Controller {
 		}
 	}
 
+	public function get_status_member()
+	{
+		if (!is_admin())
+		{
+			return;
+		}
+
+		$result['result'] = $this->acc_model->get_status_member_by_id($this->input->get('id'));
+		$result['status_member'] = ['disable' => 'ระงับการใช้งาน', 'enable' => 'พร้อมใช้งาน'];
+		
+		echo json_encode($result);
+	}
+
+	public function update_status_member()
+	{
+		$data['success'] = false;
+		
+		$this->acc_model->update_status_member_by_id($this->input->post('status'), $this->input->post('id'));
+
+		if ($this->db->affected_rows() > 0)
+		{
+			$data['success'] = true;
+			$data['message'] = 'อัพเดทสถานะผู้ใช้';
+		}
+
+		echo json_encode($data);
+	}
+
 }
 
 ?>
