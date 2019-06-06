@@ -5,10 +5,12 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> <!-- CSS DataTable -->
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>resources/js/all.min.js" type="text/javascript"></script>
     <script src=<?php echo base_url()."resources/js/holder.min.js" ?>> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script>
     <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script>

@@ -8,7 +8,7 @@ class Admin_model extends CI_Model
                 FROM deposit_detail 
                 LEFT JOIN account ON deposit_detail.accId = account.id
                 LEFT JOIN admin_banking ON deposit_detail.bankId = admin_banking.id
-                WHERE status = 1
+                WHERE deposit_detail.status = 1
                 ORDER BY deposit_detail.create_date ASC";
         $query = $this->db->query($sql)->result_array();
         return  $query;
