@@ -19,7 +19,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">สถานะผู้ใช้</h5>
+                <h5 class="modal-title" id="status_member_title">สถานะผู้ใช้</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -41,7 +41,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">เปลี่ยนเกณฑ์ตารางหวย</h5>
+                <h5 class="modal-title" id="criteria_title">เปลี่ยนเกณฑ์ตารางหวย</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -102,6 +102,8 @@ function getCriteriaMember(id)
             var tbody = $('#criteria_member > tbody');
             tbody.empty();
 
+            $('#change_criteria_member').find('h5#criteria_title').text('เปลี่ยนเกณฑ์ตารางหวย (' + response.user_name + ')');
+
             $.each(response.criteria, function (key, crit) {
                 tbody.append(
                     "<tr id='" + response.user_id + "'>" + 
@@ -129,6 +131,8 @@ function getStatusMember(id)
 
             $('#member_id').val(response.result.id);
             $('#status_member_field').empty();
+
+            $('#status_member_modal').find('h5#status_member_title').text('สถานะผู้ใช้ (' + response.user_name + ')');
 
             $.each(response.status_member, function (key, value) {
                 $('#status_member_field').append($("<option></option>")

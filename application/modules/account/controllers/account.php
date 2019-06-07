@@ -279,9 +279,11 @@ class Account extends MX_Controller {
 
 		$this->load->model('lotto/lotto_model');
 
-        $criteria = $this->lotto_model->get_criteria_user_by_id($this->input->get('id'));
+		$criteria = $this->lotto_model->get_criteria_user_by_id($this->input->get('id'));
+		$user = $this->acc_model->get_account_data_by_id($this->input->get('id'));
 
 		$result['user_id'] = ($criteria) ? $criteria->user_id : false;
+		$result['user_name'] = ($user) ? $user->fname . " " . $user->lname : false;
 		$result['criteria'] = ($criteria) ? unserialize(base64_decode($criteria->criteria)) : false;
 
 		echo json_encode($result);
@@ -318,7 +320,10 @@ class Account extends MX_Controller {
 			return;
 		}
 
+		$user = $this->acc_model->get_account_data_by_id($this->input->get('id'));
+
 		$result['result'] = $this->acc_model->get_status_member_by_id($this->input->get('id'));
+		$result['user_name'] = ($user) ? $user->fname . " " . $user->lname : false;
 		$result['status_member'] = ['disable' => 'ระงับการใช้งาน', 'enable' => 'พร้อมใช้งาน'];
 		
 		echo json_encode($result);
