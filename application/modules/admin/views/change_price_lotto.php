@@ -36,11 +36,12 @@
 <script>
 
 $('button.change_lotto[type=button]').click(function() {
+    
     var tr_id = $(this).closest('tr').attr('id');
     $(this).closest('tr#' + tr_id).find("input[type=number]").removeAttr('disabled');
 
-    var $this = $(this).toggleClass('change_lotto')
-    ;
+    var $this = $(this).toggleClass('change_lotto');
+    
     if($(this).hasClass('change_lotto'))
     {
         // บันทึก

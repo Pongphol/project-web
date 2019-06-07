@@ -232,10 +232,14 @@ class Account extends MX_Controller {
 					'number' => $this->input->post('bank_number'),
 				];
 
-				$result = $this->acc_model->insert_account_banking($insert_data);
-				$this->db->trans_complete();
+				$this->acc_model->insert_account_banking($insert_data);
+				$this->insert_criteria_user($account_id);
 
-				$data['success'] = $result;
+				if ($this->db->trans_complete())
+				{
+					$data['success'] = true;
+				}
+		
 			}
 			else
 			{
@@ -266,6 +270,47 @@ class Account extends MX_Controller {
 		}
 	}
 
+	public function get_criteria_member()
+	{
+		if (!is_admin())
+		{
+			return;
+		}
+
+		$this->load->model('lotto/lotto_model');
+
+        $criteria = $this->lotto_model->get_criteria_user_by_id($this->input->get('id'));
+
+		$result['user_id'] = ($criteria) ? $criteria->user_id : false;
+		$result['criteria'] = ($criteria) ? unserialize(base64_decode($criteria->criteria)) : false;
+
+		echo json_encode($result);
+	}
+
+	public function update_criteria_member()
+	{
+		if (!is_admin())
+		{
+			return;
+		}
+
+		$result['success'] = false;
+
+		$user_id = $this->input->post('id');
+		$criteria_json = json_decode($this->input->post('update_data'));
+		$criteria = base64_encode(serialize($criteria_json));
+
+		$query = $this->acc_model->update_criteria_user_by_id($criteria, $user_id);
+
+		if ($query)
+		{
+			$result['success'] = true;
+			$result['message'] = 'ข้อมูลถูกอัพเดทแล้ว';
+		}
+
+		echo json_encode($result);
+	}
+
 	public function get_status_member()
 	{
 		if (!is_admin())
@@ -281,6 +326,11 @@ class Account extends MX_Controller {
 
 	public function update_status_member()
 	{
+		if (!is_admin())
+		{
+			return;
+		}
+		
 		$data['success'] = false;
 		
 		$this->acc_model->update_status_member_by_id($this->input->post('status'), $this->input->post('id'));
@@ -292,6 +342,21 @@ class Account extends MX_Controller {
 		}
 
 		echo json_encode($data);
+	}
+
+	private function insert_criteria_user($id = null)
+	{
+		$this->load->model('lotto/lotto_model');
+
+		$criteria = $this->lotto_model->get_criteria();
+		$criteria_convert =  base64_encode(serialize($criteria));
+
+		$this->acc_model->insert_criteria_user_by_id(
+			[
+				'user_id' => $id, 
+				'criteria' => $criteria_convert
+			], $id
+		);
 	}
 
 }

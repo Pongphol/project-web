@@ -2,6 +2,7 @@
     <div class="card border-secondary mb-12" >
         <div class="card-header"><h4>หวยรัฐบาล</h4></div>
         <div class="card-body">
+            <?php if ($criteria) : ?>
             <table class="table table-hover table-bordered lotto_price_list">
                 <thead>
                     <tr>
@@ -22,12 +23,18 @@
                                 </tr>
                             ";
                         }
+
+                        echo '
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <a href="' . base_url('member/buy_lotto') . '" class="btn btn-success">เลือกราคานี้ <i class="far fa-arrow-alt-circle-up"></i></a>
+                                </td>
+                            </tr>';
+                    else : 
+                        echo '<strong class="d-block text-center">ไม่พบข้อมูล</strong>';
+                    endif;
                     ?>
-                    <tr>
-                        <td colspan="3" class="text-center">
-                            <a href="<?php echo base_url('member/buy_lotto'); ?>" class="btn btn-success">เลือกราคานี้ <i class="far fa-arrow-alt-circle-up"></i></a>
-                        </td>
-                    </tr>
+                
                 </tbody>
             </table>
         </div>

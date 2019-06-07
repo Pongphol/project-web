@@ -44,7 +44,7 @@ class Admin extends MX_Controller {
 			$sub_array[] = "{$member->id}";
 			$sub_array[] = "{$member->fname} {$member->lname}";
 			$sub_array[] = '
-				<a href="' . base_url('admin/set_lotto_table_member') . '" class="btn btn-primary">เปลี่ยนเกณฑ์ตารางหวย</a>
+				<button type="button" id="btn_show_change_criteria_user" onclick="getCriteriaMember(' . $member->id . ')" data-toggle="modal" class="btn btn-primary">เปลี่ยนเกณฑ์ตารางหวย</button>
 				<button type="button" id="btn_show_status_member" onclick="getStatusMember(' . $member->id . ')" data-toggle="modal" class="btn btn-primary">เปลี่ยนสถานะผู้ใช้</button>
 			';
 			$data[] = $sub_array;

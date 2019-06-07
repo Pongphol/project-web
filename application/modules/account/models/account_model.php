@@ -121,6 +121,27 @@ class Account_model extends CI_Model
         }
     }
 
+    public function get_criteria_user_by_id($data, $id)
+    {
+        $query = $this->db->where('user_id', $id)
+            ->get('criteria_user');
+        return $query->num_rows() > 0 ? $query->row : false;
+    }
+
+    public function insert_criteria_user_by_id($data, $id)
+    {
+        $query = $this->db->where('user_id', $id)
+            ->get('criteria_user');
+        return $query->num_rows() > 0 ? false : $this->db->insert('criteria_user', $data);
+    }
+
+    public function update_criteria_user_by_id($data, $id)
+    {
+        $this->db->where('user_id', $id)
+            ->update('criteria_user', ['criteria' => $data]);
+        return ($this->db->affected_rows() > 0) ? true : false;
+    }
+
     /* เพิ่มบัญชีธนาคาร */
     public function insert_bank_account_by_id($data, $id)
     {

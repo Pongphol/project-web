@@ -7,11 +7,18 @@ class Lotto_model extends CI_Model
         return $this->db->select($select)->get('criteria')->result();
     }
 
+    public function get_criteria_user_by_id($id)
+    {
+        $result = $this->db->where('user_id', $id)
+            ->get('criteria_user');
+        return $result->num_rows() > 0 ? $result->row() : false;
+    }
+
     public function get_criteria_by_id($id)
     {
         $result = $this->db->where('id', $id)
             ->get('criteria');
-        return $result->num_rows() == 1 ? $result->row() : false;
+        return $result->num_rows() > 0 ? $result->row() : false;
     }
 
     public function update_criteria($data, $id)
