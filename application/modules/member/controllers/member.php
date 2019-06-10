@@ -72,7 +72,7 @@ class Member extends MX_Controller {
 			[
 				'field' => 'email',
 				'label' => 'อีเมล',
-				'rules' => 'required|valid_email',
+				'rules' => 'required|valid_email|is_unique[account.email]',
 				'errors' => [
 					'required' => 'กรุณากรอก{field}',
 					'valid_email' => 'ต้องเป็นอีเมลเท่านั้น',

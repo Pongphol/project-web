@@ -113,9 +113,10 @@ class Account extends MX_Controller {
 			[
 				'field' => 'username',
 				'label' => 'ชื่อเข้าใช้งาน',
-				'rules' => 'required',
+				'rules' => 'required|is_unique[account.username]',
 				'errors' => [
-					'required' => 'กรุณาตั้ง{field}'
+					'required' => 'กรุณาตั้ง{field}',
+					'is_unique' => '{field}นี้ถูกใช้งานแล้ว'
 				]
 			],
 			[
@@ -202,48 +203,69 @@ class Account extends MX_Controller {
 					'alpha_dash' => '{field}ไม่ถูกต้อง'
 				]
 			],
+			[
+				'field' => 'picture_idcard',
+				'label' => 'รูปบัตรประชาชน',
+				'rules' => 'callback_validate_image[picture_idcard]'
+			],
+			[
+				'field' => 'picture_bookbank',
+				'label' => 'รูปสมุดบัญชีธนาคาร',
+				'rules' => 'callback_validate_image[picture_bookbank]'
+			],
 		];
 
 		$this->form_validation->set_rules($config);
 
 		if ($this->form_validation->run())
 		{
-			$insert_data = [
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password'),
-				'fname' => $this->input->post('fname'),
-				'lname' => $this->input->post('lname'),
-				'birthday' => $this->input->post('birthday'),
-				'gender' => $this->input->post('gender'),
-				'phone' => $this->input->post('phone'),
-				'email' => $this->input->post('email'),
-				'money' => intval(0)
-			];
+			$picture_idcard = $this->do_upload_image('picture_idcard');
+			$picture_bookbank = $this->do_upload_image('picture_bookbank');
 
-			$this->db->trans_start();
-
-			$account_id = $this->acc_model->insert_account($insert_data);
-
-			if ($account_id != false)
+			if ($picture_idcard['status'] === true && $picture_bookbank['status'] === true)
 			{
+				$idcard = $picture_idcard['filename'];
+				$bookbank = $picture_bookbank['filename'];
+				
 				$insert_data = [
-					'accId' => $account_id,
-					'type' => $this->input->post('bank_type'),
-					'number' => $this->input->post('bank_number'),
+					'username' => $this->input->post('username'),
+					'password' => $this->input->post('password'),
+					'fname' => $this->input->post('fname'),
+					'lname' => $this->input->post('lname'),
+					'birthday' => $this->input->post('birthday'),
+					'gender' => $this->input->post('gender'),
+					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
+					'idcard' => $idcard, 
+					'bookbank' => $bookbank,
+					'money' => intval(0)
 				];
-
-				$this->acc_model->insert_account_banking($insert_data);
-				$this->insert_criteria_user($account_id);
-
-				if ($this->db->trans_complete())
+	
+				$this->db->trans_start();
+	
+				$account_id = $this->acc_model->insert_account($insert_data);
+	
+				if ($account_id != false)
 				{
-					$data['success'] = true;
+					$insert_data = [
+						'accId' => $account_id,
+						'type' => $this->input->post('bank_type'),
+						'number' => $this->input->post('bank_number'),
+					];
+	
+					$this->acc_model->insert_account_banking($insert_data);
+					$this->insert_criteria_user($account_id);
+	
+					if ($this->db->trans_complete())
+					{
+						$data['success'] = true;
+					}
+			
 				}
-		
-			}
-			else
-			{
-				$data['success'] = false;
+				else
+				{
+					$data['success'] = false;
+				}
 			}
 		}
 		else
@@ -252,9 +274,38 @@ class Account extends MX_Controller {
 			{
 				$data['messages'][$key] = form_error($key);
 			}
+			if (isset($_FILES))
+			{
+				foreach ($_FILES as $key => $value)
+				{
+					$data['messages'][$key] = form_error($key);
+				}
+			}
 		}
 
 		echo json_encode($data);
+	}
+
+	private function do_upload_image($image_file)
+	{
+		if (isset($_FILES[$image_file]['name']))
+		{
+			$config['upload_path']          = './uploads/';
+			$config['allowed_types']        = 'gif|jpg|jpeg|png';
+			$config['max_size']             = 0;
+			$config['encrypt_name'] = true;
+
+			$this->load->library('upload', $config);
+			
+			if (!$this->upload->do_upload($image_file))
+			{
+				return ['status' => false];
+			}
+			else
+			{
+				return ['status' => true, 'filename' => $this->upload->data()['file_name']];
+			}
+		}
 	}
 
 	public function empty_check($str)
@@ -268,6 +319,35 @@ class Account extends MX_Controller {
 		{
 			return true;
 		}
+	}
+
+	public function validate_image($str, $name) {
+		$check = TRUE;
+
+		if ((!isset($_FILES[$name])) || $_FILES[$name]['size'] == 0) {
+			$this->form_validation->set_message('validate_image', 'กรุณาเลือก{field}');
+			$check = FALSE;
+		}
+		else if (isset($_FILES[$name]) && $_FILES[$name]['size'] != 0) {
+			$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "JPEG", "GIF", "PNG");
+			$allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
+			$extension = pathinfo($_FILES[$name]["name"], PATHINFO_EXTENSION);
+			$detectedType = exif_imagetype($_FILES[$name]['tmp_name']);
+			$type = $_FILES[$name]['type'];
+			if (!in_array($detectedType, $allowedTypes)) {
+				$this->form_validation->set_message('validate_image', 'Invalid Image Content!');
+				$check = FALSE;
+			}
+			if(filesize($_FILES[$name]['tmp_name']) > 5000000) {
+				$this->form_validation->set_message('validate_image', 'รูปภาพต้องไม่เกิน 50MB!');
+				$check = FALSE;
+			}
+			if(!in_array($extension, $allowedExts)) {
+				$this->form_validation->set_message('validate_image', "ไฟล์ต้องนามสกุลเป็น gif, jpeg, jpg, png เท่านั้น");
+				$check = FALSE;
+			}
+		}
+		return $check;
 	}
 
 	public function get_criteria_member()

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2019 at 09:18 AM
+-- Generation Time: Jun 10, 2019 at 12:34 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -42,6 +42,8 @@ CREATE TABLE `account` (
   `gender` enum('male','female') COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `idcard` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `bookbank` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `role` enum('user','admin') COLLATE utf8_unicode_ci NOT NULL,
   `status` enum('disable','enable') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'disable',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -52,16 +54,10 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `role`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 1604, 'male', '0000-00-00', '0830131416', 'admin', 'enable', '2019-05-16 19:15:28', '2019-06-06 05:17:58'),
-(2, 'fluk', '1121', 'fluk@gmail.com', 'พงศ์พล', 'มาธิดา', 84234, 'male', '2018-07-13', '0864091932', 'user', 'enable', '2019-06-03 03:13:22', '2019-06-03 03:20:55'),
-(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 0, 'male', '2019-03-08', '0123456789', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00'),
-(6, 'test02', '1234', 'yok123d@gmail.com', 'Test02', 'Test02', 0, 'male', '2019-02-08', '0864091932', 'user', 'enable', '2019-06-06 22:54:09', '0000-00-00 00:00:00'),
-(7, 'test03', '1234', 'dasda@dsa.com', 'Test03', 'Test03', 0, 'female', '2019-03-02', '0864091932', 'user', 'disable', '2019-06-06 22:56:53', '0000-00-00 00:00:00'),
-(8, 'sdfsffsdf', '1234', 'fluk@gmail.com', 'sdfsfs', 'sdfsfs', 0, 'male', '2019-01-01', '0123456789', 'user', 'disable', '2019-06-06 23:37:19', '0000-00-00 00:00:00'),
-(9, 'cvxcvx3211', '1234', 'dasda@dsa.com', 'asdasdas', 'asdfafasf', 0, 'female', '2019-06-01', '0123456789', 'user', 'disable', '2019-06-06 23:37:50', '0000-00-00 00:00:00'),
-(10, 'sadasdasd', '1234', 'dasda@dsa.com', 'sadasd', 'dasdasd', 0, 'male', '2019-06-07', '0123456789', 'user', 'disable', '2019-06-06 23:50:17', '0000-00-00 00:00:00'),
-(11, 'asdad', '1234', 'yok123d@gmail.com', 'asdasd', 'dasdada', 0, 'female', '2019-06-07', '0864091932', 'user', 'disable', '2019-06-06 23:55:18', '0000-00-00 00:00:00');
+INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `idcard`, `bookbank`, `role`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 1604, 'male', '0000-00-00', '0830131416', '', '', 'admin', 'enable', '2019-05-16 19:15:28', '2019-06-06 05:17:58'),
+(2, 'fluk', '1121', 'fluk@gmail.com', 'พงศ์พล', 'มาธิดา', 84234, 'male', '2018-07-13', '0864091932', '', '', 'user', 'enable', '2019-06-03 03:13:22', '2019-06-03 03:20:55'),
+(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 0, 'male', '2019-03-08', '0123456789', '', '', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -103,7 +99,7 @@ INSERT INTO `banking` (`id`, `name`, `picture`) VALUES
 (1, 'ไทยพาณิชย์', 'resources/images/scb.png'),
 (2, 'กสิกรไทย', 'resources/images/kkb.png'),
 (3, 'กรุงไทย', 'resources/images/kthai.png'),
-(4, 'กรุงเทพ', 'resources/images/bankok.png');
+(4, 'กรุงเทพ', 'resources/images/bangkok.jpg');
 
 -- --------------------------------------------------------
 
@@ -125,13 +121,7 @@ CREATE TABLE `bank_account` (
 INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
 (2, 1, 2, '1234567890'),
 (4, 2, 2, '1234567890-d'),
-(5, 3, 3, '1234567890-d'),
-(8, 6, 4, '1234567890-d'),
-(9, 7, 2, '1234567890d'),
-(10, 8, 1, '1234567890d'),
-(11, 9, 2, '1234567890d'),
-(12, 10, 1, '1234567890-d'),
-(13, 11, 1, '1234567890d');
+(5, 3, 3, '1234567890-d');
 
 -- --------------------------------------------------------
 
@@ -205,13 +195,7 @@ CREATE TABLE `criteria_user` (
 
 INSERT INTO `criteria_user` (`id`, `user_id`, `criteria`) VALUES
 (1, 2, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czoxOiIwIjt9aToxO086ODoic3RkQ2xhc3MiOjQ6e3M6MjoiaWQiO3M6MToiMiI7czo0OiJuYW1lIjtzOjIzOiIzIOC4leC4seC4p+C5guC4leC5iuC4lCI7czo4OiJkaXNjb3VudCI7czoyOiIzNSI7czozOiJwYXkiO3M6NDoiMTE1MCI7fWk6MjtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjMiO3M6NDoibmFtZSI7czoyMzoiMyDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiNTAiO3M6MzoicGF5IjtzOjQ6IjExMjEiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjM6IjEwMCI7czozOiJwYXkiO3M6MzoiNTU1Ijt9aTo0O086ODoic3RkQ2xhc3MiOjQ6e3M6MjoiaWQiO3M6MToiNSI7czo0OiJuYW1lIjtzOjE3OiIyIOC4leC4seC4p+C4muC4mSI7czo4OiJkaXNjb3VudCI7czozOiIxMDAiO3M6MzoicGF5IjtzOjI6IjcwIjt9aTo1O086ODoic3RkQ2xhc3MiOjQ6e3M6MjoiaWQiO3M6MToiNiI7czo0OiJuYW1lIjtzOjIzOiIyIOC4leC4seC4p+C4peC5iOC4suC4hyI7czo4OiJkaXNjb3VudCI7czoyOiIxNCI7czozOiJwYXkiO3M6MjoiMzAiO319'),
-(2, 3, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ=='),
-(3, 6, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTUiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI2NTQiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjM6IjEwMCI7czozOiJwYXkiO3M6MzoiNDU2Ijt9aTozO086ODoic3RkQ2xhc3MiOjQ6e3M6MjoiaWQiO3M6MToiNCI7czo0OiJuYW1lIjtzOjIzOiIyIOC4leC4seC4p+C5guC4leC5iuC4lCI7czo4OiJkaXNjb3VudCI7czozOiIxMDAiO3M6MzoicGF5IjtzOjM6IjU1MCI7fWk6NDtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjUiO3M6NDoibmFtZSI7czoxNzoiMiDguJXguLHguKfguJrguJkiO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9aTo1O086ODoic3RkQ2xhc3MiOjQ6e3M6MjoiaWQiO3M6MToiNiI7czo0OiJuYW1lIjtzOjIzOiIyIOC4leC4seC4p+C4peC5iOC4suC4hyI7czo4OiJkaXNjb3VudCI7czoxOiIwIjtzOjM6InBheSI7czoyOiI3MCI7fX0='),
-(4, 7, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ=='),
-(5, 8, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ=='),
-(6, 9, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ=='),
-(7, 10, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ=='),
-(8, 11, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ==');
+(2, 3, 'YTo2OntpOjA7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWUiO3M6MTc6IjMg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjE7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiIxMDAiO31pOjI7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiIzIjtzOjQ6Im5hbWUiO3M6MjM6IjMg4LiV4Lix4Lin4Lil4LmI4Liy4LiHIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI2IjtzOjM6InBheSI7czozOiIxMDAiO31pOjM7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI0IjtzOjQ6Im5hbWUiO3M6MjM6IjIg4LiV4Lix4Lin4LmC4LiV4LmK4LiUIjtzOjg6ImRpc2NvdW50IjtzOjI6IjM1IjtzOjM6InBheSI7czozOiI1NTAiO31pOjQ7Tzo4OiJzdGRDbGFzcyI6NDp7czoyOiJpZCI7czoxOiI1IjtzOjQ6Im5hbWUiO3M6MTc6IjIg4LiV4Lix4Lin4Lia4LiZIjtzOjg6ImRpc2NvdW50IjtzOjI6IjI4IjtzOjM6InBheSI7czoyOiI3MCI7fWk6NTtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjtzOjE6IjYiO3M6NDoibmFtZSI7czoyMzoiMiDguJXguLHguKfguKXguYjguLLguIciO3M6ODoiZGlzY291bnQiO3M6MjoiMjgiO3M6MzoicGF5IjtzOjI6IjcwIjt9fQ==');
 
 -- --------------------------------------------------------
 
@@ -421,7 +405,7 @@ ALTER TABLE `withdraw_detail`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `admin_banking`
@@ -439,7 +423,7 @@ ALTER TABLE `banking`
 -- AUTO_INCREMENT for table `bank_account`
 --
 ALTER TABLE `bank_account`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `buy_lotto`
@@ -457,7 +441,7 @@ ALTER TABLE `criteria`
 -- AUTO_INCREMENT for table `criteria_user`
 --
 ALTER TABLE `criteria_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `deposit_detail`
