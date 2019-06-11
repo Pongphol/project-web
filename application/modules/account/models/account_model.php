@@ -23,7 +23,7 @@ class Account_model extends CI_Model
 
     private function make_query()
     {
-        $order_column = ['id', 'fname', null];
+        $order_column = ['id', null, 'fname', null];
 
         $this->db->from('account');
         $this->db->where('role', 'user');

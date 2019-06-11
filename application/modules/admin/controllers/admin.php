@@ -37,11 +37,12 @@ class Admin extends MX_Controller {
 		$this->load->model('account/account_model');
 		$members = $this->account_model->get_all_member();
 		$data = [];
-
+		
 		foreach ($members as $member)
 		{
 			$sub_array = [];
 			$sub_array[] = "{$member->id}";
+			$sub_array[] = '<a href="' . base_url('uploads/idcard/') . $member->idcard . '"><img src="' . base_url('uploads/idcard/') . $member->idcard . '" class="img-thumnail" width="70" height="70" /></a>';
 			$sub_array[] = "{$member->fname} {$member->lname}";
 			$sub_array[] = '
 				<button type="button" id="btn_show_change_criteria_user" onclick="getCriteriaMember(' . $member->id . ')" data-toggle="modal" class="btn btn-primary">เปลี่ยนเกณฑ์ตารางหวย</button>

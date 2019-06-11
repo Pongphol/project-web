@@ -4,16 +4,20 @@
     <title><?php if (isset($title)) { echo $title; } else { echo "Untitled"; } ?></title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/jquery.fancybox-1.3.4.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> <!-- CSS DataTable -->
-    <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url(); ?>resources/js/all.min.js" type="text/javascript"></script>
-    <script src=<?php echo base_url()."resources/js/holder.min.js" ?>> </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
-    <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script>
+    <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script> <!-- JS Jquery -->
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <script src="<?php echo base_url(); ?>resources/js/all.min.js" type="text/javascript"></script> <!-- JS All -->
+    <script src="<?php echo base_url(); ?>resources/js/jquery.fancybox-1.3.4.js" type="text/javascript"></script> <!-- JS Fancybox Jquery -->
+    <script src="<?php echo base_url(); ?>resources/js/jquery.easing-1.3.pack.js" type="text/javascript"></script> <!-- JS Easing Jquery For Fancybox -->
+    <script src=<?php echo base_url()."resources/js/holder.min.js" ?>> </script> <!-- JS Holder -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script> <!-- JS Notify -->
+    <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script> <!-- JS Bootstrap -->
+    <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script> <!-- JS Chosen Jquery -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> <!-- JS DataTable -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> <!-- JS Bootstrap DataTable -->
 </head>
