@@ -3,6 +3,7 @@
 <head>
     <title><?php if (isset($title)) { echo $title; } else { echo "Untitled"; } ?></title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="theme-styles">
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/jquery.fancybox-1.3.4.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css" media="screen"/>
@@ -10,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> <!-- CSS DataTable -->
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script> <!-- JS Jquery -->
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/all.min.js" type="text/javascript"></script> <!-- JS All -->
     <script src="<?php echo base_url(); ?>resources/js/jquery.fancybox-1.3.4.js" type="text/javascript"></script> <!-- JS Fancybox Jquery -->
     <script src="<?php echo base_url(); ?>resources/js/jquery.easing-1.3.pack.js" type="text/javascript"></script> <!-- JS Easing Jquery For Fancybox -->

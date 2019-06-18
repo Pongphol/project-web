@@ -30,7 +30,7 @@
                                                         <div class='media'>
                                                             <div class='media-left'>
                                                                 <a href='#'>
-                                                                    <img class='media-object' data-src='holder.js/64x64' style='width: 64px; height: 64px;' src='{$bank->picture}' alt='{$bank->name}'>
+                                                                    <img class='media-object' data-src='holder.js/64x64' style='width: 64px; height: 64px;' src='" . base_url("$bank->picture") . "' alt='{$bank->name}'>
                                                                 </a>
                                                             </div>
                                                             <div class='media-body ml-2'><p>{$bank->name} ({$bank->number})</p></div>

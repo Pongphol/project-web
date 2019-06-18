@@ -7,6 +7,7 @@
                     <thead>
                         <th>ไอดีผู้ใช้</th>
                         <th>รูปบัตรประชาชน</th>
+                        <th>รูปสมุดบัญชี</th>
                         <th>ชื่อผู้ใช้</th>
                         <th>จัดการ</th>
                     </thead>
@@ -83,9 +84,11 @@ $(document).ready(function() {
         },
         "columnDefs" : [
             { "width": "11%", "targets": 0 },
-            { "width": "15%", "targets": 1 },
-            { "width": "35%", "targets": 2 },
-            { "orderable" : false, "target" : [1, 3] }
+            { "width": "11%", "targets": 1 },
+            { "width": "11%", "targets": 2 },
+            { "width": "25%", "targets": 3 },
+            { "width": "55%", "targets": 4 },
+            { "orderable" : false, "target" : [1, 2, 4] }
         ],
         createdRow: function(row, data) {
             $('a', row).fancybox({
