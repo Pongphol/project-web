@@ -23,7 +23,7 @@ class Account_model extends CI_Model
 
     private function make_query()
     {
-        $order_column = ['id', 'fname', null];
+        $order_column = ['id', null, null, 'fname', null];
 
         $this->db->from('account');
         $this->db->where('role', 'user');
@@ -45,7 +45,7 @@ class Account_model extends CI_Model
         }
         else
         {
-            $this->db->order_by('id', 'DESC');
+            //$this->db->order_by('id', 'DESC');
         }
 
         if ($this->input->post('length') != -1)

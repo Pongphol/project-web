@@ -181,9 +181,10 @@ class Account extends MX_Controller {
 			[
 				'field' => 'email',
 				'label' => 'อีเมล',
-				'rules' => 'required|valid_email',
+				'rules' => 'required|valid_email|is_unique[account.email]',
 				'errors' => [
-					'required' => 'กรุณากรอก{field}'
+					'required' => 'กรุณากรอก{field}',
+					'is_unique' => '{field}นี้ถูกใช้งานแล้ว'
 				]
 			],
 			[
@@ -219,9 +220,9 @@ class Account extends MX_Controller {
 
 		if ($this->form_validation->run())
 		{
-			$picture_idcard = $this->do_upload_image('picture_idcard');
-			$picture_bookbank = $this->do_upload_image('picture_bookbank');
-
+			$picture_idcard = $this->do_upload_image('picture_idcard', 'bookbank');
+			$picture_bookbank = $this->do_upload_image('picture_bookbank', 'idcard');
+			
 			if ($picture_idcard['status'] === true && $picture_bookbank['status'] === true)
 			{
 				$idcard = $picture_idcard['filename'];
@@ -286,16 +287,25 @@ class Account extends MX_Controller {
 		echo json_encode($data);
 	}
 
-	private function do_upload_image($image_file)
+	private function do_upload_image($image_file, $folder = '')
 	{
 		if (isset($_FILES[$image_file]['name']))
 		{
-			$config['upload_path']          = './uploads/';
+			if (is_string($folder) && $folder != '')
+			{
+				$config['upload_path']          = './uploads/' . $folder . '/';
+			}
+			else
+			{
+				$config['upload_path']          = './uploads/';
+			}
+			
 			$config['allowed_types']        = 'gif|jpg|jpeg|png';
 			$config['max_size']             = 0;
 			$config['encrypt_name'] = true;
 
 			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
 			
 			if (!$this->upload->do_upload($image_file))
 			{

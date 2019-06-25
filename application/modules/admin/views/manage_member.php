@@ -6,6 +6,8 @@
                 <table id="member_table" class="table table-bordered">
                     <thead>
                         <th>ไอดีผู้ใช้</th>
+                        <th>รูปบัตรประชาชน</th>
+                        <th>รูปสมุดบัญชี</th>
                         <th>ชื่อผู้ใช้</th>
                         <th>จัดการ</th>
                     </thead>
@@ -81,10 +83,19 @@ $(document).ready(function() {
             type : "POST"
         },
         "columnDefs" : [
-            { "width": "15%", "targets": 0 },
-            { "width": "40%", "targets": 1 },
-            { "orderable" : false, "target" : [0, 2] }
-        ]
+            { "width": "11%", "targets": 0 },
+            { "width": "11%", "targets": 1 },
+            { "width": "11%", "targets": 2 },
+            { "width": "25%", "targets": 3 },
+            { "width": "55%", "targets": 4 },
+            { "orderable" : false, "target" : [1, 2, 4] }
+        ],
+        createdRow: function(row, data) {
+            $('a', row).fancybox({
+                protect: true,
+                type : "image"
+            });
+        }
     });
 
 });
@@ -164,7 +175,7 @@ function updateStatusMember()
 
             if (response.success === true)
             {
-                toastr.success(response.message, null, { timeOut: 2000 });
+                toastr.success(response.message, null, { timeOut: 2000, iconClass: 'notify-ss' });
                 $('#status_member_modal').modal('toggle');
             }
             else

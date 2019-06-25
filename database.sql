@@ -1,14 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2019 at 12:34 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.1
-
-CREATE DATABASE IF NOT EXISTS lottery;
-USE lottery;
+-- Generation Time: Jun 25, 2019 at 10:25 PM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -126,11 +123,26 @@ INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bill_lotto`
+--
+
+CREATE TABLE `bill_lotto` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `buy_lotto`
 --
 
 CREATE TABLE `buy_lotto` (
   `id` int(10) NOT NULL,
+  `bill_id` int(11) NOT NULL,
   `accId` int(10) NOT NULL,
   `number` varchar(10) NOT NULL,
   `criteria_id` varchar(3) NOT NULL,
@@ -144,13 +156,13 @@ CREATE TABLE `buy_lotto` (
 -- Dumping data for table `buy_lotto`
 --
 
-INSERT INTO `buy_lotto` (`id`, `accId`, `number`, `criteria_id`, `pay`, `status`, `created_at`, `updated_at`) VALUES
-(41, 2, '61', '5', '200', 'win', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
-(42, 2, '12', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
-(43, 2, '12', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
-(44, 2, '21', '5', '200', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
-(45, 2, '21', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
-(46, 2, '21', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46');
+INSERT INTO `buy_lotto` (`id`, `bill_id`, `accId`, `number`, `criteria_id`, `pay`, `status`, `created_at`, `updated_at`) VALUES
+(41, 0, 2, '61', '5', '200', 'win', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
+(42, 0, 2, '12', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
+(43, 0, 2, '12', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
+(44, 0, 2, '21', '5', '200', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
+(45, 0, 2, '21', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
+(46, 0, 2, '21', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46');
 
 -- --------------------------------------------------------
 
@@ -441,7 +453,7 @@ ALTER TABLE `criteria`
 -- AUTO_INCREMENT for table `criteria_user`
 --
 ALTER TABLE `criteria_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `deposit_detail`

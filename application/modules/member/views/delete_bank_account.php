@@ -23,7 +23,7 @@
                                     <tr>
                                         <th></th>
                                         <td>
-                                            <input type="submit" class="btn btn-danger" value="ลบ">
+                                            <input type="submit" id="btn_delete_bank_account" class="btn btn-danger" value="ลบ">
                                             <a href="<?php echo base_url('profile'); ?>" class="btn btn-warning">ย้อนกลับ</a>
                                         </td>
                                     </tr>
@@ -36,3 +36,28 @@
         </div>
     </div>
 </div>
+
+<script>
+
+$('#btn_delete_bank_account').on('click',function(e){
+
+    e.preventDefault();
+    var form = $(this).parents('form');
+
+    Swal.fire({
+      title: "ลบบัญชีธนาคาร?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก"
+    }).then((result) =>  {
+        if (result.value)
+        {
+            form.submit();
+        }
+    });
+
+});
+
+</script>
