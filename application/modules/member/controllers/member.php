@@ -717,5 +717,11 @@ class Member extends MX_Controller {
 		
 		echo json_encode($table);
 	}
+	// สร้างบิลการซื้อ
+	function create_bill()
+	{
+		$this->load->model('lotto/lotto_model');
+		$this->input->post('name_bill');
 
+	}
 }

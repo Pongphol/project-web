@@ -446,6 +446,9 @@
     }
     function show_option_number()
     {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue'
+        });
         var table = "<div class='col'>"
             table += "<input type='checkbox' id='check_all_number'>"
             table += "<label>เลือกทั้งหมด</label>"               

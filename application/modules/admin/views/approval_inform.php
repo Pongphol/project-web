@@ -3,6 +3,8 @@
         get_inform_deposit()
         get_inform_withdraw()
         validate_table()
+        select_all()
+        unselect_all()
     })
     /*รับข้อมูลแจ้งเติมเงิน */
     function get_inform_deposit()
@@ -13,11 +15,48 @@
                 dataType : 'json',
                 success: function(result){
                     $('#inform_deposit').html(result)
-                    $("#checkAll_deposit").change(function(){
-                        var status = $(this).is(":checked") ? true : false;
-                         $(".dep").prop("checked",status);
-                     });
+                     $('input').iCheck({
+                        checkboxClass: 'icheckbox_square-blue'
+                    });
                 }  
+        });
+    }
+    function select_all()
+    {
+        $("#checkAll_deposit").change(function(){
+            $('.dep').each(function (ind,ele){
+                if(!$(ele).prop('disabled'))
+                {
+                    $(ele).iCheck('check');
+                }
+            });
+        });
+        $("#checkAll_withdraw").change(function(){
+            $('.wit').each(function (ind,ele){
+                if(!$(ele).prop('disabled'))
+                {
+                    $(ele).iCheck('check');
+                }
+            });
+        });
+    }
+    function unselect_all()
+    {
+        $("#checkAll_deposit").change(function(){
+            $('.dep').each(function (ind,ele){
+                if(!$(ele).prop('disabled'))
+                {
+                    $(ele).iCheck('checked');
+                }
+            });
+        });
+        $("#checkAll_withdraw").change(function(){
+            $('.wit').each(function (ind,ele){
+                if(!$(ele).prop('disabled'))
+                {
+                    $(ele).iCheck('checked');
+                }
+            });
         });
     }
     /*รับข้อมูลแจ้งถอนเงิน */
@@ -29,10 +68,9 @@
                 dataType : 'json',
                 success: function(result){
                     $('#inform_withdraw').html(result)
-                    $("#checkAll_withdraw").change(function(){
-                        var status = $(this).is(":checked") ? true : false;
-                        $(".wit").prop("checked",status);
-                    });
+                    $('input').iCheck({
+                        checkboxClass: 'icheckbox_square-blue'
+                    });;
                 } 
         });
     }
@@ -168,6 +206,7 @@
             $("#checkAll_deposit").prop("checked",false);
         })
     }
+    
 </script>
 
 <div class="container mt-5" >
@@ -190,7 +229,7 @@
                         <table class="table table-hover" id="table_deposit">
                             <thead align='center'>
                                 <tr>
-                                    <th class="cus_checkbox"><input type='checkbox' id="checkAll_deposit" ></th>
+                                    <th class="cus_checkbox"><input type='checkbox' id="checkAll_deposit" class='test' ></th>
                                     <th>ผู้เติมเงิน</th>
                                     <th>ธนาคาร</th>
                                     <th>หมายเลขบัญชี</th>
