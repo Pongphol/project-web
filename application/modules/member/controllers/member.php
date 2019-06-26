@@ -520,7 +520,22 @@ class Member extends MX_Controller {
 
 	public function buy_lotto_ajax()
 	{
-		$this->load->model('member_model','mm'); 
+		$this->load->model('member_model','mm');
+
+		/* Insert bill lotto */
+
+		$name_bill = $this->input->post('name_bill');
+		$data = [
+			'name' => $name_bill,
+			'status' => 1
+		];
+		$this->mm->insert_bill_lotto($data);
+
+		/* Get id last bill lotto */
+
+		$id_last_row = $this->mm->get_last_row_bill();
+
+		/* Insert number lotto  / bill */
 		$id = $this->session->userdata('account_id');
 		$number2 = $this->input->post('number2');
 		$number3 = $this->input->post('number3');
@@ -542,6 +557,7 @@ class Member extends MX_Controller {
 					{
 						$data = [
 							'accId' => $this->session->userdata('account_id'),
+							'bill_id' => $id_last_row,
 							'number' => $row['number'],
 							'criteria_id' => 5,
 							'pay' => $row['numberTop']
@@ -552,6 +568,7 @@ class Member extends MX_Controller {
 					{
 						$data = [
 							'accId' => $this->session->userdata('account_id'),
+							'bill_id' => $id_last_row,
 							'number' => $row['number'],
 							'criteria_id' => 4,
 							'pay' => $row['numberTod']
@@ -562,6 +579,7 @@ class Member extends MX_Controller {
 					{
 						$data = [
 							'accId' => $this->session->userdata('account_id'),
+							'bill_id' => $id_last_row,
 							'number' => $row['number'],
 							'criteria_id' => 6,
 							'pay' => $row['numberBut']
@@ -579,6 +597,7 @@ class Member extends MX_Controller {
 					{
 						$data = [
 							'accId' => $this->session->userdata('account_id'),
+							'bill_id' => $id_last_row,
 							'number' => $row['number'],
 							'criteria_id' => 1,
 							'pay' => $row['numberTop']
@@ -589,6 +608,7 @@ class Member extends MX_Controller {
 					{
 						$data = [
 							'accId' => $this->session->userdata('account_id'),
+							'bill_id' => $id_last_row,
 							'number' => $row['number'],
 							'criteria_id' => 2,
 							'pay' => $row['numberTod']
@@ -599,6 +619,7 @@ class Member extends MX_Controller {
 					{
 						$data = [
 							'accId' => $this->session->userdata('account_id'),
+							'bill_id' => $id_last_row,
 							'number' => $row['number'],
 							'criteria_id' => 3,
 							'pay' => $row['numberBut']
@@ -608,7 +629,6 @@ class Member extends MX_Controller {
 				}
 			}
 			
-			/** */
 			echo json_encode(['status' => 'success']);
 		}
 		else
@@ -716,12 +736,5 @@ class Member extends MX_Controller {
 		}
 		
 		echo json_encode($table);
-	}
-	// สร้างบิลการซื้อ
-	function create_bill()
-	{
-		$this->load->model('lotto/lotto_model');
-		$this->input->post('name_bill');
-
 	}
 }

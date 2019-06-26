@@ -58,9 +58,28 @@ class Member_model extends CI_Model
         $query = $this->db->query($sql)->result_array();
         return  $query;
     }
+    /*
+        เพิ่มข้อมูลเลขหวย
+        โดยต้องทำการเพิ่ม bill lotto ก่อน
+    */
     function insert_buy_lotto($data)
     {
         $this->db->insert('buy_lotto', $data);
+    }
+    /*เพิ่มข้อมูลบิลการซื้อหวย*/
+    function insert_bill_lotto($data)
+    {
+        $this->db->insert('bill_lotto', $data);
+    }
+    /*เพิ่มข้อมูลบิลการซื้อหวย*/
+    function get_last_row_bill()
+    {
+        $sql = "SELECT id 
+                FROM date_data 
+                ORDER BY id DESC 
+                LIMIT 1";
+        $query = $this->db->query($sql)->row();
+        return  $query;
     }
 }
 
