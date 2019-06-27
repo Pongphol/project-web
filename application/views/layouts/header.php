@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> <!-- CSS DataTable -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/skins/square/blue.css" type="text/css" media="screen"/>
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script> <!-- JS Jquery -->
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
@@ -20,6 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script> <!-- JS Notify -->
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js" type="text/javascript"></script> <!-- JS Bootstrap -->
     <script src=<?php echo base_url()."resources/js/chosen.jquery.min.js" ?>> </script> <!-- JS Chosen Jquery -->
+    <script src=<?php echo base_url()."resources/js/icheck.min.js" ?>> </script> <!-- JS Chosen Jquery -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> <!-- JS DataTable -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> <!-- JS Bootstrap DataTable -->
 </head>

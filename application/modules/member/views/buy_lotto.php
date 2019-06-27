@@ -15,6 +15,7 @@
 </style>
 <script>
     $(document).ready(function(){
+        
         inputFilter()
         validate_number_input()
         sum_twoTop_digit()
@@ -86,6 +87,21 @@
         });
         $(".number3").inputFilter(function(value) {
             return /^\d*$/.test(value) && (value === "" || parseInt(value) < 1000); 
+        });
+        $('#check_all_number').click(function(event) {   
+            if(this.checked) 
+            {
+                // Iterate each checkbox
+                $(':checkbox').each(function() {
+                    this.checked = true;                        
+                });
+            }
+            else 
+            {
+                $(':checkbox').each(function() {
+                    this.checked = false;                       
+                });
+            }
         });
 
     }
@@ -446,17 +462,14 @@
     }
     function show_option_number()
     {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue'
-        });
         var table = "<div class='col'>"
-            table += "<input type='checkbox' id='check_all_number'>"
+            table += "<input type='checkbox'  id='check_all_number'>"
             table += "<label>เลือกทั้งหมด</label>"               
             table += "</div>"
             $('#number_tod_list').html(table)
         $('#number').keyup(function(){
             var table = "<div class='col'>"
-            table += "<input type='checkbox' id='check_all_number'>"
+            table += "<input type='checkbox'   id='check_all_number'>"
             table += "<label>เลือกทั้งหมด</label>"               
             table += "</div>"
             $('#number_tod_list').html(table)
@@ -483,6 +496,7 @@
             }
         })
     }
+    
 
 </script>   
 <div class="container mt-5" >

@@ -75,7 +75,7 @@ class Member_model extends CI_Model
     function get_last_row_bill()
     {
         $sql = "SELECT id 
-                FROM date_data 
+                FROM bill_lotto 
                 ORDER BY id DESC 
                 LIMIT 1";
         $query = $this->db->query($sql)->row();
