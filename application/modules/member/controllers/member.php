@@ -524,7 +524,7 @@ class Member extends MX_Controller {
 
 		/* Insert bill lotto */
 
-		$name_bill = "test"/*$this->input->post('name_bill')*/;
+		$name_bill = $this->input->post('name_bill');
 		$data = [
 			'name' => $name_bill,
 			'status' => 1
