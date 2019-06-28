@@ -753,7 +753,130 @@ class Member extends MX_Controller {
 	{
 		$this->load->model('lotto/lotto_model');
 		$buy_date = $this->input->post('buy_date');
-		$result = $this->lotto_model->get_bill_member_by_date($buy_date, get_account_id());
-		pre_r($result);
+		$list_history_buy_lotto = $this->lotto_model->get_bill_member_by_date($buy_date, get_account_id());
+
+		$table = "";
+
+		foreach($list_history_buy_lotto as $key => $row)
+		{
+			$status = [
+				'wait' => '<label class="text-secondary">รอ</label>',
+				'win' => '<label class="text-success">ทายถูก</label>',
+				'lose' => '<label class="text-danger">ทายผิด</label>'
+			];
+
+			$discount = (($row->discount / 100) * $row->pay);
+			$randomKey = generateRandomString(5);
+
+			if ($key == 0)
+			{
+				$last_bill_id = $row->bill_id;
+
+				$table .= '
+				<li>
+					<div class="lotto_list_head" onclick="showDetail(\'' . $randomKey . '\')"><i class="fa fa-search"></i>
+						ชื่อบิล 
+						<span class="name">' . $row->bill_name . '</span> | 
+						<span class="pay">รวม ' . ($row->pay - $discount) . ' บาท</span>
+						<span class="time">
+							<span class="status-text"> </span>' . dateTimeThai($row->created_at) .'
+						</span>
+					</div>';
+				$table .= '
+					<div id="' . $randomKey . '" class="table-responsive" style="display: none;">
+						<table width="100%" class="table table-hover table-bordered showtable history">
+							<thead>
+								<tr>
+									<th>เลข</th>
+									<th>รูปแบบ</th>
+									<th>จ่ายเต็ม</th>
+									<th>ส่วนลด</th>
+									<th>จ่ายจริง</th>
+									<th>รางวัล</th>
+									<th>สถานะ</th>
+									<th>ผล</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="text-info">' . $row->number . '</td>
+									<td>' . $row->criteria_name . '</td>
+									<td class="text-info">' . $row->pay . '</td>
+									<td class="text-danger">-' . $discount . '</td>
+									<td class="text-info">' . ($row->pay - $discount) . '</td>
+									<td class="text-success">' . ($row->pay * $row->pay_rate) . '</td>
+									<td>' . $status[$row->status] . '</td>
+									<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
+								</tr>
+							</tbody>
+				';
+
+			}
+			else if ($row->bill_id == $last_bill_id)
+			{
+				$table .= '
+						<tbody>
+						<tr>
+							<td class="text-info">' . $row->number . '</td>
+							<td>' . $row->criteria_name . '</td>
+							<td class="text-info">' . $row->pay . '</td>
+							<td class="text-danger">-' . $discount . '</td>
+							<td class="text-info">' . ($row->pay - $discount) . '</td>
+							<td class="text-success">' . ($row->pay * $row->pay_rate) . '</td>
+							<td>' . $status[$row->status] . '</td>
+							<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
+						</tr>
+					</tbody>
+				';
+			}
+			else
+			{
+				$table .= '
+							</table>
+						</div>
+					</li>
+				<li>
+					<div class="lotto_list_head" onclick="showDetail(\'' . $randomKey . '\')"><i class="fa fa-search"></i>
+						ชื่อบิล 
+						<span class="name">' . $row->bill_name . '</span> | 
+						<span class="pay">รวม ' . ($row->pay - $discount) . ' บาท</span>
+						<span class="time">
+							<span class="status-text"> </span>' . dateTimeThai($row->created_at) .'
+						</span>
+					</div>';
+				$table .= '<div id="' . $randomKey . '" class="table-responsive" style="display: none;">
+							<table width="100%" class="table table-hover table-bordered showtable history">
+								<thead>
+									<tr>
+										<th>เลข</th>
+										<th>รูปแบบ</th>
+										<th>จ่ายเต็ม</th>
+										<th>ส่วนลด</th>
+										<th>จ่ายจริง</th>
+										<th>รางวัล</th>
+										<th>สถานะ</th>
+										<th>ผล</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-info">' . $row->number . '</td>
+										<td>' . $row->criteria_name . '</td>
+										<td class="text-info">' . $row->pay . '</td>
+										<td class="text-danger">-' . $discount . '</td>
+										<td class="text-info">' . ($row->pay - $discount) . '</td>
+										<td class="text-success">' . ($row->pay * $row->pay_rate) . '</td>
+										<td>' . $status[$row->status] . '</td>
+										<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</li>
+				';
+			}
+
+		}
+		echo json_encode($table);
 	}
 }

@@ -34,9 +34,10 @@ class Lotto_model extends CI_Model
     public function get_bill_member_by_date($buy_date, $user_id)
     {
         $result = $this->db->select(
-                'bill_lotto.name as bill_name, 
+                'buy_lotto.bill_id, 
+                bill_lotto.name as bill_name, 
                 buy_lotto.id as buy_lotto_id, 
-                CAST(bill_lotto.created_at AS date) AS created_at, 
+                bill_lotto.created_at, 
                 buy_lotto.number, 
                 criteria_id, 
                 criteria.name as criteria_name, 

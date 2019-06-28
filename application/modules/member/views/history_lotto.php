@@ -23,6 +23,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
+                <ul id="lotto_list"></ul>
             </div>
         </div>
     </div>
@@ -33,13 +34,19 @@
 $('#buy_date_lotto').on('change', function() {
     var buy_date = $('#buy_date_lotto').val();
     $.ajax({
-        type : 'POST',
+        method : 'POST',
         url : "<?php echo base_url('member/get_bill'); ?>",
         data : { buy_date : buy_date },
-        success : function() {
-            
+        dataType : 'JSON',
+        success : function(response) {
+            $('ul#lotto_list').html(response);
         }
     });
 });
+
+function showDetail(line)
+{
+    $("#" + line).slideToggle();
+}
 
 </script>

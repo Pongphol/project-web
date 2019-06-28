@@ -37,3 +37,42 @@ table.lotto_price_list tr td.number {
     background-color: #51a351;
     opacity: 1;
 }
+
+#lotto_list {
+    list-style-type: none;
+    padding : 0;
+}
+ol, ul {
+    list-style: none;
+}
+
+#lotto_list li .lotto_list_head {
+    padding: 10px;
+    text-align: left;
+    background: #fff;
+}
+
+#lotto_list li span.name {
+    color: #0099ff;
+    font-weight: bold !important;
+}
+
+#lotto_list li span.time {
+    float: right;
+}
+
+#lotto_list li {
+    margin: 10px 0;
+    border: #262626 1px solid;
+    font-size: 14px;
+    color: #000;
+}
+
+.showtable {
+    background-color: transparent;
+}
+
+.showtable.history thead tr th {
+    color: #fff;
+    background: #4d4d4d;
+}
