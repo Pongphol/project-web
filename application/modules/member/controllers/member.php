@@ -638,6 +638,17 @@ class Member extends MX_Controller {
 
 	}
 
+	public function history_lotto()
+	{
+		$this->load->model('lotto/lotto_model');
+
+		$this->data['title'] = 'ประวัติการแทง';
+		$this->data['content'] = 'history_lotto';
+		$this->data['buy_date_lotto'] = $this->lotto_model->get_buy_date_lotto_by_id(get_account_id());
+
+		$this->load->view('template', $this->data);
+	}
+
 	public function show_lottery_result()
 	{
 		$this->data['title'] = 'ประวัติแทงหวย';
@@ -736,5 +747,13 @@ class Member extends MX_Controller {
 		}
 		
 		echo json_encode($table);
+	}
+
+	public function get_bill()
+	{
+		$this->load->model('lotto/lotto_model');
+		$buy_date = $this->input->post('buy_date');
+		$result = $this->lotto_model->get_bill_member_by_date($buy_date, get_account_id());
+		pre_r($result);
 	}
 }

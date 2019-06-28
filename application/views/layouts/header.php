@@ -50,6 +50,9 @@
             <li class="nav-item <?php if ($this->uri->segment(1) == "inform_deposit_withdraw_show" || $this->uri->segment(2) == "inform_deposit_withdraw_show"){ echo 'active'; }?>">
                 <a class="nav-link" href="<?php echo base_url('member/inform_deposit_withdraw_show'); ?>">แจ้งฝาก/ถอน</a>
             </li>
+            <li class="nav-item <?php if ($this->uri->segment(1) == "history_lotto" || $this->uri->segment(2) == "history_lotto"){ echo 'active'; }?>">
+                <a class="nav-link" href="<?php echo base_url('member/history_lotto'); ?>">ประวัติการแทง</a>
+            </li>
             <?php endif; ?>
         </ul>
         <?php if(is_logged_in() && isset($account)) : ?>
