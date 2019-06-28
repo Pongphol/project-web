@@ -754,6 +754,7 @@ class Member extends MX_Controller {
 		$this->load->model('lotto/lotto_model');
 		$buy_date = $this->input->post('buy_date');
 		$list_history_buy_lotto = $this->lotto_model->get_bill_member_by_date($buy_date, get_account_id());
+		//pre_r($list_history_buy_lotto);
 
 		$table = "";
 
@@ -771,7 +772,6 @@ class Member extends MX_Controller {
 			if ($key == 0)
 			{
 				$last_bill_id = $row->bill_id;
-
 				$table .= '
 				<li>
 					<div class="lotto_list_head" onclick="showDetail(\'' . $randomKey . '\')"><i class="fa fa-search"></i>
@@ -808,14 +808,13 @@ class Member extends MX_Controller {
 									<td>' . $status[$row->status] . '</td>
 									<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
 								</tr>
-							</tbody>
 				';
 
 			}
-			else if ($row->bill_id == $last_bill_id)
+			elseif($row->bill_id == $last_bill_id)
 			{
+				$last_bill_id = $row->bill_id;
 				$table .= '
-						<tbody>
 						<tr>
 							<td class="text-info">' . $row->number . '</td>
 							<td>' . $row->criteria_name . '</td>
@@ -826,12 +825,12 @@ class Member extends MX_Controller {
 							<td>' . $status[$row->status] . '</td>
 							<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
 						</tr>
-					</tbody>
 				';
 			}
 			else
 			{
-				$table .= '
+				$last_bill_id = $row->bill_id;
+				$table .= '		</tbody>
 							</table>
 						</div>
 					</li>
@@ -869,10 +868,6 @@ class Member extends MX_Controller {
 										<td>' . $status[$row->status] . '</td>
 										<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
 									</tr>
-								</tbody>
-							</table>
-						</div>
-					</li>
 				';
 			}
 

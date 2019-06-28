@@ -51,6 +51,7 @@ class Lotto_model extends CI_Model
             ->join('criteria', 'criteria.id = buy_lotto.criteria_id', 'INNER')
             ->where('accId', $user_id)
             ->where('DATE(bill_lotto.created_at)', $buy_date)
+            ->order_by('bill_id','ASC')
             ->get();
         
             return $result->num_rows() > 0 ? $result->result() : false;
