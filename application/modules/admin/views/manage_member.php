@@ -303,7 +303,7 @@ function updateCriteriaUserdd(obj)
     $.ajax({
         type: "POST",
         url: "<?php echo base_url('account/update_criteria_member'); ?>",
-        dataType : 'JSON',
+        dataType : 'json',
         data :{
             update_data : update_data
         },

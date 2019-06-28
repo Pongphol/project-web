@@ -21,6 +21,40 @@ class Lotto_model extends CI_Model
         return $result->num_rows() > 0 ? $result->row() : false;
     }
 
+    public function get_buy_date_lotto_by_id($id)
+    {
+        $result = $this->db->select('CAST(created_at as date) AS buy_date')
+            ->where('accId', $id)
+            ->group_by('CAST(created_at AS date)')
+            ->order_by('created_at', 'DESC')
+            ->get('buy_lotto');
+        return $result->num_rows() > 0 ? $result->result() : false;
+    }
+
+    public function get_bill_member_by_date($buy_date, $user_id)
+    {
+        $result = $this->db->select(
+                'bill_lotto.name as bill_name, 
+                buy_lotto.id as buy_lotto_id, 
+                CAST(bill_lotto.created_at AS date) AS created_at, 
+                buy_lotto.number, 
+                criteria_id, 
+                criteria.name as criteria_name, 
+                buy_lotto.pay, 
+                discount, 
+                criteria.pay as pay_rate, 
+                buy_lotto.status'
+            )
+            ->from('bill_lotto')
+            ->join('buy_lotto', 'buy_lotto.bill_id = bill_lotto.id', 'INNER')
+            ->join('criteria', 'criteria.id = buy_lotto.criteria_id', 'INNER')
+            ->where('accId', $user_id)
+            ->where('DATE(bill_lotto.created_at)', $buy_date)
+            ->get();
+        
+            return $result->num_rows() > 0 ? $result->result() : false;
+    }
+
     public function update_criteria($data, $id)
     {
         $this->db->where('id', $id)
