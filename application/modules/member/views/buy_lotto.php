@@ -36,13 +36,13 @@
                 url: "<?php echo base_url('member/get_criteria_ajax'); ?>",
                 dataType: 'json',
                 success: function(result){
-                    $('.input_number2 ').on('keyup change focus',function(){
+                    $('.input_number2,#number_top,#number_tod,#number_button').on('keypress keyup change focus',function(){
                         topTwo = result[4]['discount'] / 100
                         todTwo = result[3]['discount'] / 100
                         butTwo = result[5]['discount'] / 100
                         discount_2_digit(topTwo,todTwo,butTwo)
                     })
-                    $('.input_number3 ').on('keyup change focus',function(){
+                    $('.input_number3,#number_top,#number_tod,#number_button').on('keyup change focus',function(){
                         topThree = result[0]['discount'] / 100
                         todThree = result[1]['discount'] / 100
                         butThree = result[2]['discount'] / 100
@@ -244,17 +244,7 @@
         }
     })();
     function sum_twoTop_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_twoTop = 0
-                for(var i = 0 ; i < 10 ; i++){
-                sum_twoTop += parseInt($('#number2_top_inp'+i).val()) || 0
-                }
-                $('#cash2_top_total').val(sum_twoTop)
-                return parseInt(sum_twoTop) || 0;
-            }
-        })
-        $('.input_number2').on('keyup change focus',function(){
+        $('.input_number2,#number_top,#number_tod,#number_button').on('keypress keyup change focus',function(){
             var sum_twoTop = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_twoTop += parseInt($('#number2_top_inp'+i).val()) || 0
@@ -272,17 +262,7 @@
         })
     }
     function sum_twoTod_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_twoTod = 0
-                for(var i = 0 ; i < 10 ; i++){
-                sum_twoTod += parseInt($('#number2_tod_inp'+i).val()) || 0
-                }
-                $('#cash2_tod_total').val(sum_twoTod)
-                return parseInt(sum_twoTod) || 0;
-            }
-        })
-        $('.input_number2').on('keyup change focus',function(){
+        $('.input_number2,#number_top,#number_tod,#number_button').on('keypress keyup change focus',function(){
             var sum_twoTod = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_twoTod += parseInt($('#number2_tod_inp'+i).val()) || 0
@@ -300,17 +280,7 @@
         })
     }
     function sum_twoBut_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_twoBut = 0
-                for(var i = 0 ; i < 10 ; i++){
-                sum_twoBut += parseInt($('#number2_button_inp'+i).val()) || 0
-                }
-                $('#cash2_but_total').val(sum_twoBut)
-                return parseInt(sum_twoBut) || 0;
-            }
-        })
-        $('.input_number2 ').on('keyup change focus',function(){
+        $('.input_number2,#number_top,#number_tod,#number_button').on('keypress keyup change focus',function(){
             var sum_twoBut = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_twoBut += parseInt($('#number2_button_inp'+i).val()) || 0
@@ -328,16 +298,7 @@
         })
     }
     function sum_threeTop_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_threeTop = 0
-                for(var i = 0 ; i < 10 ; i++){
-                sum_threeTop += parseInt($('#number3_top_inp'+i).val()) || 0
-                }
-                $('#cash3_top_total').val(sum_threeTop)
-            }
-        })
-        $('.input_number3 ').on('keyup change focus',function(){
+        $('.input_number3,#number_top,#number_tod,#number_button ').on('keypress keyup change focus',function(){
             var sum_threeTop = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_threeTop += parseInt($('#number3_top_inp'+i).val()) || 0
@@ -353,16 +314,7 @@
         })
     }
     function sum_threeTod_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_threeTod = 0
-                for(var i = 0 ; i < 10 ; i++){
-                sum_threeTod += parseInt($('#number3_tod_inp'+i).val()) || 0
-                }
-                $('#cash3_tod_total').val(sum_threeTod)
-            }
-        })
-        $('.input_number3 ').on('keyup change focus',function(){
+        $('.input_number3,#number_top,#number_tod,#number_button ').on('keypress keyup change focus',function(){
             var sum_threeTod = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_threeTod += parseInt($('#number3_tod_inp'+i).val()) || 0
@@ -378,16 +330,7 @@
         })
     }
     function sum_threeBut_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_threeeBut = 0
-                for(var i = 0 ; i < 10 ; i++){
-                sum_threeeBut += parseInt($('#number3_button_inp'+i).val()) || 0
-                }
-                $('#cash3_but_total').val(sum_threeeBut)
-            }
-        })
-        $('.input_number3 ').on('keyup change focus',function(){
+        $('.input_number3,#number_top,#number_tod,#number_button ').on('keypress keyup change focus',function(){
             var sum_threeeBut = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_threeeBut += parseInt($('#number3_button_inp'+i).val()) || 0
@@ -403,14 +346,7 @@
         })
     }
     function sum_total_2_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_two = 0
-                sum_two = parseInt($('#cash2_top_total').val())+parseInt($('#cash2_tod_total').val())+parseInt($('#cash2_but_total').val()) || 0
-                $('#cash2_total').val(sum_two)
-            }
-        })
-        $('.input_number2 ').on('keyup change focus',function(){
+        $('.input_number2,#number_top,#number_tod,#number_button ').on('keypress keyup change focus',function(){
             var sum_two = 0
             sum_two = parseInt($('#cash2_top_total').val())+parseInt($('#cash2_tod_total').val())+parseInt($('#cash2_but_total').val()) || 0
             $('#cash2_total').val(sum_two)
@@ -422,14 +358,7 @@
         })
     }
     function sum_total_3_digit(){
-        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
-            if(e.which == 13){
-                var sum_three = 0
-                sum_three = parseInt($('#cash3_top_total').val())+parseInt($('#cash3_tod_total').val())+parseInt($('#cash3_but_total').val()) || 0
-                $('#cash3_total').val(sum_three)
-            }
-        })
-        $('.input_number3 ').on('keyup change focus',function(){
+        $('.input_number3,#number_top,#number_tod,#number_button ').on('keypress keyup change focus',function(){
             var sum_three = 0
             sum_three = parseInt($('#cash3_top_total').val())+parseInt($('#cash3_tod_total').val())+parseInt($('#cash3_but_total').val()) || 0
             $('#cash3_total').val(sum_three)

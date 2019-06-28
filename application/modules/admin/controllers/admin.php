@@ -390,7 +390,8 @@ class Admin extends MX_Controller {
 		$this->lotto_model->update_criteria(
 			[
 				'discount' => $this->input->post('update_data')[1],
-				'pay' => $this->input->post('update_data')[2]
+				'pay' => $this->input->post('update_data')[2],
+				'limit_pay' => $this->input->post('update_data')[3]
 			], $this->input->post('update_data')[0]
 		);
 

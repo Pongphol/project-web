@@ -8,6 +8,7 @@
                         <th>เลข</th>
                         <th>ส่วนลด</th>
                         <th>จ่าย</th>
+                        <th>จำกัดการจ่าย</th>
                         <th>จัดการ</th>
                     </tr>
                 </thead>
@@ -21,6 +22,7 @@
                                     <td>{$crit->name}</td>
                                     <td><input type='number' class='form-control' name='discount' disabled='disabled' value='{$crit->discount}'></td>
                                     <td><input type='number' class='form-control' name='pay' disabled='disabled' value='{$crit->pay}'></td>
+                                    <td><input type='number' class='form-control' name='limit_pay' disabled='disabled' value='{$crit->limit_pay}'></td>
                                     <td><button type='button' class='btn btn-warning change_lotto' value='" . $crit->id . "'>แก้ไข</button></td>
                                 </tr>
                             ";
@@ -72,7 +74,8 @@ function change_price_lotto(obj)
     update_data.push(
         $("tr#" + tr_id + " button.change_lotto").val(),
         $("tr#" + tr_id + " input[name=discount]").val(),
-        $("tr#" + tr_id + " input[name=pay]").val()
+        $("tr#" + tr_id + " input[name=pay]").val(),
+        $("tr#" + tr_id + " input[name=limit_pay]").val()
     );
 
     $.ajax({
