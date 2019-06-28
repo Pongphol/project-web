@@ -88,21 +88,20 @@
         $(".number3").inputFilter(function(value) {
             return /^\d*$/.test(value) && (value === "" || parseInt(value) < 1000); 
         });
-        $('#check_all_number').click(function(event) {   
-            if(this.checked) 
-            {
-                // Iterate each checkbox
-                $(':checkbox').each(function() {
-                    this.checked = true;                        
-                });
+        $('#number_top,#number_tod,#number_button').on("keypress",function(event){
+            if(event.which == 13){
+                input_number()
             }
-            else 
-            {
-                $(':checkbox').each(function() {
-                    this.checked = false;                       
-                });
-            }
+        })
+        $("#check_all_number").change(function(){
+            $('.numtod').each(function (ind,ele){
+                if(!$(ele).prop('disabled'))
+                {
+                    $(ele).iCheck('check');
+                }
+            });
         });
+        
 
     }
     function validate_number_input()
@@ -245,13 +244,22 @@
         }
     })();
     function sum_twoTop_digit(){
-        $('.input_number2 ').on('keyup change focus',function(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_twoTop = 0
+                for(var i = 0 ; i < 10 ; i++){
+                sum_twoTop += parseInt($('#number2_top_inp'+i).val()) || 0
+                }
+                $('#cash2_top_total').val(sum_twoTop)
+                return parseInt(sum_twoTop) || 0;
+            }
+        })
+        $('.input_number2').on('keyup change focus',function(){
             var sum_twoTop = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_twoTop += parseInt($('#number2_top_inp'+i).val()) || 0
             }
             $('#cash2_top_total').val(sum_twoTop)
-            return sum_twoTop;
             return parseInt(sum_twoTop) || 0;
         })
         $('.large_button').on('click',function(){
@@ -264,7 +272,17 @@
         })
     }
     function sum_twoTod_digit(){
-        $('.input_number2 ').on('keyup change focus',function(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_twoTod = 0
+                for(var i = 0 ; i < 10 ; i++){
+                sum_twoTod += parseInt($('#number2_tod_inp'+i).val()) || 0
+                }
+                $('#cash2_tod_total').val(sum_twoTod)
+                return parseInt(sum_twoTod) || 0;
+            }
+        })
+        $('.input_number2').on('keyup change focus',function(){
             var sum_twoTod = 0
             for(var i = 0 ; i < 10 ; i++){
             sum_twoTod += parseInt($('#number2_tod_inp'+i).val()) || 0
@@ -282,6 +300,16 @@
         })
     }
     function sum_twoBut_digit(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_twoBut = 0
+                for(var i = 0 ; i < 10 ; i++){
+                sum_twoBut += parseInt($('#number2_button_inp'+i).val()) || 0
+                }
+                $('#cash2_but_total').val(sum_twoBut)
+                return parseInt(sum_twoBut) || 0;
+            }
+        })
         $('.input_number2 ').on('keyup change focus',function(){
             var sum_twoBut = 0
             for(var i = 0 ; i < 10 ; i++){
@@ -300,6 +328,15 @@
         })
     }
     function sum_threeTop_digit(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_threeTop = 0
+                for(var i = 0 ; i < 10 ; i++){
+                sum_threeTop += parseInt($('#number3_top_inp'+i).val()) || 0
+                }
+                $('#cash3_top_total').val(sum_threeTop)
+            }
+        })
         $('.input_number3 ').on('keyup change focus',function(){
             var sum_threeTop = 0
             for(var i = 0 ; i < 10 ; i++){
@@ -316,6 +353,15 @@
         })
     }
     function sum_threeTod_digit(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_threeTod = 0
+                for(var i = 0 ; i < 10 ; i++){
+                sum_threeTod += parseInt($('#number3_tod_inp'+i).val()) || 0
+                }
+                $('#cash3_tod_total').val(sum_threeTod)
+            }
+        })
         $('.input_number3 ').on('keyup change focus',function(){
             var sum_threeTod = 0
             for(var i = 0 ; i < 10 ; i++){
@@ -332,6 +378,15 @@
         })
     }
     function sum_threeBut_digit(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_threeeBut = 0
+                for(var i = 0 ; i < 10 ; i++){
+                sum_threeeBut += parseInt($('#number3_button_inp'+i).val()) || 0
+                }
+                $('#cash3_but_total').val(sum_threeeBut)
+            }
+        })
         $('.input_number3 ').on('keyup change focus',function(){
             var sum_threeeBut = 0
             for(var i = 0 ; i < 10 ; i++){
@@ -348,6 +403,13 @@
         })
     }
     function sum_total_2_digit(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_two = 0
+                sum_two = parseInt($('#cash2_top_total').val())+parseInt($('#cash2_tod_total').val())+parseInt($('#cash2_but_total').val()) || 0
+                $('#cash2_total').val(sum_two)
+            }
+        })
         $('.input_number2 ').on('keyup change focus',function(){
             var sum_two = 0
             sum_two = parseInt($('#cash2_top_total').val())+parseInt($('#cash2_tod_total').val())+parseInt($('#cash2_but_total').val()) || 0
@@ -360,6 +422,13 @@
         })
     }
     function sum_total_3_digit(){
+        $('#number_top,#number_tod,#number_button').on('keypress',function(e){
+            if(e.which == 13){
+                var sum_three = 0
+                sum_three = parseInt($('#cash3_top_total').val())+parseInt($('#cash3_tod_total').val())+parseInt($('#cash3_but_total').val()) || 0
+                $('#cash3_total').val(sum_three)
+            }
+        })
         $('.input_number3 ').on('keyup change focus',function(){
             var sum_three = 0
             sum_three = parseInt($('#cash3_top_total').val())+parseInt($('#cash3_tod_total').val())+parseInt($('#cash3_but_total').val()) || 0
@@ -458,12 +527,7 @@
                         total_cash : $('#cash_total').val()
                     },
                     success: function(result){
-                        console.log('ใใใใ')
                         if(result.status == "success"){
-                            console.log('ใใใใ')
-                            $.notify('ลงหวยสำเร็จ', {
-                                className: 'success'
-                            });
                             $("input.form-control:text").val("")
                             location.reload();
                         }else{
@@ -471,10 +535,6 @@
                                 className: 'error'
                             });
                         }
-                    }
-                    ,
-                    error : function(reult){
-                        console.log('ff')
                     }
                 });
             }  
@@ -499,7 +559,7 @@
                 for(var i = 0 ; i < result_tod.length ; i++){
                     console.log(result_tod[i])
                     table += "<div class='col'>"
-                    table += "<input type='checkbox'  value='"+result_tod[i]+"' name='list_num'>"
+                    table += "<input type='checkbox'  class='numtod' value='"+result_tod[i]+"' name='list_num'>"
                     table += "<label>"+result_tod[i]+"</label>"
                     table += "</div>"
                 }
@@ -509,7 +569,7 @@
                 for(var i = 0 ; i < result_tod.length ; i++){
                     console.log(result_tod[i])
                     table += "<div class='col'>"
-                    table += "<input type='checkbox'  value='"+result_tod[i]+"' name='list_num'>"
+                    table += "<input type='checkbox' class='numtod' value='"+result_tod[i]+"' name='list_num'>"
                     table += "<label>"+result_tod[i]+"</label>"
                     table += "</div>"
                 }

@@ -534,7 +534,6 @@ class Member extends MX_Controller {
 		/* Get id last bill lotto */
 
 		$id_last_row = $this->mm->get_last_row_bill();
-		echo $id_last_row->id;
 
 		/* Insert number lotto  / bill */
 		$id = $this->session->userdata('account_id');
