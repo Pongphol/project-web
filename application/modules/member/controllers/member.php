@@ -752,9 +752,11 @@ class Member extends MX_Controller {
 	public function get_bill()
 	{
 		$this->load->model('lotto/lotto_model');
+
 		$buy_date = $this->input->post('buy_date');
 		$list_history_buy_lotto = $this->lotto_model->get_bill_member_by_date($buy_date, get_account_id());
-		//pre_r($list_history_buy_lotto);
+		$sum_bills = $this->lotto_model->get_sum_bill_by_date($buy_date, get_account_id());
+		$bill = 0;
 
 		$table = "";
 
@@ -772,17 +774,17 @@ class Member extends MX_Controller {
 			if ($key == 0)
 			{
 				$last_bill_id = $row->bill_id;
+				
 				$table .= '
 				<li>
 					<div class="lotto_list_head" onclick="showDetail(\'' . $randomKey . '\')"><i class="fa fa-search"></i>
 						ชื่อบิล 
 						<span class="name">' . $row->bill_name . '</span> | 
-						<span class="pay">รวม ' . ($row->pay - $discount) . ' บาท</span>
+						<span class="pay">รวม ' . $sum_bills[$bill]->pay_all . ' บาท</span>
 						<span class="time">
 							<span class="status-text"> </span>' . dateTimeThai($row->created_at) .'
 						</span>
-					</div>';
-				$table .= '
+					</div>
 					<div id="' . $randomKey . '" class="table-responsive" style="display: none;">
 						<table width="100%" class="table table-hover table-bordered showtable history">
 							<thead>
@@ -809,7 +811,7 @@ class Member extends MX_Controller {
 									<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
 								</tr>
 				';
-
+				$bill++;
 			}
 			elseif($row->bill_id == $last_bill_id)
 			{
@@ -837,41 +839,43 @@ class Member extends MX_Controller {
 				<li>
 					<div class="lotto_list_head" onclick="showDetail(\'' . $randomKey . '\')"><i class="fa fa-search"></i>
 						ชื่อบิล 
-						<span class="name">' . $row->bill_name . '</span> | 
-						<span class="pay">รวม ' . ($row->pay - $discount) . ' บาท</span>
+						<span class="name">' . $row->bill_id . $row->bill_name . '</span> | 
+						<span class="pay">รวม ' . $sum_bills[$bill]->pay_all .' บาท</span>
 						<span class="time">
 							<span class="status-text"> </span>' . dateTimeThai($row->created_at) .'
 						</span>
-					</div>';
-				$table .= '<div id="' . $randomKey . '" class="table-responsive" style="display: none;">
-							<table width="100%" class="table table-hover table-bordered showtable history">
-								<thead>
-									<tr>
-										<th>เลข</th>
-										<th>รูปแบบ</th>
-										<th>จ่ายเต็ม</th>
-										<th>ส่วนลด</th>
-										<th>จ่ายจริง</th>
-										<th>รางวัล</th>
-										<th>สถานะ</th>
-										<th>ผล</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td class="text-info">' . $row->number . '</td>
-										<td>' . $row->criteria_name . '</td>
-										<td class="text-info">' . $row->pay . '</td>
-										<td class="text-danger">-' . $discount . '</td>
-										<td class="text-info">' . ($row->pay - $discount) . '</td>
-										<td class="text-success">' . ($row->pay * $row->pay_rate) . '</td>
-										<td>' . $status[$row->status] . '</td>
-										<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
-									</tr>
+					</div>
+					<div id="' . $randomKey . '" class="table-responsive" style="display: none;">
+						<table width="100%" class="table table-hover table-bordered showtable history">
+							<thead>
+								<tr>
+									<th>เลข</th>
+									<th>รูปแบบ</th>
+									<th>จ่ายเต็ม</th>
+									<th>ส่วนลด</th>
+									<th>จ่ายจริง</th>
+									<th>รางวัล</th>
+									<th>สถานะ</th>
+									<th>ผล</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="text-info">' . $row->number . '</td>
+									<td>' . $row->criteria_name . '</td>
+									<td class="text-info">' . $row->pay . '</td>
+									<td class="text-danger">-' . $discount . '</td>
+									<td class="text-info">' . ($row->pay - $discount) . '</td>
+									<td class="text-success">' . ($row->pay * $row->pay_rate) . '</td>
+									<td>' . $status[$row->status] . '</td>
+									<td>' . ($row->status == 'win' ? '<label class="text-success">' . ($row->pay * $row->pay_rate) . '</label>' : '0') . '</td>
+								</tr>
 				';
+				$bill++;
 			}
 
 		}
+
 		echo json_encode($table);
 	}
 }

@@ -57,6 +57,25 @@ class Lotto_model extends CI_Model
             return $result->num_rows() > 0 ? $result->result() : false;
     }
 
+    public function get_sum_bill_by_date($buy_date, $user_id)
+    {
+        $result = $this->db->select(
+                'buy_lotto.bill_id, 
+                SUM(buy_lotto.pay - ((criteria.discount / 100) * buy_lotto.pay)) AS pay_all, 
+                bill_lotto.name as bill_name'
+            )
+            ->from('bill_lotto')
+            ->join('buy_lotto', 'buy_lotto.bill_id = bill_lotto.id', 'INNER')
+            ->join('criteria', 'criteria.id = buy_lotto.criteria_id', 'INNER')
+            ->where('accId', $user_id)
+            ->where('DATE(bill_lotto.created_at)', $buy_date)
+            ->order_by('bill_id','ASC')
+            ->group_by('buy_lotto.bill_id')
+            ->get();
+    
+        return $result->num_rows() > 0 ? $result->result() : false;
+    }
+
     public function update_criteria($data, $id)
     {
         $this->db->where('id', $id)
