@@ -3,9 +3,14 @@
         get_inform_deposit()
         get_inform_withdraw()
         validate_table()
-        select_all()
-        unselect_all()
+        //select_all()
+        //unselect_all()
     })
+
+    $(document).ajaxComplete(function() {
+        select_all();
+    });
+
     /*รับข้อมูลแจ้งเติมเงิน */
     function get_inform_deposit()
     {
@@ -21,7 +26,7 @@
                 }  
         });
     }
-    function select_all()
+    /*function select_all()
     {
         $("#checkAll_deposit").change(function(){
             $('.dep').each(function (ind,ele){
@@ -39,7 +44,23 @@
                 }
             });
         });
+    }*/
+
+    function select_all()
+    {
+        var checkall_withdraw = $('input#checkAll_withdraw');
+        var checkboxes_withdraw = $('input.wit');
+
+        checkall_withdraw.on('ifChecked ifUnchecked', function(event) {
+            if (event.type == 'ifChecked') {
+                checkboxes_withdraw.iCheck('check');
+            } else {
+                checkboxes_withdraw.iCheck('uncheck');
+            }
+        });
+    
     }
+
     function unselect_all()
     {
         $("#checkAll_deposit").change(function(){
@@ -68,9 +89,9 @@
                 dataType : 'json',
                 success: function(result){
                     $('#inform_withdraw').html(result)
-                    $('input').iCheck({
+                    $('input.wit').iCheck({
                         checkboxClass: 'icheckbox_square-blue'
-                    });;
+                    });
                 } 
         });
     }
