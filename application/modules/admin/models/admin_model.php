@@ -112,7 +112,7 @@ class Admin_model extends CI_Model
          return $query;  
     }
     /*รับข้อมูลประวัติการแจ้ง*/
-    function get_history_inform()
+    public function get_history_inform()
     {
         $sql = "SELECT accId, account.username, amount, create_date , deposit_detail.updated_at, tranfersDate, status, description 
                 FROM deposit_detail
@@ -124,6 +124,39 @@ class Admin_model extends CI_Model
                 ORDER BY create_date DESC";
         $query = $this->db->query($sql)->result_array();
         return $query; 
+    }
+    /*ปรับเปลี่ยนวันที่ลงหวย*/
+    public function set_period($start_date, $end_date)
+    {
+        if (strtotime($start_date) !== false && strtotime($end_date) !== false)
+        {
+            $period = $this->db->limit(1)->get('period');
+            
+            if ($period->num_rows() > 0)
+            {
+                $last_row = $period->row();
+
+                $this->db->where('id', $last_row->id)
+                    ->update('period', [
+                        'start_date' => $start_date,
+                        'end_date' => $end_date,
+                        'created_at' => date("Y-m-d H:i:s")
+                    ]
+                );
+            }
+            else
+            {
+                $this->db->insert('period', [
+                        'start_date' => $start_date,
+                        'end_date' => $end_date,
+                    ]
+                );
+            }
+
+            return $this->db->affected_rows() > 0 ? true : false;
+        }
+        
+        return false;
     }
 }
 ?>

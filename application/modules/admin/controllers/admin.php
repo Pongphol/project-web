@@ -419,4 +419,31 @@ class Admin extends MX_Controller {
 		}
 	}
 
+	public function update_period()
+	{
+		$result = false;
+
+		if ($this->input->post('start_date') != '' && $this->input->post('end_date') != '')
+		{
+			$start_date = $this->input->post('start_date');
+			$end_date = $this->input->post('end_date');
+			
+			$this->load->model('admin_model');
+
+			$result = $this->admin_model->set_period($start_date, $end_date);
+		}
+
+		if ($result === true)
+		{
+			echo json_encode([
+				'success' => true,
+				'message' => 'ปรับเปลี่ยนวันที่ลงหวยสำเร็จ'
+			]);
+		}
+		else
+		{
+			echo json_encode(['success' => false]);
+		}
+	}
+
 }

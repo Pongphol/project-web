@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
     <title><?php if (isset($title)) { echo $title; } else { echo "Untitled"; } ?></title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" type="text/css" media="screen"/> <!-- CSS Bootstarp -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/jquery.datetimepicker.css" type="text/css" media="screen"/> <!-- CSS Bootstrap Datepicker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="theme-styles">
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/jquery.fancybox-1.3.4.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/style.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css"> <!-- CSS Jquey UI -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> <!-- CSS DataTable -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/skins/square/blue.css" type="text/css" media="screen"/>
+    
     <script src="<?php echo base_url(); ?>resources/js/jquery.min.js" type="text/javascript"></script> <!-- JS Jquery -->
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <script src="<?php echo base_url(); ?>resources/js/jquery.datetimepicker.js" type="text/javascript"></script> <!-- JS Bootstrap Datepicker -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/all.min.js" type="text/javascript"></script> <!-- JS All -->
     <script src="<?php echo base_url(); ?>resources/js/jquery.fancybox-1.3.4.js" type="text/javascript"></script> <!-- JS Fancybox Jquery -->
@@ -70,6 +74,7 @@
                     <a class="dropdown-item" href="<?php echo base_url('admin/manage_member'); ?>"><i class="fas fa-cog"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
                     <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
                     <a class="dropdown-item" href="<?php echo base_url('admin/get_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;อัพเดทผลหวย</a>
+                    <button class="dropdown-item" data-toggle="modal" data-target="#set_period"><i class="fas fa-award"></i>&nbsp;&nbsp;กำหนดวันลงหวย</button>
                     <?php else : ?>
                     <a class="dropdown-item" href="<?php echo base_url('member/show_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
                     <!-- สำหรับสมาชิกทั่วไป -->
@@ -91,3 +96,79 @@
     </div>
   
 </nav>
+
+<?php if (is_admin()) : ?>
+
+<div class="modal fade" id="set_period" tabindex="-1" role="dialog" aria-labelledy="myModalLable" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="status_member_title">กำหนดวันลงหวย</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">เริ่ม</label>
+                            <input name="start_date" class="datepicker" type="text" readonly autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">สิ้นสุด</label>
+                            <input name="end_date" class="datepicker" type="text" readonly autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="updatePeriod()" class="btn btn-primary">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+    $('.datepicker').datetimepicker({
+        lang:'th'
+    });
+
+});
+
+function updatePeriod()
+{
+    var data = {
+        start_date : $('input[name=start_date]').val(),
+        end_date : $('input[name=end_date]').val()
+    };
+
+    $.ajax({
+        url : "<?php echo base_url('admin/update_period'); ?>",
+        type: 'POST',
+        data : { start_date : data.start_date, end_date : data.end_date },
+        dataType : "JSON",
+        success : function (response) {
+
+            if (response.success === true)
+            {
+                toastr.success(response.message, null, { timeOut: 2000, iconClass: 'notify-ss' });
+                $('#set_period').modal('toggle');
+            }
+            else
+            {
+                $('#set_period').modal('toggle');
+            }
+            
+        }
+    });
+}
+
+</script>
+
+<?php endif; ?>
