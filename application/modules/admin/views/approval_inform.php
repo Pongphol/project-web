@@ -2,13 +2,14 @@
     $(document).ready(function(){
         get_inform_deposit()
         get_inform_withdraw()
-        validate_table()
+        //validate_table()
         //select_all()
         //unselect_all()
     })
 
     $(document).ajaxComplete(function() {
         select_all();
+        validate_table()
     });
 
     /*รับข้อมูลแจ้งเติมเงิน */
@@ -26,26 +27,7 @@
                 }  
         });
     }
-    /*function select_all()
-    {
-        $("#checkAll_deposit").change(function(){
-            $('.dep').each(function (ind,ele){
-                if(!$(ele).prop('disabled'))
-                {
-                    $(ele).iCheck('check');
-                }
-            });
-        });
-        $("#checkAll_withdraw").change(function(){
-            $('.wit').each(function (ind,ele){
-                if(!$(ele).prop('disabled'))
-                {
-                    $(ele).iCheck('check');
-                }
-            });
-        });
-    }*/
-
+    
     function select_all()
     {
         var checkall_withdraw = $('input#checkAll_withdraw');
@@ -58,28 +40,20 @@
                 checkboxes_withdraw.iCheck('uncheck');
             }
         });
+
+        var checkall_deposit = $('input#checkAll_deposit');
+        var checkboxes_deposit = $('input.dep');
+
+        checkall_deposit.on('ifChecked ifUnchecked', function(event) {
+            if (event.type == 'ifChecked') {
+                checkboxes_deposit.iCheck('check');
+            } else {
+                checkboxes_deposit.iCheck('uncheck');
+            }
+        });
     
     }
 
-    function unselect_all()
-    {
-        $("#checkAll_deposit").change(function(){
-            $('.dep').each(function (ind,ele){
-                if(!$(ele).prop('disabled'))
-                {
-                    $(ele).iCheck('checked');
-                }
-            });
-        });
-        $("#checkAll_withdraw").change(function(){
-            $('.wit').each(function (ind,ele){
-                if(!$(ele).prop('disabled'))
-                {
-                    $(ele).iCheck('checked');
-                }
-            });
-        });
-    }
     /*รับข้อมูลแจ้งถอนเงิน */
     function get_inform_withdraw()
     {
@@ -219,12 +193,12 @@
     function validate_table()
     {
         $('.tab_deposit').click(function(){
-            $(".wit").prop("checked",false);
-            $("#checkAll_withdraw").prop("checked",false);
+            $("input.wit").iCheck('uncheck')
+            $("input#checkAll_withdraw").iCheck('uncheck')
         })
         $('.tab_withdraw').click(function(){
-            $(".dep").prop("checked",false);
-            $("#checkAll_deposit").prop("checked",false);
+            $("input.dep").iCheck('uncheck')
+            $("input#checkAll_deposit").iCheck('uncheck')
         })
     }
     

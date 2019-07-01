@@ -3,12 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2019 at 04:33 PM
+-- Generation Time: Jul 01, 2019 at 07:34 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
-
-CREATE DATABASE IF NOT EXISTS lottery;
-USE lottery;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -57,7 +54,7 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `idcard`, `bookbank`, `role`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 1604, 'male', '0000-00-00', '0830131416', '', '', 'admin', 'enable', '2019-05-16 19:15:28', '2019-06-06 05:17:58'),
 (2, 'fluk', '1121', 'fluk@gmail.com', 'พงศ์พล', 'มาธิดา', 84234, 'male', '2018-07-13', '0864091932', '', '', 'user', 'enable', '2019-06-03 03:13:22', '2019-06-03 03:20:55'),
-(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 9784, 'male', '2019-03-08', '0123456789', '', '', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00');
+(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 19483, 'male', '2019-03-08', '0123456789', '', '', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -251,7 +248,14 @@ INSERT INTO `deposit_detail` (`id`, `accId`, `bankId`, `amount`, `tranfersDate`,
 (27, 1, 1, 400, '2019-01-02', '02:01:00', '', 'dd', 3, '2019-05-24 13:28:45', '2019-05-25 07:38:09'),
 (28, 1, 1, 300, '2019-10-05', '03:00:00', '', '', 2, '2019-05-24 13:49:11', '2019-05-25 07:38:18'),
 (29, 1, 1, 500, '2019-01-03', '03:01:00', '', '', 2, '2019-05-24 13:49:44', '2019-05-25 07:38:18'),
-(30, 1, 1, 1100, '2019-02-03', '02:02:00', '', '', 2, '2019-05-24 13:49:56', '2019-05-25 07:38:18');
+(30, 1, 1, 1100, '2019-02-03', '02:02:00', '', '', 2, '2019-05-24 13:49:56', '2019-05-25 07:38:18'),
+(31, 3, 1, 1000, '2019-04-04', '02:03:00', '', '', 2, '2019-07-01 15:01:42', '2019-07-01 22:14:30'),
+(32, 3, 1, 3000, '2019-03-03', '05:04:00', '', '', 2, '2019-07-01 15:02:04', '2019-07-01 22:17:48'),
+(33, 3, 1, 1000, '2019-01-01', '00:00:00', '', '', 2, '2019-07-01 15:18:27', '2019-07-01 22:21:43'),
+(34, 3, 1, 2200, '2019-01-01', '01:01:00', '', '', 2, '2019-07-01 15:18:40', '2019-07-01 22:21:43'),
+(35, 3, 1, 1199, '2019-02-02', '03:02:00', '', '', 2, '2019-07-01 15:47:02', '2019-07-01 22:48:26'),
+(36, 3, 1, 1000, '2020-02-02', '01:02:00', '', '', 2, '2019-07-01 15:47:13', '2019-07-01 22:48:26'),
+(37, 3, 1, 500, '2021-04-03', '03:03:00', '', '', 2, '2019-07-01 15:47:29', '2019-07-01 22:48:26');
 
 -- --------------------------------------------------------
 
@@ -297,6 +301,19 @@ INSERT INTO `lotto` (`id`, `date`, `prize_first`, `number_back_three`, `number_b
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `period`
+--
+
+CREATE TABLE `period` (
+  `id` int(11) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `status`
 --
 
@@ -337,7 +354,8 @@ CREATE TABLE `withdraw_detail` (
 
 INSERT INTO `withdraw_detail` (`id`, `accId`, `amount`, `bankId`, `status`, `description`, `create_date`, `updated_at`) VALUES
 (11, 1, 100, 1, 3, 'ฟหกฟ', '2019-05-24 16:31:56', '2019-05-25 07:39:07'),
-(12, 1, 12000, 1, 1, '', '2019-05-27 18:50:19', '0000-00-00 00:00:00');
+(12, 1, 12000, 1, 2, '', '2019-05-27 18:50:19', '2019-07-01 22:48:16'),
+(13, 3, 200, 5, 2, '', '2019-07-01 15:47:53', '2019-07-01 22:48:16');
 
 --
 -- Indexes for dumped tables
@@ -416,6 +434,12 @@ ALTER TABLE `lotto`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `period`
+--
+ALTER TABLE `period`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
@@ -485,7 +509,7 @@ ALTER TABLE `criteria_user`
 -- AUTO_INCREMENT for table `deposit_detail`
 --
 ALTER TABLE `deposit_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `lottery_result`
@@ -500,6 +524,12 @@ ALTER TABLE `lotto`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- AUTO_INCREMENT for table `period`
+--
+ALTER TABLE `period`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
@@ -509,7 +539,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `withdraw_detail`
 --
 ALTER TABLE `withdraw_detail`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
