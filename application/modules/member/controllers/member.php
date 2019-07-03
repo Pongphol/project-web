@@ -540,7 +540,8 @@ class Member extends MX_Controller {
 			$name_bill = $this->input->post('name_bill');
 			$data = [
 				'name' => $name_bill,
-				'status' => 1
+				'status' => 1,
+				'period_id' => $last_period->id
 			];
 			$this->mm->insert_bill_lotto($data);
 
