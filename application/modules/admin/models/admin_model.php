@@ -158,5 +158,13 @@ class Admin_model extends CI_Model
         
         return false;
     }
+    /*รับค่างวดล่าสุด*/
+    function get_peroid(){
+        $sql = "SELECT * 
+                FROM period 
+                ORDER BY id DESC" ;
+         $query = $this->db->query($sql)->result_array();
+         return $query; 
+    }
 }
 ?>

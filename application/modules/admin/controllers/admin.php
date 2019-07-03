@@ -61,7 +61,26 @@ class Admin extends MX_Controller {
 
 		echo json_encode($output);
 	}
+	/*แสดงหน้าจอเลขอั้นหวย */
+	public function limit_pay_show()
+	{
+		$this->load->helper('date_helper');
+		$this->load->model('admin_model');
+		$date = $this->admin_model->get_peroid();
+		$newDate = [];
+		foreach($date as $row){
+			$newDate = [
+				'id' => $row['id'],
+				'start_date' => dateThai($row['start_date'])
+			];
+			$pop[] = $newDate;
+		}
+		$this->data['peroid'] = $pop;
+		$this->data['title'] = 'จำกัดจำนวนหวย';
+		$this->data['content'] = 'limit_pay';
 
+		$this->load->view('template', $this->data);
+	}
 	public function change_price_lotto()
 	{
 		$this->load->model('admin_model');
