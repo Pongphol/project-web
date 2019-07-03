@@ -81,6 +81,16 @@ class Member_model extends CI_Model
         $query = $this->db->query($sql)->row();
         return  $query;
     }
+    /*รับค่าวันเวลางวดล่าสุด */
+	function get_last_period_date()
+	{
+		$sql = "SELECT id ,start_date, end_date
+                FROM period 
+                ORDER BY id DESC 
+                LIMIT 1";
+        $query = $this->db->query($sql)->row();
+        return  $query;
+	}
 }
 
 ?>

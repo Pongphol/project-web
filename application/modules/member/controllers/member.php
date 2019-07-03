@@ -522,20 +522,7 @@ class Member extends MX_Controller {
 	{
 		$this->load->model('member_model','mm');
 
-		/* Insert bill lotto */
-
-		$name_bill = $this->input->post('name_bill');
-		$data = [
-			'name' => $name_bill,
-			'status' => 1
-		];
-		$this->mm->insert_bill_lotto($data);
-
-		/* Get id last bill lotto */
-
-		$id_last_row = $this->mm->get_last_row_bill();
-
-		/* Insert number lotto  / bill */
+		/* Insert number lotto  bill */
 		$id = $this->session->userdata('account_id');
 		$number2 = $this->input->post('number2');
 		$number3 = $this->input->post('number3');
@@ -543,97 +530,119 @@ class Member extends MX_Controller {
 		$user_money = $this->mm->get_money_user_by_id($id)->money;
 		$data = [];
 
-		if($user_money >= $total_cash) // ตรวจสอบว่าเงินของผู้ใช้เพียงพอต่อการซื้อหวยหรือไม่
-		{
-			$update['money'] = ($user_money - $total_cash);
-			$this->mm->update_monney_by_id($update,$id);
+		/* Check date period */
 
-			//เลข 2 ตัว
-			foreach($number2 as $row)
+		$last_period = $this->mm->get_last_period_date();
+		$current_date = date("Y-m-d H:i:s");
+		if($last_period->start_date <= $current_date && $current_date <= $last_period->end_date)
+		{
+			/* bill lotto */
+			$name_bill = $this->input->post('name_bill');
+			$data = [
+				'name' => $name_bill,
+				'status' => 1
+			];
+			$this->mm->insert_bill_lotto($data);
+
+			/* Get id last bill lotto */
+			$id_last_row = $this->mm->get_last_row_bill();
+
+			if($user_money >= $total_cash) // ตรวจสอบว่าเงินของผู้ใช้เพียงพอต่อการซื้อหวยหรือไม่
 			{
-				if($row['number'] != "")
+				$update['money'] = ($user_money - $total_cash);
+				$this->mm->update_monney_by_id($update,$id);
+
+				//เลข 2 ตัว
+				foreach($number2 as $row)
 				{
-					if($row['numberTop']  != "")
+					if($row['number'] != "")
 					{
-						$data = [
-							'accId' => $this->session->userdata('account_id'),
-							'bill_id' => $id_last_row->id,
-							'number' => $row['number'],
-							'criteria_id' => 5,
-							'pay' => $row['numberTop']
-						];
-						$this->mm->insert_buy_lotto($data);
-					}
-					if($row['numberTod']  != "")
-					{
-						$data = [
-							'accId' => $this->session->userdata('account_id'),
-							'bill_id' => $id_last_row->id,
-							'number' => $row['number'],
-							'criteria_id' => 4,
-							'pay' => $row['numberTod']
-						];
-						$this->mm->insert_buy_lotto($data);
-					}
-					if($row['numberBut']  != "")
-					{
-						$data = [
-							'accId' => $this->session->userdata('account_id'),
-							'bill_id' => $id_last_row->id,
-							'number' => $row['number'],
-							'criteria_id' => 6,
-							'pay' => $row['numberBut']
-						];
-						$this->mm->insert_buy_lotto($data);
+						if($row['numberTop']  != "")
+						{
+							$data = [
+								'accId' => $this->session->userdata('account_id'),
+								'bill_id' => $id_last_row->id,
+								'number' => $row['number'],
+								'criteria_id' => 5,
+								'pay' => $row['numberTop']
+							];
+							$this->mm->insert_buy_lotto($data);
+						}
+						if($row['numberTod']  != "")
+						{
+							$data = [
+								'accId' => $this->session->userdata('account_id'),
+								'bill_id' => $id_last_row->id,
+								'number' => $row['number'],
+								'criteria_id' => 4,
+								'pay' => $row['numberTod']
+							];
+							$this->mm->insert_buy_lotto($data);
+						}
+						if($row['numberBut']  != "")
+						{
+							$data = [
+								'accId' => $this->session->userdata('account_id'),
+								'bill_id' => $id_last_row->id,
+								'number' => $row['number'],
+								'criteria_id' => 6,
+								'pay' => $row['numberBut']
+							];
+							$this->mm->insert_buy_lotto($data);
+						}
 					}
 				}
-			}
-			// เลข 3 ตัว
-			foreach($number3 as $row)
-			{
-				if($row['number'] != "")
+				// เลข 3 ตัว
+				foreach($number3 as $row)
 				{
-					if($row['numberTop']  != "")
+					if($row['number'] != "")
 					{
-						$data = [
-							'accId' => $this->session->userdata('account_id'),
-							'bill_id' => $id_last_row->id,
-							'number' => $row['number'],
-							'criteria_id' => 1,
-							'pay' => $row['numberTop']
-						];
-						$this->mm->insert_buy_lotto($data);
-					}
-					if($row['numberTod']  != "")
-					{
-						$data = [
-							'accId' => $this->session->userdata('account_id'),
-							'bill_id' => $id_last_row->id,
-							'number' => $row['number'],
-							'criteria_id' => 2,
-							'pay' => $row['numberTod']
-						];
-						$this->mm->insert_buy_lotto($data);
-					}
-					if($row['numberBut']  != "")
-					{
-						$data = [
-							'accId' => $this->session->userdata('account_id'),
-							'bill_id' => $id_last_row->id,
-							'number' => $row['number'],
-							'criteria_id' => 3,
-							'pay' => $row['numberBut']
-						];
-						$this->mm->insert_buy_lotto($data);
+						if($row['numberTop']  != "")
+						{
+							$data = [
+								'accId' => $this->session->userdata('account_id'),
+								'bill_id' => $id_last_row->id,
+								'number' => $row['number'],
+								'criteria_id' => 1,
+								'pay' => $row['numberTop']
+							];
+							$this->mm->insert_buy_lotto($data);
+						}
+						if($row['numberTod']  != "")
+						{
+							$data = [
+								'accId' => $this->session->userdata('account_id'),
+								'bill_id' => $id_last_row->id,
+								'number' => $row['number'],
+								'criteria_id' => 2,
+								'pay' => $row['numberTod']
+							];
+							$this->mm->insert_buy_lotto($data);
+						}
+						if($row['numberBut']  != "")
+						{
+							$data = [
+								'accId' => $this->session->userdata('account_id'),
+								'bill_id' => $id_last_row->id,
+								'number' => $row['number'],
+								'criteria_id' => 3,
+								'pay' => $row['numberBut']
+							];
+							$this->mm->insert_buy_lotto($data);
+						}
 					}
 				}
+				
+				echo json_encode(['status' => 'success']);
 			}
-			
-			echo json_encode(['status' => 'success']);
+			else
+			{
+				echo json_encode(['status' => 'error']);
+			}
 		}
 		else
 		{
-			echo json_encode(['status' => 'error']);
+			echo json_encode(['status' => 'error_date']);
 		}
 
 	}

@@ -409,7 +409,7 @@
     {
         if($('#bill_name').val() == ""){
             $('#bill_name').addClass("is-invalid")
-            $('#validate_bill_name').addClass("invalid-feedback").text("กรุณากรอกจำนวนเงินที่โอน")
+            $('#validate_bill_name').addClass("invalid-feedback").text("กรุณากรอกชื่อบิล")
         }else{
             $('#bill_name').keyup(function(){
                 if($('#bill_name').val() != ""){
@@ -460,8 +460,12 @@
                         if(result.status == "success"){
                             $("input.form-control:text").val("")
                             location.reload();
-                        }else{
+                        }else if(result.status == "error"){
                             $.notify('ยอดเงินไม่เพียงพอ', {
+                                className: 'error'
+                            });
+                        }else{
+                            $.notify('ไม่สามารถลงหวยนอกเวลางวดได้', {
                                 className: 'error'
                             });
                         }
