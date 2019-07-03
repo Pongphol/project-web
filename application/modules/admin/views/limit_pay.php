@@ -3,10 +3,10 @@
         <div class="card-header"><h4>จำกัดจำนวนหวย</h4></div>
             <div class="card-body">
             <p class="mt-2">
-                       <select  id="peroid">
+                       <select  id="period">
                             <option disabled selected >-- เลือกงวดลงหวย --</option>
                                 <?php
-                                    foreach($peroid as $option)
+                                    foreach($period as $option)
                                     {
                                         echo "<option value='".$option['id']."'>".$option['start_date']."</option>";
                                     }
@@ -31,3 +31,24 @@
             </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        get_table_lotto();
+    })
+    function get_table_lotto(){
+        $('#period').on('change',function(){
+            var id = $(this).val()
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('admin/get_limit_pay'); ?>",
+                dataType : 'json',
+                data :{
+                    date_id : id
+                },
+                success: function(result){
+                }
+            });
+        })
+        
+    }
+</script>

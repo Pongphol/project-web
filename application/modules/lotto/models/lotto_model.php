@@ -140,6 +140,17 @@ class Lotto_model extends CI_Model
 
         return ($result->num_rows() > 0) ? $result->last_row() : false;
     }
+    /*รับข้อมูลหวยในงวดที่ถูกเลือก */
+    public function get_lotto_by_dateId($id)
+    {
+        $sql = "SELECT number, criteria_id, pay, buy_lotto.status
+                FROM bill_lotto
+                LEFT JOIN buy_lotto ON bill_lotto.id = buy_lotto.bill_id
+                LEFT JOIN period ON bill_lotto.period_id = period.id
+                WHERE period.id = $id";
+        $query = $this->db->query($sql)->result_array();
+        return $query; 
+    }
 }
 
 ?>

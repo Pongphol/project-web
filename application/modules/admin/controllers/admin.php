@@ -66,7 +66,7 @@ class Admin extends MX_Controller {
 	{
 		$this->load->helper('date_helper');
 		$this->load->model('admin_model');
-		$date = $this->admin_model->get_peroid();
+		$date = $this->admin_model->get_period();
 		$newDate = [];
 		foreach($date as $row){
 			$newDate = [
@@ -75,7 +75,7 @@ class Admin extends MX_Controller {
 			];
 			$pop[] = $newDate;
 		}
-		$this->data['peroid'] = $pop;
+		$this->data['period'] = $pop;
 		$this->data['title'] = 'จำกัดจำนวนหวย';
 		$this->data['content'] = 'limit_pay';
 
@@ -463,6 +463,32 @@ class Admin extends MX_Controller {
 		{
 			echo json_encode(['success' => false]);
 		}
+	}
+	/*รับตารางแสดงจำกัดเงินหวย */
+	function get_limit_pay()
+	{
+		$this->load->helper('date_helper');
+		$this->load->model('lotto/lotto_model','lm');
+
+		/*input from view */
+		$date_id = $this->input->post('date_id');
+
+		/*get data lotto */
+		$data_lotto = $this->lm->get_lotto_by_dateId($date_id);
+		$criteria = $this->lm->get_criteria();
+
+		$limit_top_three,$limit_tod_three,$limit_buttom_three = 0;
+		$limit_top_two,$limit_tod_two,$limit_buttom_two = 0;
+
+		/* check limit pay 
+		foreach($data_lotto as $row)
+		{
+			---------------TO DO ----------------
+		}
+		*/
+
+
+
 	}
 
 }

@@ -159,7 +159,8 @@ class Admin_model extends CI_Model
         return false;
     }
     /*รับค่างวดล่าสุด*/
-    function get_peroid(){
+    function get_period()
+    {
         $sql = "SELECT * 
                 FROM period 
                 ORDER BY id DESC" ;
