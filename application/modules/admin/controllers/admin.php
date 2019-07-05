@@ -477,6 +477,7 @@ class Admin extends MX_Controller {
 		$data_lotto = $this->lm->get_lotto_by_dateId($date_id);
 		$criteria = $this->lm->get_criteria();
 
+		/* Define variable for admin and other */
 		$limit_top_three = $limit_tod_three = $limit_buttom_three = 0;
 		$limit_top_two = $limit_tod_two = $limit_buttom_two = 0;
 
@@ -486,7 +487,7 @@ class Admin extends MX_Controller {
 		$mylimit = [];
 		$other = [];
 
-		pre_r($criteria);
+		//pre_r($criteria);
 		/*check limit pay*/ 
 		foreach($data_lotto as $row)
 		{
@@ -607,12 +608,53 @@ class Admin extends MX_Controller {
 					break;
 			}
 		}
-		echo $limit_top_three." ".$limit_top_three2;
-		pre_r($newMylimit);
-		pre_r($newOther);
+		//echo $limit_top_three." ".$limit_top_three2;
+		//pre_r($newMylimit);
+		//pre_r($newOther);
+		
+		$html = "";
+		$html .= "<div class='tab-pane fade active show' id='mylimit'>
+					<table class='table table-hover'>
+						<thead>
+							<tr>
+								<th>เลข</th>
+								<th>รูปแบบ</th>
+								<th>จ่าย</th>
+							</tr>
+						</thead>";
+		$html .= "<tbody>";
+				foreach($newMylimit as $row){
+					$html .= "<tr>
+								<td>".$row['number']."</td>
+								<td>".$row['criteria']."</td>
+								<td>".$row['pay']."</td>
+							 </tr>";
+				}
+		$html .= "</tbody>";
+		$html .= "</table>";
+        $html .= "</div>";
+		$html .= "<div class='tab-pane fade show' id='other'>
+					<table class='table table-hover'>
+						<thead>
+							<tr>
+								<th>เลข</th>
+								<th>รูปแบบ</th>
+								<th>จ่าย</th>
+							</tr>
+						</thead>";
+		$html .= "<tbody>";
+				foreach($newOther as $row){
+					$html .= "<tr>
+								<td>".$row['number']."</td>
+								<td>".$row['criteria']."</td>
+								<td>".$row['pay']."</td>
+							  </tr>";
+				}
+		$html .= "</tbody>";
+		$html .= "</table>";
+		$html .= "</div>";
 
-
-
+		echo json_encode($html);
 	}
 
 }

@@ -22,11 +22,7 @@
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content form_inform">
-                    <div class="tab-pane fade active show" id="mylimit">
-                    </div>
-                    <div class="tab-pane fade show" id="other">
-                        
-                    </div>
+                    
                 </div>
             </div>
     </div>
@@ -46,6 +42,7 @@
                     date_id : id
                 },
                 success: function(result){
+                    $('#myTabContent').html(result)
                 }
             });
         })
