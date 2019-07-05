@@ -477,15 +477,139 @@ class Admin extends MX_Controller {
 		$data_lotto = $this->lm->get_lotto_by_dateId($date_id);
 		$criteria = $this->lm->get_criteria();
 
-		$limit_top_three,$limit_tod_three,$limit_buttom_three = 0;
-		$limit_top_two,$limit_tod_two,$limit_buttom_two = 0;
+		$limit_top_three = $limit_tod_three = $limit_buttom_three = 0;
+		$limit_top_two = $limit_tod_two = $limit_buttom_two = 0;
 
-		/* check limit pay 
+		$limit_top_three2 = $limit_tod_three2 = $limit_buttom_three2 = 0;
+		$limit_top_two2 = $limit_tod_two2 = $limit_buttom_two2 = 0;
+
+		$mylimit = [];
+		$other = [];
+
+		pre_r($criteria);
+		/*check limit pay*/ 
 		foreach($data_lotto as $row)
 		{
-			---------------TO DO ----------------
+			switch($row['criteria_id']){
+				case $criteria[0]->id:
+						if($limit_top_three + $row['pay'] < $criteria[0]->limit_pay){
+							$limit_top_three += $row['pay'];
+							$mylimit = [
+								'number' => $row['number'],
+								'criteria' => "3 ตัวบน",
+								'pay' => $row['pay']
+							] ;
+							$newMylimit[] = $mylimit;
+						}else{
+							$limit_top_three2 += $row['pay'];
+							$other = [
+								'number' => $row['number'],
+								'criteria' => "3 ตัวบน",
+								'pay' => $row['pay']
+							] ;
+							$newOther[] = $other;
+						}
+					break;
+				case $criteria[1]->id:
+						if($limit_tod_three + $row['pay'] < $criteria[1]->limit_pay){
+							$limit_tod_three += $row['pay'];
+							$mylimit = [
+								'number' => $row['number'],
+								'criteria' => "3 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newMylimit[] = $mylimit;
+						}else{
+							$limit_tod_three2 += $row['pay'];
+							$other = [
+								'number' => $row['number'],
+								'criteria' => "3 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newOther[] = $other;
+						}
+					break;
+				case $criteria[2]->id:
+						if($limit_buttom_three + $row['pay'] < $criteria[2]->limit_pay){
+							$limit_buttom_three += $row['pay'];
+							$mylimit = [
+								'number' => $row['number'],
+								'criteria' => "3 ตัวล่าง",
+								'pay' => $row['pay']
+							] ;
+							$newMylimit[] = $mylimit;
+						}else{
+							$limit_buttom_three2 += $row['pay'];
+							$other = [
+								'number' => $row['number'],
+								'criteria' => "3 ตัวล่าง",
+								'pay' => $row['pay']
+							] ;
+							$newOther[] = $other;
+						}
+					break;
+				case $criteria[3]->id:
+						if($limit_tod_two + $row['pay'] < $criteria[3]->limit_pay){
+							$limit_tod_two += $row['pay'];
+							$mylimit = [
+								'number' => $row['number'],
+								'criteria' => "2 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newMylimit[] = $mylimit;
+						}else{
+							$limit_tod_two2 += $row['pay'];
+							$other = [
+								'number' => $row['number'],
+								'criteria' => "2 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newOther[] = $other;
+						}
+					break;
+				case $criteria[4]->id:
+						if($limit_top_two + $row['pay'] < $criteria[4]->limit_pay){
+							$limit_top_two += $row['pay'];
+							$mylimit = [
+								'number' => $row['number'],
+								'criteria' => "2 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newMylimit[] = $mylimit;
+						}else{
+							$limit_top_two2 += $row['pay'];
+							$other = [
+								'number' => $row['number'],
+								'criteria' => "2 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newOther[] = $other;
+						}
+					break;
+				case $criteria[5]->id:
+						if($limit_buttom_two + $row['pay'] < $criteria[5]->limit_pay){
+							$limit_buttom_two += $row['pay'];
+							$mylimit = [
+								'number' => $row['number'],
+								'criteria' => "2 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newMylimit[] = $mylimit;
+						}else{
+							$limit_buttom_two2 += $row['pay'];
+							$other = [
+								'number' => $row['number'],
+								'criteria' => "2 ตัวโต๊ด",
+								'pay' => $row['pay']
+							] ;
+							$newOther[] = $other;
+						}
+					break;
+			}
 		}
-		*/
+		echo $limit_top_three." ".$limit_top_three2;
+		pre_r($newMylimit);
+		pre_r($newOther);
 
 
 

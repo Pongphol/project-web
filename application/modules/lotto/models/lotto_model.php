@@ -6,7 +6,7 @@ class Lotto_model extends CI_Model
     {
         return $this->db->select($select)->get('criteria')->result();
     }
-
+    
     public function get_criteria_user_by_id($id)
     {
         $result = $this->db->where('user_id', $id)
