@@ -29,6 +29,8 @@
         get_criteria_ajax()
         show_option_number()
     })
+
+
     function get_criteria_ajax()
     {
         $.ajax({
@@ -476,23 +478,26 @@
     }
     function show_option_number()
     {
-        var table = "<div class='col'>"
-            table += "<input type='checkbox'  id='check_all_number'>"
-            table += "<label>เลือกทั้งหมด</label>"               
-            table += "</div>"
+        var table = "<div class='col'>";
+            table += "<input type='checkbox'  id='check_all_number'>";
+            table += "<label>เลือกทั้งหมด</label>"  ;             
+            table += "</div>";
+            
             $('#number_tod_list').html(table)
             $('input').iCheck({
              checkboxClass: 'icheckbox_square-blue'
             });
+            
         $('#number').keyup(function(){
             var table = "<div class='col'>"
-            table += "<input type='checkbox'  onchange='select_all()' id='check_all_number'>"
+            table += "<input type='checkbox' id='check_all_number'>"
             table += "<label>เลือกทั้งหมด</label>"               
             table += "</div>"
             $('#number_tod_list').html(table)
             $('input').iCheck({
-             checkboxClass: 'icheckbox_square-blue'
+                checkboxClass: 'icheckbox_square-blue'
             });
+            
             if($('#number').val().toString().length == 2){
                 result_tod =  permutate.getPermutations($('#number').val(), 2);
                 for(var i = 0 ; i < result_tod.length ; i++){
@@ -520,12 +525,15 @@
                     checkboxClass: 'icheckbox_square-blue'
                   });
             }
+
+            $('input#check_all_number').on('ifChanged', function(event){
+                select_all();
+            });
         })
     }
     function select_all(){
         var checkall= $('input#check_all_number');
         var checkboxes = $('input.numtod');
-        alert(123)
         checkall.on('ifChecked ifUnchecked', function(event) {
             if (event.type == 'ifChecked') {
                 checkboxes.iCheck('check');
