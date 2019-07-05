@@ -28,7 +28,6 @@
         sum_total_3_digit()
         get_criteria_ajax()
         show_option_number()
-        select_all() 
     })
     function get_criteria_ajax()
     {
@@ -487,7 +486,7 @@
             });
         $('#number').keyup(function(){
             var table = "<div class='col'>"
-            table += "<input type='checkbox'   id='check_all_number'>"
+            table += "<input type='checkbox'  onchange='select_all()' id='check_all_number'>"
             table += "<label>เลือกทั้งหมด</label>"               
             table += "</div>"
             $('#number_tod_list').html(table)
@@ -526,6 +525,7 @@
     function select_all(){
         var checkall= $('input#check_all_number');
         var checkboxes = $('input.numtod');
+        alert(123)
         checkall.on('ifChecked ifUnchecked', function(event) {
             if (event.type == 'ifChecked') {
                 checkboxes.iCheck('check');

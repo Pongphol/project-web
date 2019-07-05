@@ -3,12 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2019 at 07:34 PM
+-- Generation Time: Jul 05, 2019 at 05:12 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
-
-CREATE DATABASE IF NOT EXISTS lottery;
-USE lottery;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -57,7 +54,7 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`id`, `username`, `password`, `email`, `fname`, `lname`, `money`, `gender`, `birthday`, `phone`, `idcard`, `bookbank`, `role`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'yok', '1121', 'yok123@gmail.com', 'Satthabut', 'Loungsanam', 1604, 'male', '0000-00-00', '0830131416', '', '', 'admin', 'enable', '2019-05-16 19:15:28', '2019-06-06 05:17:58'),
 (2, 'fluk', '1121', 'fluk@gmail.com', 'พงศ์พล', 'มาธิดา', 84234, 'male', '2018-07-13', '0864091932', '', '', 'user', 'enable', '2019-06-03 03:13:22', '2019-06-03 03:20:55'),
-(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 19483, 'male', '2019-03-08', '0123456789', '', '', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00');
+(3, 'test', '1234', 'dasda@dsa.com', 'จอห์น', 'วิค', 14939, 'male', '2019-03-08', '0123456789', '', '', 'user', 'enable', '2019-06-05 01:21:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -132,6 +129,7 @@ INSERT INTO `bank_account` (`id`, `accId`, `type`, `number`) VALUES
 CREATE TABLE `bill_lotto` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `period_id` int(11) NOT NULL,
   `status` int(1) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL
@@ -141,11 +139,15 @@ CREATE TABLE `bill_lotto` (
 -- Dumping data for table `bill_lotto`
 --
 
-INSERT INTO `bill_lotto` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'test', 1, '2019-06-27 15:05:56', NULL),
-(2, 'test', 1, '2019-06-27 15:06:06', NULL),
-(3, 'test', 1, '2019-06-27 15:06:55', NULL),
-(4, 'test', 1, '2019-06-27 15:08:07', NULL);
+INSERT INTO `bill_lotto` (`id`, `name`, `period_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'test', 0, 1, '2019-06-27 15:05:56', NULL),
+(2, 'test', 0, 1, '2019-06-27 15:06:06', NULL),
+(3, 'test', 0, 1, '2019-06-27 15:06:55', NULL),
+(4, 'test', 0, 1, '2019-06-27 15:08:07', NULL),
+(5, '222', 0, 1, '2019-07-03 14:34:18', NULL),
+(6, 'Yok', 0, 1, '2019-07-03 15:18:21', NULL),
+(7, 'Yok2', 0, 1, '2019-07-03 15:20:00', NULL),
+(8, 'boon', 1, 1, '2019-07-03 15:43:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -176,7 +178,33 @@ INSERT INTO `buy_lotto` (`id`, `bill_id`, `accId`, `number`, `criteria_id`, `pay
 (44, 0, 2, '21', '5', '200', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
 (45, 0, 2, '21', '4', '500', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
 (46, 0, 2, '21', '6', '300', 'lose', '2019-06-03 14:38:47', '2019-06-07 06:38:46'),
-(47, 4, 3, '233', '1', '133', 'wait', '2019-06-27 15:08:07', '0000-00-00 00:00:00');
+(47, 4, 3, '233', '1', '133', 'wait', '2019-06-27 15:08:07', '0000-00-00 00:00:00'),
+(48, 5, 3, '123', '1', '133', 'wait', '2019-07-03 14:34:18', '0000-00-00 00:00:00'),
+(49, 6, 3, '12', '5', '1000', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(50, 6, 3, '123', '1', '1000', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(51, 6, 3, '132', '2', '200', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(52, 6, 3, '213', '2', '200', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(53, 6, 3, '231', '2', '200', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(54, 6, 3, '312', '2', '200', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(55, 6, 3, '112', '2', '333', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(56, 6, 3, '121', '2', '333', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(57, 6, 3, '211', '2', '333', 'wait', '2019-07-03 15:18:21', '0000-00-00 00:00:00'),
+(58, 7, 3, '12', '5', '100', 'wait', '2019-07-03 15:20:00', '0000-00-00 00:00:00'),
+(59, 7, 3, '13', '5', '100', 'wait', '2019-07-03 15:20:00', '0000-00-00 00:00:00'),
+(60, 7, 3, '34', '5', '100', 'wait', '2019-07-03 15:20:00', '0000-00-00 00:00:00'),
+(61, 7, 3, '40', '5', '199', 'wait', '2019-07-03 15:20:00', '0000-00-00 00:00:00'),
+(62, 8, 3, '456', '1', '300', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(63, 8, 3, '456', '2', '100', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(64, 8, 3, '465', '1', '300', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(65, 8, 3, '465', '2', '100', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(66, 8, 3, '546', '1', '300', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(67, 8, 3, '546', '2', '100', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(68, 8, 3, '564', '1', '300', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(69, 8, 3, '564', '2', '100', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(70, 8, 3, '645', '1', '300', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(71, 8, 3, '645', '2', '100', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(72, 8, 3, '654', '1', '300', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00'),
+(73, 8, 3, '654', '2', '100', 'wait', '2019-07-03 15:43:57', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -188,20 +216,21 @@ CREATE TABLE `criteria` (
   `id` int(3) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `discount` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `pay` int(11) NOT NULL
+  `pay` int(11) NOT NULL,
+  `limit_pay` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `criteria`
 --
 
-INSERT INTO `criteria` (`id`, `name`, `discount`, `pay`) VALUES
-(1, '3 ตัวบน', '35', 550),
-(2, '3 ตัวโต๊ด', '35', 100),
-(3, '3 ตัวล่าง', '26', 100),
-(4, '2 ตัวโต๊ด', '35', 550),
-(5, '2 ตัวบน', '28', 70),
-(6, '2 ตัวล่าง', '28', 70);
+INSERT INTO `criteria` (`id`, `name`, `discount`, `pay`, `limit_pay`) VALUES
+(1, '3 ตัวบน', '35', 550, 1000),
+(2, '3 ตัวโต๊ด', '35', 100, 500),
+(3, '3 ตัวล่าง', '26', 100, 400),
+(4, '2 ตัวโต๊ด', '35', 550, 400),
+(5, '2 ตัวบน', '28', 70, 300),
+(6, '2 ตัวล่าง', '28', 70, 300);
 
 -- --------------------------------------------------------
 
@@ -299,7 +328,8 @@ INSERT INTO `lotto` (`id`, `date`, `prize_first`, `number_back_three`, `number_b
 (16, '2019-05-16', 'a:1:{i:0;s:6:\"962526\";}', 'a:2:{i:0;s:3:\"018\";i:1;s:3:\"828\";}', 'a:1:{i:0;s:2:\"71\";}'),
 (21, '2019-06-03', 'a:1:{i:0;s:6:\"516461\";}', 'a:2:{i:0;s:3:\"215\";i:1;s:3:\"560\";}', 'a:1:{i:0;s:2:\"46\";}'),
 (22, '0000-00-00', 'N;', 'N;', 'N;'),
-(23, '2019-06-01', 'a:1:{i:0;s:6:\"516461\";}', 'a:2:{i:0;s:3:\"215\";i:1;s:3:\"560\";}', 'a:1:{i:0;s:2:\"46\";}');
+(23, '2019-06-01', 'a:1:{i:0;s:6:\"516461\";}', 'a:2:{i:0;s:3:\"215\";i:1;s:3:\"560\";}', 'a:1:{i:0;s:2:\"46\";}'),
+(24, '2019-07-01', 'a:1:{i:0;s:6:\"943647\";}', 'a:2:{i:0;s:3:\"006\";i:1;s:3:\"375\";}', 'a:1:{i:0;s:2:\"86\";}');
 
 -- --------------------------------------------------------
 
@@ -313,6 +343,13 @@ CREATE TABLE `period` (
   `end_date` datetime NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `period`
+--
+
+INSERT INTO `period` (`id`, `start_date`, `end_date`, `created_at`) VALUES
+(1, '2019-07-03 04:12:03', '2019-07-24 11:15:00', '2019-07-03 11:15:23');
 
 -- --------------------------------------------------------
 
@@ -488,13 +525,13 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT for table `bill_lotto`
 --
 ALTER TABLE `bill_lotto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `buy_lotto`
 --
 ALTER TABLE `buy_lotto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `criteria`
@@ -524,13 +561,13 @@ ALTER TABLE `lottery_result`
 -- AUTO_INCREMENT for table `lotto`
 --
 ALTER TABLE `lotto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `status`
