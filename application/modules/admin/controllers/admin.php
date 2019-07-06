@@ -608,10 +608,6 @@ class Admin extends MX_Controller {
 					break;
 			}
 		}
-		//echo $limit_top_three." ".$limit_top_three2;
-		//pre_r($newMylimit);
-		//pre_r($newOther);
-		
 		$html = "";
 		$html .= "<div class='tab-pane fade active show' id='mylimit'>
 					<table class='table table-hover'>
@@ -653,8 +649,62 @@ class Admin extends MX_Controller {
 		$html .= "</tbody>";
 		$html .= "</table>";
 		$html .= "</div>";
+		
+		$myInfo = "<tr>
+					<td>".$criteria[0]->name."</td>
+					<td>".$limit_top_three."/".$criteria[0]->limit_pay."</td>
+					</tr>
+					<tr>
+					<td>".$criteria[1]->name."</td>
+					<td>".$limit_tod_three."/".$criteria[1]->limit_pay."</td>
+					</tr>
+					<tr>
+					<td>".$criteria[2]->name."</td>
+					<td>".$limit_buttom_three."/".$criteria[2]->limit_pay."</td>
+					</tr>
+					<tr>
+					<td>".$criteria[3]->name."</td>
+					<td>".$limit_top_two."/".$criteria[3]->limit_pay."</td>
+					</tr>
+					<tr>
+					<td>".$criteria[4]->name."</td>
+					<td>".$limit_tod_two."/".$criteria[4]->limit_pay."</td>
+					</tr>
+					<tr>
+					<td>".$criteria[5]->name."</td>
+					<td>".$limit_buttom_two."/".$criteria[5]->limit_pay."</td>
+					</tr>";
 
-		echo json_encode($html);
+		$otherInfo = "<tr>
+						<td>".$criteria[0]->name."</td>
+						<td>".$limit_top_three2."</td>
+						</tr>
+						<tr>
+						<td>".$criteria[1]->name."</td>
+						<td>".$limit_tod_three2."</td>
+						</tr>
+						<tr>
+						<td>".$criteria[2]->name."</td>
+						<td>".$limit_buttom_three2."</td>
+						</tr>
+						<tr>
+						<td>".$criteria[3]->name."</td>
+						<td>".$limit_top_two2."</td>
+						</tr>
+						<tr>
+						<td>".$criteria[4]->name."</td>
+						<td>".$limit_tod_two2."</td>
+						</tr>
+						<tr>
+						<td>".$criteria[5]->name."</td>
+						<td>".$limit_buttom_two2."</td>
+					</tr>";
+		$newData = [
+			'myInfo' => $myInfo,
+			'otherInfo' => $otherInfo,
+			'html' => $html
+		];
+		echo json_encode($newData);
 	}
 
 }
