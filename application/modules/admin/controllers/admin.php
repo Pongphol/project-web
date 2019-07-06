@@ -365,7 +365,16 @@ class Admin extends MX_Controller {
 			$newdata[] = $temp_data;
 		}
 
-		$table = "";
+		$table = "<thead>
+                        <th>รูปแบบ</th>
+                        <th>ผู้ใช้</th>
+                        <th>จำนวน</th>
+                        <th>วันถูกแจ้ง</th>
+                        <th>วันรับแจ้ง</th>
+                        <th>สถานะ</th>
+                        <th>รายละเอียด</th>
+					</thead>
+					<tbody>";
 		foreach ($newdata as $row) 
 		{
 			$table .= "<tr>";

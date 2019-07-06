@@ -25,9 +25,11 @@ class Member extends MX_Controller {
 	/* หน้าจอลงหวย */
 	public function buy_lotto()
 	{
+		$this->load->model('lotto/lotto_model');
+        $criteria = $this->lotto_model->get_criteria_user_by_id(get_account_id());
 		$this->data['title'] = 'ลงหวย';
 		$this->data['content'] = 'buy_lotto';
-		
+		$this->data['criteria'] = ($criteria) ? unserialize(base64_decode($criteria->criteria)) : false;
 		$this->load->view('template', $this->data);
 	}
 

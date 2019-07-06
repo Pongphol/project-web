@@ -477,21 +477,11 @@
         
     }
     function show_option_number()
-    {
-        var table = "<div class='col'>";
-            table += "<input type='checkbox'  id='check_all_number'>";
-            table += "<label>เลือกทั้งหมด</label>"  ;             
-            table += "</div>";
-            
-            $('#number_tod_list').html(table)
-            $('input').iCheck({
-             checkboxClass: 'icheckbox_square-blue'
-            });
-            
+    {      
         $('#number').keyup(function(){
             var table = "<div class='col'>"
             table += "<input type='checkbox' id='check_all_number'>"
-            table += "<label>เลือกทั้งหมด</label>"               
+            table += "<label>ทั้งหมด</label>"               
             table += "</div>"
             $('#number_tod_list').html(table)
             $('input').iCheck({
@@ -502,7 +492,7 @@
                 result_tod =  permutate.getPermutations($('#number').val(), 2);
                 for(var i = 0 ; i < result_tod.length ; i++){
                     console.log(result_tod[i])
-                    table += "<div class='col'>"
+                    table += "<div class='col' style='padding-left:0;padding-right:0;'>"
                     table += "<input type='checkbox'  class='numtod' value='"+result_tod[i]+"' name='list_num'>"
                     table += "<label>"+result_tod[i]+"</label>"
                     table += "</div>"
@@ -515,7 +505,7 @@
                 result_tod =  permutate.getPermutations($('#number').val(), 3);
                 for(var i = 0 ; i < result_tod.length ; i++){
                     console.log(result_tod[i])
-                    table += "<div class='col'>"
+                    table += "<div class='col' style='padding-left:0;padding-right:0;' >"
                     table += "<input type='checkbox' class='numtod' value='"+result_tod[i]+"' name='list_num'>"
                     table += "<label>"+result_tod[i]+"</label>"
                     table += "</div>"
@@ -546,238 +536,276 @@
 
 </script>   
 <div class="container mt-5" >
-    <div class="card border-secondary mb-12" >
-        <div class="card-header"><h4>ลงหวย</h4></div>
-            <div class="card-body">
-                <div class="form-group">
-                    <table class="table">
-                        <tr>
-                            <th><h3>เลข</h3></th>
-                            <th><h3>บน</h3></th>
-                            <th><h3>โต๊ด</h3></th>
-                            <th><h3>ล่าง</h3></th>
-                            <th rowspan="2"><button type="submit" class="btn btn-info btn-block large_button" id="input_table" onclick="input_number()">นำเข้าตาราง</button></th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="text" class="form-control input_number" id="number" name="number">
-                                <div id="validate_number_input"></div>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control input_pay" disabled id="number_top" name="number_top">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control input_pay" disabled id="number_tod" name="number_tod">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control input_pay" disabled id="number_button" name="number_button">
-                            </td>
-                        </tr>
-                    </table>
-                        <div class="row" id="number_tod_list">
+    <div class="row">
+        <div class="col-8">
+            <div class="card border-secondary mb-12" >
+                <div class="card-header"><h4>ลงหวย</h4></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <table class="table">
+                                <tr>
+                                    <th><h3>เลข</h3></th>
+                                    <th><h3>บน</h3></th>
+                                    <th><h3>โต๊ด</h3></th>
+                                    <th><h3>ล่าง</h3></th>
+                                    <th rowspan="2"><button type="submit" class="btn btn-info btn-block large_button" id="input_table" onclick="input_number()">นำเข้าตาราง</button></th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control input_number" id="number" name="number">
+                                        <div id="validate_number_input"></div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input_pay" disabled id="number_top" name="number_top">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input_pay" disabled id="number_tod" name="number_tod">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input_pay" disabled id="number_button" name="number_button">
+                                    </td>
+                                </tr>
+                            </table>
+                                <div class="row" id="number_tod_list">
+                                </div>
                         </div>
-                </div>
-                <div class="form-group">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <table class="table table-bordered" id="">
-                                    <thead>
-                                        <tr class="table-primary" align="center">
-                                            <th colspan="4">2 ตัว</th>
-                                        </tr>
-                                        <tr class="table-secondary" align="center">
-                                            <th>เลข</th>
-                                            <th>บน</th>
-                                            <th>โต๊ด</th>
-                                            <th>ล่าง</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            for($i = 0 ; $i < 10 ; $i++)
-                                            {
-                                                echo "<tr>";
-                                                echo "<td><input type='text' class='form-control input_number2 number2 number_format' id='number2_inp{$i}' name='number2_inp[{$i}]' ></td>";
-                                                echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_top_inp{$i}' name='number2_top_inp[{$i}]' ></td>";
-                                                echo "<td><input type='text' class='form-control input_number2 number_format'  id='number2_tod_inp{$i}' name='number2_tod_inp[{$i}]' ></td>";
-                                                echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_button_inp{$i}' name='number2_button_inp[{$i}]' ></td>";
-                                                echo "</tr>";
-                                            }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr class="table-primary" align="center">
-                                            <th colspan="4">3 ตัว</th>
-                                        </tr>
-                                        <tr class="table-secondary" align="center">
-                                            <th>เลข</th>
-                                            <th>บน</th>
-                                            <th>โต๊ด</th>
-                                            <th>ล่าง</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            for($i = 0 ; $i < 10 ; $i++)
-                                            {
-                                                echo "<tr>";
-                                                echo "<td><input type='text' class='form-control input_number3  number3 number_format' id='number3_inp{$i}' name='number3_inp[{$i}]' ></td>";
-                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_top_inp{$i}' name='number3_top_inp[{$i}]' ></td>";
-                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_tod_inp{$i}' name='number3_tod_inp[{$i}]' ></td>";
-                                                echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_button_inp{$i}' name='number3_button_inp[{$i}]' ></td>";
-                                                echo "</tr>";
-                                            }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash2_top_total">บนรวมเลข 2 ตัวจำนวน</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash2_top_total" disabled class="form-control number_format" name="cash2_top_total" >
-                                    </div>
-                                </div>
-                            </td>                       
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash3_top_total">บนรวมเลข 3 ตัว</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash3_top_total" disabled class="form-control number_format" name="cash3_top_total" >
-                                    </div>
-                                </div>            
-                            </td>                    
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash2_but_total">ล่างรวมเลข 2 ตัว</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash2_but_total" disabled class="form-control number_format" name="cash2_but_total" >
-                                    </div>
-                                </div>
-                            </td>                       
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash3_but_total">ล่างรวมเลข 3 ตัว</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash3_but_total" disabled class="form-control number_format" name="cash3_but_total" >
-                                    </div>
-                                </div>            
-                            </td>                    
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash2_tod_total">โต้ดรวมเลข 2 ตัว</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash2_tod_total" disabled class="form-control number_format" name="cash2_tod_total" >
-                                    </div>
-                                </div>                     
-                            </td>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash3_tod_total">โต้ดรวมเลข 3 ตัว</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash3_tod_total" disabled class="form-control number_format" name="cash3_tod_total" >
-                                    </div>
-                                </div>            
-                            </td>      
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash2_total">รวมเลข 2 ตัวทั้งหมด</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash2_total" disabled class="form-control number_format" name="cash2_total" >
-                                    </div>
-                                    <div class="col">
-                                        <label for="cash2_discount">ส่วนลดจำนวน</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash2_discount" disabled class="form-control number_format discount" name="cash2_discount" >
-                                    </div>
-                                </div>                            
-                            </td>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash3_total">รวมเลข 3 ตัวทั้งหมด</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash3_total" disabled class="form-control number_format " name="cash3_total" >
-                                    </div>
-                                    <div class="col">
-                                        <label for="cash3_discount">ส่วนลดจำนวน</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash3_discount" disabled class="form-control number_format discount" name="cash3_discount" >
-                                    </div>
-                                </div>            
-                            </td>      
-                        </tr>        
-                        <tr>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash2_net">รวม</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash2_net" disabled class="form-control number_format total_net" name="cash2_net" >
-                                    </div>
-                                </div>
-                            </td>                       
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash3_net">รวม</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash3_net" disabled class="form-control number_format total_net" name="cash3_net" >
-                                    </div>
-                                </div>            
-                            </td>                    
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div class="row" class="form-group">
-                                    <div class="col">
-                                        <label for="cash_total">รวมทั้งหมด</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" id="cash_total" disabled class="form-control number_format total_net" name="cash_total" >
-                                    </div>
-                                </div>            
-                            </td>
-                        </tr>
-                        <tr>
-                        <td colspan='2' align="right"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">ยืนยัน</button></td>
-                        </tr>      
-                    </table>
-                </div>
+                        <div class="form-group">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <table class="table table-bordered" id="">
+                                            <thead>
+                                                <tr class="table-primary" align="center">
+                                                    <th colspan="4">2 ตัว</th>
+                                                </tr>
+                                                <tr class="table-secondary" align="center">
+                                                    <th>เลข</th>
+                                                    <th>บน</th>
+                                                    <th>โต๊ด</th>
+                                                    <th>ล่าง</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    for($i = 0 ; $i < 10 ; $i++)
+                                                    {
+                                                        echo "<tr>";
+                                                        echo "<td><input type='text' class='form-control input_number2 number2 number_format' id='number2_inp{$i}' name='number2_inp[{$i}]' ></td>";
+                                                        echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_top_inp{$i}' name='number2_top_inp[{$i}]' ></td>";
+                                                        echo "<td><input type='text' class='form-control input_number2 number_format'  id='number2_tod_inp{$i}' name='number2_tod_inp[{$i}]' ></td>";
+                                                        echo "<td><input type='text' class='form-control input_number2 number_format' id='number2_button_inp{$i}' name='number2_button_inp[{$i}]' ></td>";
+                                                        echo "</tr>";
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr class="table-primary" align="center">
+                                                    <th colspan="4">3 ตัว</th>
+                                                </tr>
+                                                <tr class="table-secondary" align="center">
+                                                    <th>เลข</th>
+                                                    <th>บน</th>
+                                                    <th>โต๊ด</th>
+                                                    <th>ล่าง</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    for($i = 0 ; $i < 10 ; $i++)
+                                                    {
+                                                        echo "<tr>";
+                                                        echo "<td><input type='text' class='form-control input_number3  number3 number_format' id='number3_inp{$i}' name='number3_inp[{$i}]' ></td>";
+                                                        echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_top_inp{$i}' name='number3_top_inp[{$i}]' ></td>";
+                                                        echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_tod_inp{$i}' name='number3_tod_inp[{$i}]' ></td>";
+                                                        echo "<td><input type='text' class='form-control input_number3 number_format' id='number3_button_inp{$i}' name='number3_button_inp[{$i}]' ></td>";
+                                                        echo "</tr>";
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash2_top_total">บนรวมเลข 2 ตัวจำนวน</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash2_top_total" disabled class="form-control number_format" name="cash2_top_total" >
+                                            </div>
+                                        </div>
+                                    </td>                       
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash3_top_total">บนรวมเลข 3 ตัว</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash3_top_total" disabled class="form-control number_format" name="cash3_top_total" >
+                                            </div>
+                                        </div>            
+                                    </td>                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash2_but_total">ล่างรวมเลข 2 ตัว</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash2_but_total" disabled class="form-control number_format" name="cash2_but_total" >
+                                            </div>
+                                        </div>
+                                    </td>                       
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash3_but_total">ล่างรวมเลข 3 ตัว</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash3_but_total" disabled class="form-control number_format" name="cash3_but_total" >
+                                            </div>
+                                        </div>            
+                                    </td>                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash2_tod_total">โต้ดรวมเลข 2 ตัว</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash2_tod_total" disabled class="form-control number_format" name="cash2_tod_total" >
+                                            </div>
+                                        </div>                     
+                                    </td>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash3_tod_total">โต้ดรวมเลข 3 ตัว</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash3_tod_total" disabled class="form-control number_format" name="cash3_tod_total" >
+                                            </div>
+                                        </div>            
+                                    </td>      
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash2_total">รวมเลข 2 ตัวทั้งหมด</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash2_total" disabled class="form-control number_format" name="cash2_total" >
+                                            </div>
+                                            <div class="col">
+                                                <label for="cash2_discount">ส่วนลดจำนวน</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash2_discount" disabled class="form-control number_format discount" name="cash2_discount" >
+                                            </div>
+                                        </div>                            
+                                    </td>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash3_total">รวมเลข 3 ตัวทั้งหมด</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash3_total" disabled class="form-control number_format " name="cash3_total" >
+                                            </div>
+                                            <div class="col">
+                                                <label for="cash3_discount">ส่วนลดจำนวน</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash3_discount" disabled class="form-control number_format discount" name="cash3_discount" >
+                                            </div>
+                                        </div>            
+                                    </td>      
+                                </tr>        
+                                <tr>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash2_net">รวม</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash2_net" disabled class="form-control number_format total_net" name="cash2_net" >
+                                            </div>
+                                        </div>
+                                    </td>                       
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash3_net">รวม</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash3_net" disabled class="form-control number_format total_net" name="cash3_net" >
+                                            </div>
+                                        </div>            
+                                    </td>                    
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <div class="row" class="form-group">
+                                            <div class="col">
+                                                <label for="cash_total">รวมทั้งหมด</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="cash_total" disabled class="form-control number_format total_net" name="cash_total" >
+                                            </div>
+                                        </div>            
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td colspan='2' align="right"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">ยืนยัน</button></td>
+                                </tr>      
+                            </table>
+                        </div>
+                    </div>
             </div>
+        </div>
+        <div class="col-4">
+            <div class="card border-secondary mb-12" >
+                <div class="card-header"><h4>หวยรัฐบาล</h4></div>
+                <div class="card-body">
+                    <?php if ($criteria) : ?>
+                    <table class="table table-hover table-bordered lotto_price_list">
+                        <thead>
+                            <tr>
+                                <th>เลข</th>
+                                <th>ส่วนลด</th>
+                                <th>จ่าย</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                foreach ($criteria as $crit)
+                                {
+                                    echo "
+                                        <tr>
+                                            <td>{$crit->name}</td>
+                                            <td class='number'>{$crit->discount}%</td>
+                                            <td class='number'>{$crit->pay}</td>
+                                        </tr>
+                                    ";
+                                }
+                            else : 
+                                echo '<strong class="d-block text-center">ไม่พบข้อมูล</strong>';
+                            endif;
+                            ?>
+                        
+                        </tbody>
+                    </table>
+            </div>
+        </div>
     </div>
 </div>
 <!--หน้ายืนยันการซื้อหวย-->

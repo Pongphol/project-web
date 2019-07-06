@@ -46,6 +46,9 @@
             <li class="nav-item <?php if ($this->uri->segment(1) == "history_inform" || $this->uri->segment(2) == "history_inform"){ echo 'active'; }?>">
                 <a class="nav-link" href="<?php echo base_url('admin/history_inform'); ?>">ประวัติการแจ้งฝากถอน <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item <?php if ($this->uri->segment(1) == "limit_pay_show" || $this->uri->segment(2) == "limit_pay_show"){ echo 'active'; }?>">
+                <a class="nav-link" href="<?php echo base_url('admin/limit_pay_show'); ?>">อั้นเลขจ่าย <span class="sr-only">(current)</span></a>
+            </li>
             <?php else: ?>
             <!-- สำหรับสมาชิกทั่วไป -->
             <li class="nav-item <?php if ($this->uri->segment(1) == "choose_criteria" || $this->uri->segment(2) == "choose_criteria"){ echo 'active'; }?>">
@@ -76,7 +79,6 @@
                     <a class="dropdown-item" href="<?php echo base_url('admin/get_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;อัพเดทผลหวย</a>
                     <button class="dropdown-item" data-toggle="modal" data-target="#set_period"><i class="fas fa-award"></i>&nbsp;&nbsp;กำหนดวันลงหวย</button>
                     <?php else : ?>
-                    <a class="dropdown-item" href="<?php echo base_url('member/show_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;ตรวจผลการแทงหวย</a>
                     <!-- สำหรับสมาชิกทั่วไป -->
                     <?php endif; ?>
                     <div class="dropdown-divider"></div>
