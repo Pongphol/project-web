@@ -114,11 +114,11 @@ class Admin_model extends CI_Model
     /*รับข้อมูลประวัติการแจ้ง*/
     public function get_history_inform()
     {
-        $sql = "SELECT accId, account.username, amount, create_date , deposit_detail.updated_at, tranfersDate, status, description 
+        $sql = "SELECT accId, account.username, amount, create_date , deposit_detail.updated_at, tranfersDate, deposit_detail.status, deposit_detail.description 
                 FROM deposit_detail
                 LEFT JOIN account ON deposit_detail.accId = account.id
                 UNION ALL
-                SELECT accId, account.username, amount, create_date, withdraw_detail.updated_at ,NULL AS tranfersDate, status, description 
+                SELECT accId, account.username, amount, create_date, withdraw_detail.updated_at ,NULL AS tranfersDate, withdraw_detail.status, withdraw_detail.description 
                 FROM withdraw_detail
                 LEFT JOIN account ON withdraw_detail.accId = account.id
                 ORDER BY create_date DESC";
