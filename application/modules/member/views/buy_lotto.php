@@ -140,12 +140,16 @@
                 var number_top = $('#number_top').val()
                 var number_tod = $('#number_tod').val()
                 var number_button = $('#number_button').val()
+                var number_check =  []
+                $.each($("input[name='list_num']:checked"), function(){            
+                    number_check.push($(this).val());
+                });
                 for(var i = 0 ; i < 10 ; i++ ){
                     if($('#number2_inp'+i).val() == ""){
-                        if($('#number_tod').val() == ""){
+                        if(number_check === undefined || number_check.length == 0){
                             $('#number2_inp'+i).val(number)
                             $('#number2_top_inp'+i).val(number_top)
-                            $('#number2_tod_inp'+i).val("")
+                            $('#number2_tod_inp'+i).val(number_tod)
                             $('#number2_button_inp'+i).val(number_button)
                             $('#number').val("")
                             $('#number_top').val("")
@@ -153,12 +157,8 @@
                             $('#number_button').val("")
                             break;
                         }else{
-                            var result_tod =  []
-                            $.each($("input[name='list_num']:checked"), function(){            
-                                result_tod.push($(this).val());
-                            });
                             var temp = 0;
-                            for(var j = i ; j < i+result_tod.length ; j++){
+                            for(var j = i ; j < i+number_check.length ; j++){
                                 $('#number2_inp'+j).val(result_tod[temp++])
                                 $('#number2_top_inp'+j).val(number_top)
                                 $('#number2_tod_inp'+j).val(number_tod)
@@ -176,12 +176,16 @@
                 var number_top = $('#number_top').val()
                 var number_tod = $('#number_tod').val()
                 var number_button = $('#number_button').val()
+                var number_check =  []
+                $.each($("input[name='list_num']:checked"), function(){            
+                    number_check.push($(this).val());
+                });
                 for(var i = 0 ; i < 10 ; i++ ){
                     if($('#number3_inp'+i).val() == ""){
-                        if($('#number_tod').val() == ""){
+                        if(number_check === undefined || number_check.length == 0){
                             $('#number3_inp'+i).val(number)
                             $('#number3_top_inp'+i).val(number_top)
-                            $('#number3_tod_inp'+i).val("")
+                            $('#number3_tod_inp'+i).val(number_tod)
                             $('#number3_button_inp'+i).val(number_button)
                             $('#number').val("")
                             $('#number_top').val("")
@@ -189,13 +193,9 @@
                             $('#number_button').val("")
                             break;
                         }else{
-                            var result_tod =  []
-                            $.each($("input[name='list_num']:checked"), function(){            
-                                result_tod.push($(this).val());
-                            });
                             var temp = 0;
-                            for(var j = i ; j < i+result_tod.length ; j++){
-                                $('#number3_inp'+j).val(result_tod[temp++])
+                            for(var j = i ; j < i+number_check.length ; j++){
+                                $('#number3_inp'+j).val(number_check[temp++])
                                 $('#number3_top_inp'+j).val(number_top)
                                 $('#number3_tod_inp'+j).val(number_tod)
                                 $('#number3_button_inp'+j).val(number_button)
