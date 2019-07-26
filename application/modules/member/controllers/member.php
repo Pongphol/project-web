@@ -698,7 +698,7 @@ class Member extends MX_Controller {
 				}
 				elseif ($row->criteria_id == '2') // 3 ตัวโต๊ด
 				{
-					$status = lotto_answer($row->number, $result['prize_first'][0], -3);
+					$status = lotto_answer($row->number, $result['prize_first'][0], -3, true);
 				}
 				elseif ($row->criteria_id == '3') // 3 ตัวล่าง
 				{
@@ -706,7 +706,7 @@ class Member extends MX_Controller {
 				}
 				elseif ($row->criteria_id == '4') // 2 ตัวโต๊ด
 				{
-					$status = lotto_answer($row->number, $result['prize_first'][0], -2);
+					$status = lotto_answer($row->number, $result['prize_first'][0], -2, true);
 				}
 				elseif ($row->criteria_id == '5') // 2 ตัวบน
 				{

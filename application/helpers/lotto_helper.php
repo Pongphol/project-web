@@ -38,7 +38,7 @@ function get_lotto_array($type = 'latest')
     return $data;
 }
 
-function lotto_answer($number1, $number2, $cutNumber2 = false)
+function lotto_answer($number1, $number2, $cutNumber2 = false, $todNumner = false)
 {
     $status = 'wait';
 
@@ -91,6 +91,72 @@ function lotto_answer($number1, $number2, $cutNumber2 = false)
     }
 
     return $status;
+}
+function check_tod_number($number)
+{
+    $split_num = str_split($number);
+    $size = count($split_num);
+
+    if($size == 2)
+    {
+        if($split_num[0] == $split_num[1])
+        {
+            $size = 1;
+        }
+        else
+        {
+            $size = 2;
+        }
+        
+        $output = array();
+        
+        while(count($output) < $size)
+        {
+          shuffle($split_num);
+          $shuf_num = implode("",$split_num);
+          if(!in_array( $shuf_num , $output))
+          $output[] = $shuf_num;
+        }
+        return $output;
+    }
+    if($size == 3)
+    {
+        if($split_num[0] == $split_num[1])
+        {
+          if($split_num[1] == $split_num[2])
+          {
+            $size = 1;
+          }
+          else
+          {
+            $size = 3;
+          }
+          
+      }
+      else if($split_num[0] == $split_num[2])
+      {
+        $size = 3;
+      }
+      else if($split_num[1] == $split_num[2])
+      {
+        $size = 3;
+      }
+      else
+      {
+        $size = 6;
+      }
+      
+      $output = array();
+      
+      while(count($output) < $size)
+      {
+        shuffle($split_num);
+        $shuf_num = implode("",$split_num);
+        if(!in_array( $shuf_num , $output))
+        $output[] = $shuf_num;
+      }
+      return $output;
+    }
 }
 
 ?>
