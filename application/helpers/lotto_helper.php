@@ -64,7 +64,23 @@ function lotto_answer($number1, $number2, $cutNumber2 = false, $todNumner = fals
         else
         {
             $number2 = substr($number2, $cutNumber2);
-            $status = ($number1 == $number2) ? 'win' : 'lose';
+            if ($todNumner) 
+            {
+               $tod_result =  check_tod_number($number1);
+               foreach($tod_result as $row)
+               {
+                    if($row == $number2)
+                    {
+                        $status = 'win';
+                        break;
+                    } 
+               }
+            }
+            else
+            {
+                $status = ($number1 == $number2) ? 'win' : 'lose';
+            }
+            
         }  
     }
     else
@@ -86,7 +102,22 @@ function lotto_answer($number1, $number2, $cutNumber2 = false, $todNumner = fals
         }
         else
         {
-            $status = ($number1 == $number2) ? 'win' : 'lose';
+            if ($todNumner) 
+            {
+               $tod_result =  check_tod_number($number1);
+               foreach($tod_result as $row)
+               {
+                    if($row == $number2)
+                    {
+                        $status = 'win';
+                        break;
+                    } 
+               }
+            }
+            else
+            {
+                $status = ($number1 == $number2) ? 'win' : 'lose';
+            }
         }   
     }
 
