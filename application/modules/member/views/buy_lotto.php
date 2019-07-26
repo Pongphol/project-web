@@ -15,7 +15,7 @@
 </style>
 <script>
     $(document).ready(function(){
-        
+        $("html, body").animate({ scrollTop: 0 }, "slow");
         inputFilter()
         validate_number_input()
         sum_twoTop_digit()
@@ -103,8 +103,6 @@
                 }
             });
         });
-        
-
     }
     function validate_number_input()
     {
@@ -459,8 +457,14 @@
                     },
                     success: function(result){
                         if(result.status == "success"){
-                            $("input.form-control:text").val("")
-                            location.reload();
+                            Swal.fire({
+                                type: 'success',
+                                title: 'บันทึกสำเร็จ',
+                                showConfirmButton: false
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            },2000)
                         }else if(result.status == "error"){
                             $.notify('ยอดเงินไม่เพียงพอ', {
                                 className: 'error'
@@ -532,7 +536,6 @@
             }
         });
     }
-    
 
 </script>   
 <div class="container mt-5" >
@@ -830,7 +833,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-success" onclick="confirm_buy()">บันทึกการคีย์เลข</button>
+        <button type="button" class="btn btn-success"  data-dismiss="modal" onclick="confirm_buy()">บันทึกการคีย์เลข</button>
       </div>
     </div>
   </div>

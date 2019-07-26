@@ -706,6 +706,7 @@ class Member extends MX_Controller {
 				}
 				elseif ($row->criteria_id == '4') // 2 ตัวโต๊ด
 				{
+	
 					$status = lotto_answer($row->number, $result['prize_first'][0], -2);
 				}
 				elseif ($row->criteria_id == '5') // 2 ตัวบน
