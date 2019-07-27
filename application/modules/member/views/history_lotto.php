@@ -30,6 +30,16 @@
 </div>
 
 <script>
+$(document).ready(function() {
+    $.ajax({
+        url : "<?php echo base_url('member/get_lottery_result'); ?>",
+        method : "POST",
+        dataType : "JSON",
+        success : function(response) {
+        }
+    });
+});
+
 
 $('#buy_date_lotto').on('change', function() {
     var buy_date = $('#buy_date_lotto').val();

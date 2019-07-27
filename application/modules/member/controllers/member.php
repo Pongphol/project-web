@@ -698,7 +698,7 @@ class Member extends MX_Controller {
 				}
 				elseif ($row->criteria_id == '2') // 3 ตัวโต๊ด
 				{
-					$status = lotto_answer($row->number, $result['prize_first'][0], -3);
+					$status = lotto_answer($row->number, $result['prize_first'][0], -3, true);
 				}
 				elseif ($row->criteria_id == '3') // 3 ตัวล่าง
 				{
@@ -706,8 +706,7 @@ class Member extends MX_Controller {
 				}
 				elseif ($row->criteria_id == '4') // 2 ตัวโต๊ด
 				{
-	
-					$status = lotto_answer($row->number, $result['prize_first'][0], -2);
+					$status = lotto_answer($row->number, $result['prize_first'][0], -2, true);
 				}
 				elseif ($row->criteria_id == '5') // 2 ตัวบน
 				{
@@ -729,7 +728,7 @@ class Member extends MX_Controller {
 			}
 
 		}
-
+		/*
 		$list_buy_lotto = $this->lotto_model->get_buy_lotto_by_id(get_account_id());
 		
 		$table = "";
@@ -759,7 +758,7 @@ class Member extends MX_Controller {
 			";
 		}
 		
-		echo json_encode($table);
+		echo json_encode($table);*/
 	}
 
 	public function get_bill()
@@ -854,7 +853,7 @@ class Member extends MX_Controller {
 					<li>
 						<div class="lotto_list_head" onclick="showDetail(\'' . $randomKey . '\')"><i class="fa fa-search"></i>
 							ชื่อบิล 
-							<span class="name">' . $row->bill_id . $row->bill_name . '</span> | 
+							<span class="name">' . $row->bill_name . '</span> | 
 							<span class="pay">รวม ' . $sum_bills[$bill]->pay_all .' บาท</span>
 							<span class="time">
 								<span class="status-text"> </span>' . dateTimeThai($row->created_at) .'
