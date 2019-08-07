@@ -110,12 +110,15 @@ class Lotto_model extends CI_Model
         return $result->num_rows() > 0 ? $result->result() : false;
     }
 
-    public function insert_lotto($data)
+    public function update_lotto($data)
     {
+        $period = $this->db->limit(1)->order_by('id','desc')->get('period');
+        $last_row = $period->row();
+
         $result = $this->db->where('date', $data['date'])
             ->limit(1)
             ->get('lotto');
-        return $result->num_rows() == 0 ? $this->db->insert('lotto', $data) : false;
+        return $result->num_rows() == 0 ? $this->db->where('period_id',$last_row->id)->update('lotto', $data) : false;
     }
 
     public function select_lotto_by_date($date)

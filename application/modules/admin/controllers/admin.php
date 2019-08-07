@@ -443,7 +443,7 @@ class Admin extends MX_Controller {
 			// ดึง api ผลหวยแล้วเก็บลงใน database
 			$lotto_data = get_lotto_array();
 			// TO dO
-			$this->lotto_model->insert_lotto($lotto_data);
+			$this->lotto_model->update_lotto($lotto_data);
 			redirect('');
 		}
 	}
