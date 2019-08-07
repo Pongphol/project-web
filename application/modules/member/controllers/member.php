@@ -672,6 +672,7 @@ class Member extends MX_Controller {
 	private function get_lottery_by_date($date)
 	{
 		$date = date('Y-m-d',strtotime($date));
+		// To do
 		$lotto = $this->lotto_model->select_lotto_by_date($date);
 
 		$lotto = ($lotto) ? unserial($lotto) : [];
@@ -684,10 +685,12 @@ class Member extends MX_Controller {
 		$this->load->helper('lotto_helper');
 		$this->load->model('lotto/lotto_model');
 
+		//รับข้อมูลหวยจากคนที่ใช้งานอยู่
 		$list_buy_lotto = $this->lotto_model->get_buy_lotto_by_id(get_account_id());
 
 		foreach($list_buy_lotto as $row)
 		{
+			//Todo
 			$result = $this->get_lottery_by_date($row->created_at);
 
 			if (!empty($result))

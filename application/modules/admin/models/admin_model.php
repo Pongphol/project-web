@@ -130,30 +130,18 @@ class Admin_model extends CI_Model
     {
         if (strtotime($start_date) !== false && strtotime($end_date) !== false)
         {
-            $period = $this->db->limit(1)->get('period');
-            
-            if ($period->num_rows() > 0)
-            {
-                $last_row = $period->row();
+            $this->db->insert('period', [
+                'start_date' => $start_date,
+                 'end_date' => $end_date,
+                ]
+            );
+            $period = $this->db->limit(1)->order_by('id','desc')->get('period');
+            $last_row = $period->row();
 
-                $this->db->where('id', $last_row->id)
-                    ->update('period', [
-                        'start_date' => $start_date,
-                        'end_date' => $end_date,
-                        'created_at' => date("Y-m-d H:i:s")
-                    ]
-                );
-            }
-            else
-            {
-                $this->db->insert('period', [
-                        'start_date' => $start_date,
-                        'end_date' => $end_date,
-                    ]
-                );
-            }
-
-            return $this->db->affected_rows() > 0 ? true : false;
+            $this->db->insert('lotto',[
+                'period_id' => $last_row->id
+            ]);
+            return true;
         }
         
         return false;

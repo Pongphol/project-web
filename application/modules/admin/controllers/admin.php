@@ -442,6 +442,7 @@ class Admin extends MX_Controller {
 		{
 			// ดึง api ผลหวยแล้วเก็บลงใน database
 			$lotto_data = get_lotto_array();
+			// TO dO
 			$this->lotto_model->insert_lotto($lotto_data);
 			redirect('');
 		}
@@ -457,12 +458,14 @@ class Admin extends MX_Controller {
 			$end_date = $this->input->post('end_date');
 			
 			$this->load->model('admin_model');
-
+			//TO DO
 			$result = $this->admin_model->set_period($start_date, $end_date);
 		}
 
 		if ($result === true)
 		{
+			$period_last = $this->admin_model->get_period();
+
 			echo json_encode([
 				'success' => true,
 				'message' => 'ปรับเปลี่ยนวันที่ลงหวยสำเร็จ'
