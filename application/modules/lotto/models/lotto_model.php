@@ -92,17 +92,19 @@ class Lotto_model extends CI_Model
     {
         $result = $this->db->select(
                 'buy_lotto.id as buy_lotto_id, 
-                created_at, 
+                buy_lotto.created_at, 
                 buy_lotto.number, 
                 criteria_id, 
                 criteria.name as criteria_name, 
                 buy_lotto.pay, 
                 discount, 
                 criteria.pay as pay_rate, 
-                status'
+                buy_lotto.status,
+                period_id'
             )
             ->from('buy_lotto')
             ->join('criteria', 'buy_lotto.criteria_id = criteria.id', 'LEFT')
+            ->join('bill_lotto','buy_lotto.bill_id = bill_lotto.id')
             ->where('accId', $id)
             ->order_by('created_at','DESC')
             ->get();
@@ -121,9 +123,9 @@ class Lotto_model extends CI_Model
         return $result->num_rows() == 0 ? $this->db->where('period_id',$last_row->id)->update('lotto', $data) : false;
     }
 
-    public function select_lotto_by_date($date)
+    public function select_lotto_by_period($period)
     {
-        $result = $this->db->where('date', $date)
+        $result = $this->db->where('period_id', $period)
             ->limit(1)
             ->get('lotto');
         return $result->num_rows() > 0 ? $result->row() : false;

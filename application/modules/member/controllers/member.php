@@ -669,11 +669,11 @@ class Member extends MX_Controller {
 		$this->load->view('template', $this->data);
 	}
 
-	private function get_lottery_by_date($date)
+	private function get_lottery_by_period($period)
 	{
-		$date = date('Y-m-d',strtotime($date));
+		//$date = date('Y-m-d',strtotime($date));
 		// To do
-		$lotto = $this->lotto_model->select_lotto_by_date($date);
+		$lotto = $this->lotto_model->select_lotto_by_period($period);
 
 		$lotto = ($lotto) ? unserial($lotto) : [];
 
@@ -691,7 +691,7 @@ class Member extends MX_Controller {
 		foreach($list_buy_lotto as $row)
 		{
 			//Todo
-			$result = $this->get_lottery_by_date($row->created_at);
+			$result = $this->get_lottery_by_period($row->period_id);
 
 			if (!empty($result))
 			{
