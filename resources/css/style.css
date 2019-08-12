@@ -1,10 +1,18 @@
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background : #282321!important;
+}
+.logo-bg {
+    background: #282321;
+}
 .nav-user:hover {
-    color: #18BC9C!important;
+    /*color: #18BC9C!important;*/
+    background : #282321!important;
 }
 
 nav.custom {
     padding-top: 10px;
     padding-bottom: 10px;
+    background: #282321 !important;
 }
 
 ul.navbar-nav {

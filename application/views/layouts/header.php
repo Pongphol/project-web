@@ -31,7 +31,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary custom">
-    <a class="navbar-brand" href="<?php echo base_url(''); ?>"><i class="fa fa-home"></i></a>
+    <a class="navbar-brand" href="<?php echo base_url(''); ?>"><img src="<?php echo base_url('resources/images/header.png'); ?>" alt="" width="150px" height="50px"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -68,21 +68,21 @@
                 <a class="nav-link dropdown-toggle text-white nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
                     <i class="fas fa-user"></i>&nbsp;<?php echo $account->fname; ?>
                 </a>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                    <p class="dropdown-item"><i class="fab fa-btc"></i>&nbsp;:&nbsp;<?php echo number_format($account->money); ?></p>
-                    <a class="dropdown-item" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
+                <div class="dropdown-menu nav-user-bg" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                    <p class="dropdown-item nav-user"><i class="fab fa-btc"></i>&nbsp;:&nbsp;<?php echo number_format($account->money); ?></p>
+                    <a class="dropdown-item nav-user" href="<?php echo base_url('profile'); ?>"><i class="fas fa-address-card"></i>&nbsp;&nbsp;ข้อมูลส่วนตัว</a>
                     <?php if (is_admin()) : ?>
                     <!-- สำหรับแอดมิน -->
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?php echo base_url('admin/manage_member'); ?>"><i class="fas fa-cog"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
-                    <a class="dropdown-item" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
-                    <a class="dropdown-item" href="<?php echo base_url('admin/get_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;อัพเดทผลหวย</a>
-                    <button class="dropdown-item" data-toggle="modal" data-target="#set_period"><i class="fas fa-award"></i>&nbsp;&nbsp;กำหนดวันลงหวย</button>
+                    <a class="dropdown-item nav-user" href="<?php echo base_url('admin/manage_member'); ?>"><i class="fas fa-cog"></i>&nbsp;&nbsp;จัดการสมาชิก</a>
+                    <a class="dropdown-item nav-user" href="<?php echo base_url('admin/change_price_lotto'); ?>"><i class="fas fa-table"></i>&nbsp;&nbsp;กำหนดราคาหวย</a>
+                    <a class="dropdown-item nav-user" href="<?php echo base_url('admin/get_lottery_result'); ?>"><i class="fas fa-award"></i>&nbsp;&nbsp;อัพเดทผลหวย</a>
+                    <button class="dropdown-item nav-user" data-toggle="modal" data-target="#set_period"><i class="fas fa-award"></i>&nbsp;&nbsp;กำหนดวันลงหวย</button>
                     <?php else : ?>
                     <!-- สำหรับสมาชิกทั่วไป -->
                     <?php endif; ?>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
+                    <a class="dropdown-item nav-user" href="<?php echo base_url('logout'); ?>"><i class="fas fa-sign-out-alt">
                         </i>&nbsp;&nbsp;ออกจากระบบ
                     </a>
                 </div>

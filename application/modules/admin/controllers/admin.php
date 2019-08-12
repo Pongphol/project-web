@@ -498,7 +498,8 @@ class Admin extends MX_Controller {
 
 		$mylimit = [];
 		$other = [];
-
+		$newMylimit = [];
+		$newOther=[];
 		//pre_r($criteria);
 		/*check limit pay*/ 
 		foreach($data_lotto as $row)
@@ -585,7 +586,7 @@ class Admin extends MX_Controller {
 							$limit_top_two += $row['pay'];
 							$mylimit = [
 								'number' => $row['number'],
-								'criteria' => "2 ตัวโต๊ด",
+								'criteria' => "2 บน",
 								'pay' => $row['pay']
 							] ;
 							$newMylimit[] = $mylimit;
@@ -593,7 +594,7 @@ class Admin extends MX_Controller {
 							$limit_top_two2 += $row['pay'];
 							$other = [
 								'number' => $row['number'],
-								'criteria' => "2 ตัวโต๊ด",
+								'criteria' => "2 บน",
 								'pay' => $row['pay']
 							] ;
 							$newOther[] = $other;
@@ -604,7 +605,7 @@ class Admin extends MX_Controller {
 							$limit_buttom_two += $row['pay'];
 							$mylimit = [
 								'number' => $row['number'],
-								'criteria' => "2 ตัวโต๊ด",
+								'criteria' => "2 ตัวล่าง",
 								'pay' => $row['pay']
 							] ;
 							$newMylimit[] = $mylimit;
@@ -612,7 +613,7 @@ class Admin extends MX_Controller {
 							$limit_buttom_two2 += $row['pay'];
 							$other = [
 								'number' => $row['number'],
-								'criteria' => "2 ตัวโต๊ด",
+								'criteria' => "2 ตัวล่าง",
 								'pay' => $row['pay']
 							] ;
 							$newOther[] = $other;
